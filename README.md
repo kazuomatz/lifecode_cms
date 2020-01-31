@@ -2,7 +2,7 @@
 
 ## Product Name
 
-LifeCode CMS
+LifeCode CMS for Rails 6.0
 
 ## Ruby version
 
@@ -10,9 +10,9 @@ LifeCode CMS
 
 ## System dependencies
 
-- Rails 6.9x
+- Rails 6.0
 
-- MySQL 5.7
+- MySQL 6.9
 
 - Mecab
 
