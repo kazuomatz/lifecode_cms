@@ -1,0 +1,47 @@
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :lockable, :rememberable, :recoverable
+         #:registerable,
+         #:recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
+
+  acts_as_paranoid
+
+  def operator_role?
+    role == 2
+  end
+
+  def administrator_role?
+    role == 1
+  end
+
+  def normal_role?
+    role == 3
+  end
+
+  def grater_than_equal_to_normal_role?
+    true
+  end
+
+  def grater_than_equal_to_operator_role?
+    role == 1 || role == 2
+  end
+
+  def self.search(params = {})
+    users = User.all
+    users = users.where('name like ?', "%#{params[:name]}%") if params[:name].present?
+    users = users.where('name_kana like ?', "%#{params[:name_kana]}%") if params[:name_kana].present?
+    users = users.where('email like ?', "%#{params[:email]}%") if params[:email].present?
+    users
+  end
+
+  def role_name
+    if administrator_role?
+      'システム管理者'
+    elsif operator_role?
+      'システム運用者'
+    else
+      '一般ユーザー'
+    end
+  end
+end

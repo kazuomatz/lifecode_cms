@@ -1,0 +1,12 @@
+<div class="container-fluid base">
+  <div>
+    <div class="error-page">
+      <h1 class="error-code">403</h1>
+      <p class="description"><%= @error.present? ? @error.message : 'リクエストされたページへのアクセスは禁止されています' %></p>
+      <p class="description">
+        <small>Sorry, you don't have permission to access / on this server.</small>
+      </p>
+      <a href="/" class="moreBtn"><span><i class="fa fa-chevron-circle-right"></i>　TOPへ戻る</span></a>
+    </div>
+  </div>
+</div>

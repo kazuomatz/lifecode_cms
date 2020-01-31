@@ -1,0 +1,30 @@
+# 共通
+common:
+  app_name: 'LifeCode CMS'
+  copyright: 'LifeCode.jp'
+  info_mail: 'info@lifecode.jp'
+  description: ''
+# 管理画面
+admin:
+  ## ユーザー
+  user:
+    role:
+      1: 'システム管理者'
+      2: 'コンテンツ管理者'
+      3: '一般ユーザー'
+    role_value:
+      administrator: 1
+      operator: 2
+      normal: 3
+# meta
+meta:
+  title: 'ラリー(仮)'
+  description: ''
+  og:
+    type:  'website'
+    url:   ''
+    image: ''
+    site_name: ''
+basic:
+  user: rally
+  password: 9F-VTsfdsfXv

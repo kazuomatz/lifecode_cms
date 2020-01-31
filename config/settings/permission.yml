@@ -1,0 +1,12 @@
+## 権限
+permission:
+  top: '1,2,3'
+  users:
+    index: '1,2'
+    new: '1,2'
+    edit: '1,2,3'
+    create: '1,2'
+    update: '1,2,3'
+    destroy: '1,2,3'
+    confirm_user: '1,2,3'
+    lock: '1,2'

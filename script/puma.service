@@ -1,0 +1,10 @@
+[Unit]
+Description = Rails Web Application
+
+[Service]
+ExecStart = /home/ec2-user/life_code/script/puma.sh start
+ExecStop = /home/ec2-user/life_code/script/puma.sh stop
+Type = simple
+
+[Install]
+WantedBy = multi-user.target
