@@ -7,10 +7,13 @@ Rails.application.routes.draw do
   end
 
   get 'admin', to: 'admin/top#index'
+  resources :uploads, only: [:create, :destroy]
 
   namespace :admin do
     get 'top/index'
     resources :users
+    resources :articles
+    resources :inquiries
   end
 
   namespace :public do
@@ -29,7 +32,7 @@ Rails.application.routes.draw do
   devise_for :users, only: [:session, :password, :confirmation], controllers: {
       sessions: 'users/sessions',
       passwords: 'users/passwords',
-      unlocks: 'users/unclocks',
+      unlocks: 'users/unlocks',
       confirmations: 'users/confirmations'
   }
   patch '/users/confirm/:id', to: 'users#confirm_user', as: 'users_confirm'

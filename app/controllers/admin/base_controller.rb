@@ -5,7 +5,9 @@ module Admin
     before_action :clear_flush, only: %i[new edit]
     before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :set_variant
+    before_action :inquiry_num
     protected
+    @inquiry_num = 0
 
     # キャッシュ設定
     def set_cache_headers
@@ -42,6 +44,10 @@ module Admin
       devise_parameter_sanitizer.permit(:sign_in, keys: %i[name email password password_confirmation])
       devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email])
       devise_parameter_sanitizer.permit(:account_update, keys: %i[name email password password_confirmation image])
+    end
+
+    def inquiry_num
+      @inquiry_num = Admin::Inquiry.where(is_supported: false).length
     end
 
     # error_class
@@ -113,5 +119,6 @@ module Admin
       end
       logger.debug("Session Return : #{session[params[:controller]]['return_path']}")
     end
+
   end
 end
