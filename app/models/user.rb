@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
   acts_as_paranoid
 
+  has_many :groups_users
+  has_many :groups, through: :groups_users
+
   def operator_role?
     role == 2
   end
