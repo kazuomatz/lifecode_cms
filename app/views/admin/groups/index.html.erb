@@ -1,7 +1,7 @@
 <%= content_for :breadcrumb do %>
   <% items = [
       {url: '/admin', title: 'ホーム'},
-      {title: 'ユーザー一覧'}
+      {title: 'グループ一覧'}
   ]
   %>
   <%= render partial: 'layouts/breadcrumb',locals:{items:items}%>
@@ -22,7 +22,7 @@
           <div class="card-header">
             <strong><i class="fas fa-users"></i>　グループ一覧</strong>
             <div class="right-button-element">
-              <a class="btn-primary btn" href="<%= new_admin_group_path %>"><i class="fas fa-user-plus"></i> グループ追加</a>
+              <a class="btn-primary btn" href="<%= new_admin_group_path %>"><i class="fas fa-users"></i> グループ追加</a>
             </div>
           </div>
           <div class="card-body">
