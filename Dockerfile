@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:2.7.0
 ENV LANG C.UTF-8
 
 EXPOSE 3000 1234 26162
@@ -6,8 +6,23 @@ EXPOSE 3000 1234 26162
 RUN rm -f /etc/localtime
 RUN ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-RUN apt-get update -qq && apt-get install -y build-essential  nodejs  unzip
+RUN apt-get update -qq && \
+apt-get install -y lsb-release && \
+apt remove -y libmariadb-dev-compat libmariadb-dev && \
+apt-get install -y build-essential  nodejs  unzip imagemagick graphicsmagick-libmagick-dev-compat mecab libmecab-dev mecab-ipadic-utf8
 WORKDIR /
+
+RUN wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-common_8.0.18-1debian10_amd64.deb \
+    https://dev.mysql.com/get/Downloads/MySQL-8.0/libmysqlclient21_8.0.18-1debian10_amd64.deb \
+    https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-community-client-core_8.0.18-1debian10_amd64.deb \
+    https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-community-client_8.0.18-1debian10_amd64.deb \
+    https://dev.mysql.com/get/Downloads/MySQL-8.0/libmysqlclient-dev_8.0.18-1debian10_amd64.deb
+
+RUN dpkg -i mysql-common_8.0.18-1debian10_amd64.deb \
+    libmysqlclient21_8.0.18-1debian10_amd64.deb \
+    mysql-community-client-core_8.0.18-1debian10_amd64.deb \
+    mysql-community-client_8.0.18-1debian10_amd64.deb \
+    libmysqlclient-dev_8.0.18-1debian10_amd64.deb
 
 # install nodejs
 ENV NODE_VERSION 10.15.1
@@ -50,5 +65,6 @@ RUN bundle install
 
 ADD . /app
 RUN mkdir -p tmp/sockets
+RUN mkdir -p /var/lib/mysql
 RUN touch tmp/sockets/puma.sock
 RUN mkdir -p tmp/pids

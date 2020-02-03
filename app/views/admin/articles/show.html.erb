@@ -49,22 +49,15 @@
 
     <div class="regist-buttons-wrapper">
       <div class="card-footer regist-buttons">
-        <%- if @article.site.present? %>
-          <a href="<%= admin_articles_path(id: @article.site.id) %>" class="btn btn-default">
+          <a href="<%= admin_articles_path %>" class="btn btn-default">
             キャンセル
           </a>
-        <%- else params[:admin].present? %>
-          <a href="<%= admin_articles_path(admin: true) %>" class="btn btn-default">
-            キャンセル
-          </a>
-        <%- end  %>
         <a href="<%= edit_admin_article_path(id: @article.id) %>" class="btn btn-primary">
           <i class="fas fa-pen"></i> 編集
         </a>
       </div>
     </div>
   </div>
-</div>
 </div>
 </div>
 <%= content_for :add_js do %>
