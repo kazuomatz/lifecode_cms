@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
-  layout 'application'
+  layout 'application_sign_in'
   # GET /resource/confirmation/new
   # def new
   #   super
@@ -14,7 +14,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
-    @user = User.where(confirmation_token: params[:confirmation_token]).first
+    @user = Admin::User.where(confirmation_token: params[:confirmation_token]).first
     rescue_403 if @user.nil?
   end
 

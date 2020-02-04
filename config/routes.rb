@@ -36,6 +36,6 @@ Rails.application.routes.draw do
       unlocks: 'users/unlocks',
       confirmations: 'users/confirmations'
   }
-  patch '/users/confirm/:id', to: 'users#confirm_user', as: 'users_confirm'
+  patch '/admin/users/confirm/:id', to: 'admin/users#confirm_user', as: 'users_confirm'
 
 end
