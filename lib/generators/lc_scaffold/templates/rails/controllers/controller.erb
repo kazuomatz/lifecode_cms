@@ -1,0 +1,60 @@
+module Admin
+  class <%= @file_name.pluralize.camelize %>Controller < Admin::BaseController
+    layout 'application'
+    before_action  :authenticate_user!
+    before_action  :check_execute_permission
+    before_action  :permit_params, only: %i[create update]
+
+    def index
+      if request.xhr?
+        objects = Admin::<%= @file_name.underscore.camelize %>.search(params).page(params[:page]).per(20)
+        pagination = view_context.paginate(objects, remote: true, window: 1)
+        content = render_to_string(partial: 'list.html', locals: { objects: objects })
+        render json: { pagination: pagination, content: content, page: params[:page] || 1, status: 'OK' }
+      else
+        render
+      end
+    end
+
+    def new
+      flash[:alert] = nil
+      @user = Admin::<%= @file_name.singularize.camelize %>.new
+    end
+
+    def edit
+      @<%= @file_name.singularize.underscore %> = Admin::<%= @file_name.singularize.camelize %>.where(id: params[:id]).first
+      rescue_404 if @<%= @file_name.singularize.underscore  %>.blank?
+    end
+
+    def create
+      @<%= @file_name.singularize.underscore %> = Admin::<%= @file_name.singularize.camelize %>.new(@attr)
+      @<%= @file_name.singularize.underscore %>.save!
+      redirect_to admin_<%= @file_name.pluralize.underscore %>_path
+    end
+
+    def update
+      @<%= @file_name.singularize.underscore %> = Admin::<%= @file_name.singularize.camelize %>.where(id: params[:id]).first
+      if @<%= @file_name.singularize.underscore %>.present?
+        begin
+          if @<%= @file_name.singularize.underscore %>.update(@attr)
+            redirect_to admin_<%= @file_name.singularize.underscore %>_path
+          else
+            flash[:alert] = @<%= @file_name.singularize.underscore %>.errors.message
+            render template: '<%= @file_name.pluralize.underscore %>/edit'
+          end
+        rescue StandardError => e
+          rescue_500(e)
+        end
+      else
+        rescue_404
+      end
+    end
+  end
+
+  private
+
+  def permit_params
+    @attr = params.require('admin_<%= @file_name.singularize.underscore %>').permit(<%= class_eval(@file_name.singularize.camelize).attribute_names.map{ |a| ':' + a }.join(",") %>)
+  end
+
+end

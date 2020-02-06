@@ -1,0 +1,58 @@
+<%= content_for :breadcrumb do %>
+  <% items = [
+      {url: '/', title: 'ホーム'},
+      {url: "#{admin_users_path}", title: 'ユーザー一覧'},
+      {title: 'ユーザー編集'},
+  ]
+  %>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
+<% end %>
+
+<div class="container-fluid base">
+  <div>
+    <%= form_for @user, html: {class: 'form'} do |form| %>
+      <div class="row">
+        <div class="col-sm-12">
+
+          <h1 class="func-title">ユーザー編集</h1>
+
+          <div class="card">
+            <div class="card-header">
+              <strong><i class="fas fa-user-plus"></i>　ユーザー編集</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= render partial: 'form', locals: {form: form, user: @user} %>
+                </div>
+                <div class="col-sm-8">
+                  <div class="alert alert-danger mt-3" id="lock-control">
+                    <%= render partial: 'admin/users/lock', locals: {user: @user} %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="regist-buttons-wrapper">
+        <div class="card-footer regist-buttons">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="far fa-check-circle"></i> <%= @user.new_record? ? '登録' : '更新' %>
+          </button>
+          <a href="<%= admin_users_path %>" class="btn  btn-lg btn-default">
+            キャンセル
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<% content_for :add_js do %>
+<script>
+
+</script>
+<%-end %>

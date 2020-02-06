@@ -1,0 +1,18 @@
+<div class="row">
+  <%% if flash[:alert] %>
+  <div class="col-sm-8">
+    <div class="alert alert-danger"><%%= flash[:alert] %></div>
+  </div>
+  <%% end %>
+
+  <% class_eval(@file_name.singularize.camelize).columns_hash.keys.each do |key| %>
+  <% end %>
+</div>
+
+<%%- content_for :add_js do %>
+  <script>
+      $(function () {
+          new FormManager({ img_noimage: "<%%= asset_path('noimage.jpg') %>" }).init();
+      });
+  </script>
+<%%- end %>
