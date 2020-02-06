@@ -18,7 +18,7 @@ admin:
       normal: 3
 # meta
 meta:
-  title: 'ラリー(仮)'
+  title: 'LifeCode CMS'
   description: ''
   og:
     type:  'website'
@@ -26,5 +26,13 @@ meta:
     image: ''
     site_name: ''
 basic:
-  user: rally
-  password: 9F-VTsfdsfXv
+  user: lifecode
+  password: 7F-xTsFdS12Xv
+
+security:
+  password:
+    min_length: 8
+    regex:  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!-/:-@[-{-~])[!-~]{1,100}$'
+    validate_message: 'パスワードは英大文字、英小文字、数字、記号の４種の文字を含む必要があります'
+
+

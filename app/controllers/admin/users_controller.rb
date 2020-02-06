@@ -93,7 +93,7 @@ module Admin
     private
 
     def permit_params
-      @attr = params.require('user').permit(:name, :name_kana, :email, :password, :password_confirmation, :role)
+      @attr = params.require('admin_user').permit(:name, :name_kana, :email, :password, :password_confirmation, :role)
       @attr[:email] = @attr[:email].downcase if @attr[:email].present?
       if @attr[:password].blank? || params[:edit_password].nil?
         @attr.delete(:password)
