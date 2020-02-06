@@ -1,14 +1,4 @@
-居抜き110番に登録がありました。
-
-■　お問い合わせ項目
-<%- if  @inquiry.inquiry_type.to_i == 1 %>
-居抜き開店に関するお問い合わせ
-<%- else %>
-居抜き閉店に関するお問い合わせ
-<%- end %>
-
-■　ご検討エリア
-<%= @inquiry.area %>
+お問い合わせがありました。
 
 <%- if @inquiry.company_name %>
 ■　会社名
@@ -45,8 +35,5 @@
 https://inkuku110.com/admin/inquiries/<%= @inquiry.id %>/edit
 
 ---------------------------------------------------------
-居抜き110番　FC本部
-株式会社ジーコン・コーポレーション
-〒420-0866　静岡市葵区西草深町8番8号
-電話番号　054-260-7668
-https://inuki110.com/
+Powered By LifeCode CMS
+

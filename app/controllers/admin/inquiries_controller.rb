@@ -4,12 +4,7 @@ module Admin
 
     def index
       if request.xhr?
-        if permitted_shops.present?
-          site_ids = Site.where(system_id: permitted_shops).pluck(:id)
-          objects = Admin::Inquiry.search({site_id: site_ids})
-        else
-          objects = Admin::Inquiry.search()
-        end
+        objects = Admin::Inquiry.search()
         objects = objects.includes(:site).order('created_at desc')
         objects = objects.page(params[:page] || 1).per(20)
         pagination = view_context.paginate(objects, remote: true, window: 1)

@@ -5,13 +5,6 @@
 
 ─ご送信内容の確認─────────────────
 
-[ お問い合わせ項目 ]
-<%- if  @inquiry.inquiry_type.to_i == 1 %>
-居抜き開店に関するお問い合わせ
-<%- else %>
-居抜き閉店に関するお問い合わせ
-<%- end %>
-
 [ お名前 ] <%= @inquiry.name %> 様
 [ メールアドレス ] <%= @inquiry.email %>
 [ 電話番号 ] <%= @inquiry.tel %>
@@ -23,17 +16,7 @@
 ──────────────────────────
 このメールに心当たりの無い場合は、お手数ですが
 下記連絡先までお問い合わせください。
-この度はお問い合わせ重ねてお礼申し上げます。
 ──────────────────────────
-<% if @inquiry.site.nil? %>
-　居抜き110番 FC本部
-　〒420-0866　静岡市葵区西草深町8番8号
-　TEL / 054-260-7668
-<%-else %>
-<% company = @inquiry.site.company  %>
-  居抜き110番 <%= @inquiry.site.name %>
-  <%= company.name %>
-  〒<%= company.zip_code %>　<%= company.prefecture_name %><%= company.city_name %><%= company.address_1 %><%= company.address_2 %>
-  TEL / <%= company.tel %>
-<%- end %>
-──────────────────────────
+
+----
+Powered By LifeCode CMS

@@ -1,10 +1,6 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :lockable, :rememberable, :recoverable, :confirmable
-         #:registerable,
-         #:recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
-
   acts_as_paranoid
 
   has_many :groups_users
@@ -40,11 +36,11 @@ class User < ApplicationRecord
 
   def role_name
     if administrator_role?
-      'システム管理者'
+      Settings.admin.user.role["1"]
     elsif operator_role?
-      'システム運用者'
+      Settings.admin.user.role["2"]
     else
-      '一般ユーザー'
+      Settings.admin.user.role["3"]
     end
   end
 end

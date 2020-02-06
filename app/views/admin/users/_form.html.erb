@@ -51,25 +51,19 @@
     </div>
 
     <% if current_user.grater_than_equal_to_operator_role? %>
-    <div class="form-group">
-      <label for="user_role">権限</label>
-      <div class="col-md-9 col-form-label">
-        <% if current_user.administrator_role? %>
-        <div class="form-check form-check-inline mr-1">
-          <%= form.radio_button :role, '1' %>
-          <label class="form-check-label" for="admin_user_role_1">システム管理者</label>
-        </div>
-        <%end%>
-        <div class="form-check form-check-inline mr-1">
-          <%= form.radio_button :role, '2' %>
-          <label class="form-check-label" for="admin_user_role_2">システム運営者</label>
-        </div>
-        <div class="form-check form-check-inline mr-1">
-          <%= form.radio_button :role, '3' %>
-          <label class="form-check-label" for="admin_user_role_3">一般ユーザー</label>
+      <div class="form-group">
+        <label for="user_role">権限</label>
+        <div class="col-md-9 col-form-label">
+          <% if current_user.administrator_role? %>
+            <% Settings.admin.user.role.keys.each_with_index do | role_key, index |%>
+              <div class="form-check form-check-inline mr-1">
+                <%= form.radio_button :role, Settings.admin.user.role_value[Settings.admin.user.role_value.keys[index]] %>
+                <label class="form-check-label" for="admin_user_role_<%= Settings.admin.user.role_value[Settings.admin.user.role_value.keys[index]] %>"><%= Settings.admin.user.role[role_key] %></label>
+              </div>
+            <% end %>
+          <%end%>
         </div>
       </div>
-    </div>
     <%end%>
   </div>
 
