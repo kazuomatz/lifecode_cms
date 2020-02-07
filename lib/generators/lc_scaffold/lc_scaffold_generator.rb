@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class LcScaffoldGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
@@ -9,5 +10,14 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
   def create_views
     @file_name = file_name
     template 'rails/views/_form.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_form.html.erb")
+    template 'rails/views/_list.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_list.html.erb")
+    template 'rails/views/_search_box.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_search_box.html.erb")
+    template 'rails/views/edit.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "edit.html.erb")
+    template 'rails/views/new.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "new.html.erb")
+    template 'rails/views/index.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "index.html.erb")
+  end
+
+  def add_route
+    route "namespace :admin do\n  resources :#{file_name.pluralize.underscore}\nend\n"
   end
 end

@@ -1,0 +1,17 @@
+form:
+  label:
+    required: 必須
+    edit: 編集
+    update: 更新
+    destroy: 削除
+    create: 登録
+    operate: 操作
+    search: 検索
+    list: 一覧
+    back: 戻る
+    home: ホーム
+    cancel: キャンセル
+    confirm: 確認
+    manage: 管理
+    add: 追加
+    clear: クリア

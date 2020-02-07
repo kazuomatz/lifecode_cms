@@ -132,7 +132,7 @@
       }
 
       $(function () {
-          var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+          var form = new FormManager();
           form.init();
 
           $("input[type=file]").on('change', function (e) {

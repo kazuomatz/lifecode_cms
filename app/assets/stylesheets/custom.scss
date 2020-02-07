@@ -287,11 +287,11 @@ span.danger {
   }
 
   hr {
-    border-width: 0px;
-    height: 1px;
-    background-color: #e4e5e6;
-    margin: 15px 0;
+    margin: 16px 20px 30px 20px;
+    border: 1px $color-primary solid;
+    width: 100%;
   }
+
   .form-group {
     .form-check-label {
       border-bottom: none;
@@ -301,9 +301,11 @@ span.danger {
     }
   }
   .search-box-buttons {
+    text-align: center;
     button {
-      float: right;
+      //float: left;
     }
+
   }
 
 
@@ -347,31 +349,6 @@ form {
 
   }
 }
-.table.staff-table {
-
-  td {
-    vertical-align: middle;
-    img.image {
-      width: 60px;
-      height: 60px;
-      border-radius: 30px;
-    }
-
-    svg[data-icon=bars] {
-      color: #aaa;
-      font-weight: bold;
-      font-size: 20px;
-      margin-left: 20px;
-      cursor: pointer;
-    }
-  }
-}
-.edit_admin_staff, .new_admin_staff {
-  img.avatar {
-    width: auto;
-    height: 160px;
-  }
-}
 
 #tag-app {
   .form-control {
@@ -398,6 +375,42 @@ form {
         padding: 5px 10px;
       }
 
+    }
+  }
+}
+
+.container-fluid {
+  .table.list-table {
+    thead, tbody {
+      .operator-column {
+        text-align: right;
+        .btn {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  .container-fileinput {
+    .image-preview {
+      img {
+        width: 100%;
+      }
+    }
+    &.col-sm-1, &.col-sm-2, &.col-sm-3, &.col-sm-4 {
+      .image-preview {
+        min-height: 200px;
+      }
+    }
+
+    &.col-sm-5, &.col-sm-6, &.col-sm-7, &.col-sm-8 {
+      .image-preview {
+        min-height: 300px;
+      }
+    }
+    &.col-sm-9, &col-sm-10, &.col-sm-11, &.col-sm-12 {
+      .image-preview {
+        min-height: 400px;
+      }
     }
   }
 }

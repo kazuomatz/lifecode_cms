@@ -117,8 +117,7 @@ module Admin
         session[params[:controller]]['return_path'] = path
         session[params[:controller]]['return_path'] += '?' + new_params if new_params.present?
       end
-      logger.debug("Session Return : #{session[params[:controller]]['return_path']}")
+      logger.debug("Session Return : #{params[:controller]} : #{session[params[:controller]]['return_path']}")
     end
-
   end
 end

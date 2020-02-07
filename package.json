@@ -1,5 +1,5 @@
 {
-  "name": "card_rally",
+  "name": "lifecode_cms",
   "private": true,
   "dependencies": {
     "@coreui/coreui": "2.0.3",

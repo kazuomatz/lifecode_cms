@@ -5,7 +5,7 @@ var FormManager;
 		this.settings = $.extend({
 			el: 'form',
 			create: false,
-            img_noimage: '',
+            img_noimage: '/images/noimage.jpg',
 			icheck_options : {
 				checkboxClass: 'icheckbox',
 				radioClass: 'iradio'

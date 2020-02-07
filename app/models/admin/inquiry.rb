@@ -1,6 +1,5 @@
 module Admin
   class Inquiry < Inquiry
-
     class << self
       def search(params={})
         objects = self.all
