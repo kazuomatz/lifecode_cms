@@ -9,11 +9,11 @@ module Admin
         if params[:name].present?
           objects = objects.where(name: params[:name])
         end
-        if params[:prefecture_id].present?
-          objects = objects.where(prefecture_id: params[:prefecture_id])
+        if params[:prefecture_code].present?
+          objects = objects.where(prefecture_code: params[:prefecture_code])
         end
-        if params[:city_id].present?
-          objects = objects.where(city_id: params[:city_id])
+        if params[:city_code].present?
+          objects = objects.where(city_code: params[:city_code])
         end
         objects
       end

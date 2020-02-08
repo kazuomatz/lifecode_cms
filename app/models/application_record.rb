@@ -5,7 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
     def initial_form_attributes
       ret = {}
       ret[:label] = self.name
-      ret[:icon] = 'fa-info-circle'
+      ret[:icon] = 'fas fa-info-circle'
       columns = []
       column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
       column_names.each do| column_name |
@@ -29,6 +29,16 @@ class ApplicationRecord < ActiveRecord::Base
           validate[:required] = true
         else
           validate[:required] = false
+        end
+
+        if column_name == 'prefecture_code'
+          column[:default_prefecture_code] = 22
+          column[:city_column] = 'city_code'
+        end
+
+        if column_name == 'city_code'
+          column[:default_city_code] = 221015
+          column[:prefecture_column] = 'prefecture_code'
         end
 
         validate[:required_message] = ''
@@ -72,7 +82,6 @@ class ApplicationRecord < ActiveRecord::Base
          columns << column
       end
 
-
       ret[:columns] = columns
       ret[:search_columns] = []
       ret[:list_columns] = [:id]
@@ -83,11 +92,11 @@ class ApplicationRecord < ActiveRecord::Base
         ret[:search_columns] << :title
         ret[:list_columns] << :title
       end
-      if column_names.index('prefecture_id')
-        ret[:search_columns] << :prefecture_id
+      if column_names.index('prefecture_code')
+        ret[:search_columns] << :prefecture_code
       end
-      if column_names.index('city_id')
-        ret[:search_columns] << :city_id
+      if column_names.index('city_code')
+        ret[:search_columns] << :city_code
       end
       ret
     end

@@ -15,7 +15,13 @@ var SearchManager = function constructor(container,pagination,url) {
 
 SearchManager.prototype.getList = function(page,searchParams) {
     var time = 0;
-    var params = searchParams;
+    var params = {};
+
+    Object.keys(searchParams).forEach(function(key,index) {
+       if (searchParams[key]) {
+           params[key] = searchParams[key];
+       }
+    });
     params.page = page;
 
     var t = this;
