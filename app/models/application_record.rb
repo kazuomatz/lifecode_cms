@@ -30,13 +30,18 @@ class ApplicationRecord < ActiveRecord::Base
         else
           validate[:required] = false
         end
-        validate[:required_message] = ''
 
-        column[:validate] = validate
+        validate[:required_message] = ''
 
         if column[:type] == :datetime || column[:type] == :timestamp
           column[:show_time] = false
           column[:column] = 3
+          validate = {
+              required: '',
+              required_message: '',
+              datetime_greater: '',
+              datetime_greater_message: ''
+          }
         end
 
         if column[:type] == :text
@@ -45,6 +50,7 @@ class ApplicationRecord < ActiveRecord::Base
           column[:icon] = ''
         end
 
+        column[:validate] = validate
         columns << column
       end
 
@@ -59,8 +65,13 @@ class ApplicationRecord < ActiveRecord::Base
         column[:type] = :attachment
         column[:content_type] = 'image/jpeg,image/png'
         column[:column] = 4
-        columns << column
+        column[:validate] = {
+            required: '',
+            required_message: ''
+        }
+         columns << column
       end
+
 
       ret[:columns] = columns
       ret[:search_columns] = []
@@ -129,7 +140,20 @@ class ApplicationRecord < ActiveRecord::Base
       data = self.validate_data column_name
       p_data = {}
       data.keys.each do |key|
-        p_data["parsley_#{key}"] = data[key]
+        if key == :datetime_greater
+          s = data[key].split('<')
+          if s.length == 2
+            model = "#admin_#{self.name.underscore}"
+            p_data[:start_date] = "#{model}_#{s[0].strip}"
+            p_data[:end_date] = "#{model}_#{s[1].strip}"
+            p_data[:start_time] = "#{model}_#{s[0].strip}_time"
+            p_data[:end_time] = "#{model}_#{s[1].strip}_time"
+            p_data[:parsley_datetime_greater] = "#{model}_#{s[0].strip}"
+            p_data[:parsley_trigger] = 'change'
+          end
+        else
+          p_data["parsley_#{key}"] = data[key]
+        end
       end
       p_data
     end
@@ -165,6 +189,16 @@ class ApplicationRecord < ActiveRecord::Base
               data[:minlength_message] = validate[:min_length_message]
             end
           end
+
+          if validate[:datetime_greater].present?
+            data[:datetime_greater] = validate[:datetime_greater]
+            if validate[:datetime_greater_message].present?
+              data[:datetime_greater_message] = validate[:datetime_greater_message]
+            else
+              data[:datetime_greater_message] = "開始日時と終了日時が正しくありません。"
+            end
+          end
+
           return data
         end
       end

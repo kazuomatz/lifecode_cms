@@ -810,3 +810,55 @@ var FormManager;
 
 	FormManager = MyForm;
 })();
+
+// parsley独自バリデーション設定
+window.Parsley.addValidator('greaterOrEqualto', {
+    validate: function (value, requirement) {
+        if (value === '' || $(requirement).val() === '') {
+            return true;
+        }
+        return value >= $(requirement).val();
+    }
+});
+
+window.Parsley.addValidator('datetimeGreater', {
+    validate: function (value, requirement, parsleyInstance) {
+        var $el_start_date = $(parsleyInstance.$element.data('start-date'));
+        var $el_end_date = $(parsleyInstance.$element.data('end-date'));
+        var $el_start_time = $(parsleyInstance.$element.data('start-time'));
+        var $el_end_time = $(parsleyInstance.$element.data('end-time'));
+
+        $el_start_date.parsley().reset();
+        $el_end_date.parsley().reset();
+        if ($el_start_time.length > 0) {
+            $el_start_time.parsley().reset();
+        }
+        if ($el_end_time.length > 0) {
+            $el_end_time.parsley().reset();
+        }
+
+        var startDate = $el_start_date.val();
+        var endDate = $el_end_date.val();
+
+        var startTime = "00:00";
+        if ($el_start_time.length > 0) {
+            startTime = $el_start_time.val();
+        }
+
+        var endTime = "00:00";
+        if ($el_end_time.length > 0) {
+            endTime = $el_end_time.val();
+        }
+
+        if(startDate === '' || endDate === '') {
+            return true;
+        }
+        else if (startTime === '' || endTime === '') {
+            return true;
+        }
+
+        var s1 = Date.parse(startDate + ' ' + startTime);
+        var s2 = Date.parse(endDate + ' ' + endTime);
+        return s1 <= s2;
+    }
+});
