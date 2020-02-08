@@ -36,6 +36,7 @@ class ApplicationRecord < ActiveRecord::Base
 
         if column[:type] == :datetime || column[:type] == :timestamp
           column[:show_time] = false
+          column[:column] = 3
         end
 
         if column[:type] == :text
