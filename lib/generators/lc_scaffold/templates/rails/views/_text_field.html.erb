@@ -7,7 +7,7 @@
           <span class="input-group-text"><i class="<$$= column[:icon] $$>"></i></span>
         </div>
       <$$- end -$$>
-      <$$= form.text_field <%= ':' + column[:name] %>, class: 'form-control', data: raw(validation_data.to_json) $$>
+      <$$= form.text_field <%= ':' + column[:name] %>, class: 'form-control', data: <%= model.name %>.parsley_data(column[:name]) $$>
     </div>
   </div>
 </div>

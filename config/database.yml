@@ -17,9 +17,9 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV['DB_USER'] || 'root' %>
   password: <%= ENV['DB_PASSWORD'] || 'password' %>
-  host: <%= ENV['DB_HOST'] || 'localhost' %>
-  #host: 127.0.0.1
-  #port: 3308
+  #host: <%= ENV['DB_HOST'] || 'localhost' %>
+  host: 127.0.0.1
+  port: 3308
 development:
   <<: *default
   database: lifecode_development

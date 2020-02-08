@@ -7,7 +7,7 @@
             <$$= form.text_area <%= ':' + column[:name] %>, rows: column[:rows], maxlength: validation_data[:max_length].to_i, class: 'form-control _input-count', data: raw(validation_data.to_json) $$>
             <p class="_counter _hide-confirm" style="clear: both"></p>
           <$$- else $$>
-            <$$= form.text_area <%= ':' + column[:name] %>, rows: column[:rows], class: 'form-control', data: raw(validation_data.to_json) $$>
+            <$$= form.text_area <%= ':' + column[:name] %>, rows: column[:rows], class: 'form-control', data: <%= model.name %>.parsley_data(column[:name]) $$>
           <$$- end -$$>
         </div>
       </div>
