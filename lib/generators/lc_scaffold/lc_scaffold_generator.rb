@@ -9,29 +9,31 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
 
   def create_views
     @file_name = file_name
-    template 'rails/views/_form.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_form.html.erb")
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_form.html.erb"),'<$$','<%')
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_form.html.erb"),'$$>','%>')
 
-    template 'rails/views/_list.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_list.html.erb")
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_list.html.erb"),'<$$','<%')
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_list.html.erb"),'$$>','%>')
+    view_path = "app/views/admin/#{file_name.pluralize}"
+    file = File.join(Rails.root,view_path, "_form.html.erb")
+    template 'rails/views/_form.html.erb', file
+    replace_erb_tag file
 
-    template 'rails/views/_search_box.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_search_box.html.erb")
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_search_box.html.erb"),'<$$','<%')
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "_search_box.html.erb"),'$$>','%>')
+    file = File.join(Rails.root,view_path, "_list.html.erb")
+    template 'rails/views/_list.html.erb', file
+    replace_erb_tag file
 
-    template 'rails/views/edit.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "edit.html.erb")
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "edit.html.erb"),'<$$','<%')
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "edit.html.erb"),'$$>','%>')
+    file = File.join(Rails.root,view_path, "_search_box.html.erb")
+    template 'rails/views/_search_box.html.erb', file
+    replace_erb_tag file
 
-    template 'rails/views/new.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "new.html.erb")
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "new.html.erb"),'<$$','<%')
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "new.html.erb"),'$$>','%>')
+    file = File.join(Rails.root,view_path, "edit.html.erb")
+    template 'rails/views/edit.html.erb', file
+    replace_erb_tag file
 
-    template 'rails/views/index.html.erb', File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "index.html.erb")
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "index.html.erb"),'<$$','<%')
-    gsub_file(File.join(Rails.root,'app/views/admin',"#{file_name.pluralize}", "index.html.erb"),'$$>','%>')
+    file = File.join(Rails.root,view_path, "new.html.erb")
+    template 'rails/views/new.html.erb', file
+    replace_erb_tag file
+
+    file = File.join(Rails.root,view_path, "index.html.erb")
+    template 'rails/views/index.html.erb', file
+    replace_erb_tag file
   end
 
   def add_route
@@ -58,5 +60,10 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
 
   def source_root
     "/#{File.expand_path('templates', __dir__)}"
+  end
+
+  def replace_erb_tag(file)
+    gsub_file(file,'<$$','<%')
+    gsub_file(file,'$$>','%>')
   end
 end

@@ -92,6 +92,16 @@ class ApplicationRecord < ActiveRecord::Base
       self.load_config[:columns]
     end
 
+    def permit_attributes
+      attr = self.form_attributes.map { |a| ':' + a[:name] }
+      time_attr = self.form_attributes.select { |column|
+        column[:type] == :datetime || column[:type] == :timestamp
+        }.map { |date_column |
+          ":#{date_column[:name]}_time"
+      }
+      (attr + time_attr).join(', ')
+    end
+
     def required?(column_name)
       validate = self.validate_data column_name
       validate[:parsley_required] == true ? true : false

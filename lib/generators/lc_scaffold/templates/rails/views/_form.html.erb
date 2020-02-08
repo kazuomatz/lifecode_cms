@@ -22,6 +22,8 @@
   <%- end %>
   <%- elsif column[:type] == :text -%>
   <%= ApplicationController::render partial: 'rails/views/text_area', locals:{column: column, model: model} -%>
+  <%- elsif column[:type] == :datetime || column[:type] == :timestamp  -%>
+  <%= ApplicationController::render partial: 'rails/views/datetime', locals:{column: column, model: model, var_model: var_model} -%>
   <%- end -%>
 <%- end -%>
 </div>

@@ -18,6 +18,8 @@
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
 //= require bootstrap-datepicker/dist/locales/bootstrap-datepicker.ja.min
 //= require bootstrap-datetimepicker
+//= require bootstrap-datetimepicker
+//= require bootstrap-timepicker/js/bootstrap-timepicker.js
 //= require icheck/icheck
 //= require parsley
 //= require parsley.i18n.ja
