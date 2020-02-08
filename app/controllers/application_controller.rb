@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #before_action :basic
   @inquiry_num = 0
+  prepend_view_path Rails.root.join('lib','generators','lc_scaffold','templates')
 
   protected
 

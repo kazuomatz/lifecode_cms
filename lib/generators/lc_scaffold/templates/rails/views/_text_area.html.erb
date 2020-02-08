@@ -1,0 +1,15 @@
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-<$$= column[:column] $$>">
+        <div class="form-group">
+          <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+          <$$ if validation_data[:max_length].to_i > 0 -$$>
+            <$$= form.text_area <%= ':' + column[:name] %>, rows: column[:rows], maxlength: validation_data[:max_length].to_i, class: 'form-control _input-count', data: raw(validation_data.to_json) $$>
+            <p class="_counter _hide-confirm" style="clear: both"></p>
+          <$$- else $$>
+            <$$= form.text_area <%= ':' + column[:name] %>, rows: column[:rows], class: 'form-control', data: raw(validation_data.to_json) $$>
+          <$$- end -$$>
+        </div>
+      </div>
+    </div>
+  </div>

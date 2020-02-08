@@ -5,6 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
     def initial_form_attributes
       ret = {}
       ret[:label] = self.name
+      ret[:icon] = 'fa-info-circle'
       columns = []
       column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
       column_names.each do| column_name |
@@ -32,9 +33,17 @@ class ApplicationRecord < ActiveRecord::Base
         validate[:required_message] = ''
 
         column[:validate] = validate
+
         if column[:type] == :datetime || column[:type] == :timestamp
           column[:show_time] = false
         end
+
+        if column[:type] == :text
+          column[:column] = 6
+          column[:rows] = 5
+          column[:icon] = ''
+        end
+
         columns << column
       end
 
@@ -48,6 +57,7 @@ class ApplicationRecord < ActiveRecord::Base
         column[:label] = attachment.to_s
         column[:type] = :attachment
         column[:content_type] = 'image/jpeg,image/png'
+        column[:column] = 4
         columns << column
       end
 
@@ -72,6 +82,10 @@ class ApplicationRecord < ActiveRecord::Base
 
     def label
       self.load_config[:label]
+    end
+
+    def icon
+      self.load_config[:icon]
     end
 
     def form_attributes
@@ -100,42 +114,50 @@ class ApplicationRecord < ActiveRecord::Base
       nil
     end
 
+    def parsley_data(column_name)
+      data = self.validate_data column_name
+      p_data = {}
+      data.keys.each do |key|
+        p_data["parsley_#{key}"] = data[key]
+      end
+      p_data
+    end
+
     def validate_data(column_name)
       self.load_config[:columns].each do |column|
         if column[:name].to_s == column_name.to_s
-          validate = column[:validate]
+          validate = column[:validate] || {}
           data = {}
           if validate[:required] == true
-            data[:parsley_required] = true
+            data[:required] = true
             if validate[:required_message].present?
-              data[:parsley_required_message] = validate[:required_message]
+              data[:required_message] = validate[:required_message]
             end
           end
-          if validate[:max_length].to_i > 0
-            data[:parsley_max_length] = validate[:max_length].to_i
-            if validate[:max_length_message].present?
-              data[:max_length_message] = validate[:max_length_message]
+          if validate[:pattern].present?
+            data[:pattern] = validate[:pattern]
+            if validate[:pattern_message].present?
+              data[:pattern_message] = validate[:max_length_message]
             end
           end
 
           if validate[:max_length].to_i > 0
-            data[:parsley_maxlength] = validate[:max_length].to_i
+            data[:maxlength] = validate[:max_length].to_i
             if validate[:max_length_message].present?
-              data[:parsley_maxlength_message] = validate[:max_length_message]
+              data[:maxlength_message] = validate[:max_length_message]
             end
           end
 
           if validate[:min_length].to_i > 0
-            data[:parsley_minlength] = validate[:min_length].to_i
+            data[:minlength] = validate[:min_length].to_i
             if validate[:min_length_message].present?
-              data[:parsley_minlength_message] = validate[:min_length_message]
+              data[:minlength_message] = validate[:min_length_message]
             end
           end
           return data
         end
-        return {}
       end
-
+      return {}
     end
 
     def load_config

@@ -15,3 +15,4 @@ form:
     manage: 管理
     add: 追加
     clear: クリア
+    select_file: ファイル選択
