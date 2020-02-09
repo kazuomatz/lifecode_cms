@@ -862,3 +862,15 @@ window.Parsley.addValidator('datetimeGreater', {
         return s1 <= s2;
     }
 });
+
+function setPrefectureNames() {
+    $('._el-prefecture').each(function() {
+        var name = $("#" + this.id + " option:selected").text();
+        $('#' + this.id.replace("_prefecture_code", "_prefecture_name")).val(name);
+    });
+    $('._el-city').each(function() {
+        var name = $("#" + this.id + " option:selected").text();
+        $('#' + this.id.replace("_city_code", "_city_name")).val(name);
+    });
+    return true;
+}

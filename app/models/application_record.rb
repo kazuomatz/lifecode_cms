@@ -33,11 +33,11 @@ class ApplicationRecord < ActiveRecord::Base
 
         if column_name == 'prefecture_code'
           column[:default_prefecture_code] = 22
+          column[:default_city_code] = 221015
           column[:city_column] = 'city_code'
         end
 
         if column_name == 'city_code'
-          column[:default_city_code] = 221015
           column[:prefecture_column] = 'prefecture_code'
         end
 
@@ -111,6 +111,12 @@ class ApplicationRecord < ActiveRecord::Base
 
     def form_attributes
       self.load_config[:columns]
+    end
+
+    def prefecture_attributes
+      self.form_attributes.select { |column|
+        column[:default_prefecture_code].present?
+      }
     end
 
     def permit_attributes
@@ -215,7 +221,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def load_config
-      file = File.join(Rails.root,'config','form_attributes',"#{self.name.underscore}.yml")
+      file = File.join(Rails.root,'config','form_attributes',"#{self.name.underscore.gsub('admin/','')}.yml")
       if File.exist? file
         YAML.load_file( file )
       else

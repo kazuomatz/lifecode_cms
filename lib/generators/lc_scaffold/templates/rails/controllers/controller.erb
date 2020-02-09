@@ -7,6 +7,7 @@ module Admin
     before_action  :check_execute_permission
     before_action  :permit_params, only: %i[create update]
     before_action  :set_referer, only: [:edit, :new]
+    before_action  :set_default_params, only: [:edit, :new, :update, :destroy]
 
     def index
       if request.xhr?
@@ -21,12 +22,10 @@ module Admin
 
     def new
       flash[:alert] = nil
-      @<%= var_model %> = Admin::<%= model_name %>.new
     end
 
     def edit
-      @<%= var_model %> = Admin::<%= model_name %>.where(id: params[:id]).first
-      rescue_404 if @<%= var_model %>.blank?
+
     end
 
     def create
@@ -36,25 +35,19 @@ module Admin
     end
 
     def update
-      @<%= var_model %> = Admin::<%= model_name %>.where(id: params[:id]).first
-      if @<%= var_model %>.present?
-        begin
-          if @<%= var_model %>.update(@attr)
-            redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
-          else
-            flash[:alert] = @<%= var_model %>.errors.message
-            render template: '<%= var_model %>/edit'
-          end
-        rescue StandardError => e
-          rescue_500(e)
+      begin
+        if @<%= var_model %>.update(@attr)
+          redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+        else
+          flash[:alert] = @<%= var_model %>.errors.message
+          render template: '<%= var_model %>/edit'
         end
-      else
-        rescue_404
+      rescue StandardError => e
+          rescue_500(e)
       end
     end
 
     def destroy
-      @<%= var_model %> = Admin::<%= model_name %>.find params[:id]
       @<%= var_model %>.destroy
       render json: { status:200 }
     end
@@ -69,6 +62,36 @@ module Admin
         time = params['admin_<%= var_model %>'][date_column[:name] + '_time'] || '00:00'
         @attr[date_column[:name]] = "#{@attr[date_column[:name]]} #{time}"
         @attr.delete(date_column[:name] + '_time')
+      end
+    end
+
+    def set_default_params
+      if params[:action] == 'new'
+        @<%= var_model %> = Admin::<%= model_name %>.new
+      else
+        @<%= var_model %> = Admin::<%= model_name %>.where(id: params[:id]).first
+        if @<%= var_model %>.nil?
+          rescue_404
+          return
+        end
+      end
+      @city_data = {}
+      Admin::<%= model_name %>.prefecture_attributes.each do |column|
+        if column[:city_column].present?
+          if @<%= var_model %>.new_record?
+            @<%= var_model %>[column[:name]] = column[:default_prefecture_code] || 1
+            prefecture = Prefecture.where(code: @<%= var_model %>[column[:name]]).first
+            if column[:default_city_code].blank?
+              city = City.where(prefecture_code: prefecture.code).first
+            else
+              city = City.where(code: column[:default_city_code]).first
+            end
+            @<%= var_model %>[column[:city_column]] = city.code
+            @<%= var_model %>[column[:name].gsub('_code','_name')] = prefecture.name
+            @<%= var_model %>[column[:city_column].gsub('_code','_name')] = city.name
+          end
+          @city_data[column[:city_column]] = City.where(prefecture_code: @<%= var_model %>[column[:name]]).map {|c| [c.name, c.code, {'data-name' => c.name}]}
+        end
       end
     end
   end
