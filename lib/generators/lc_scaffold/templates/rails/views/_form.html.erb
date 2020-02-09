@@ -22,6 +22,8 @@
   <%= ApplicationController::render partial: 'rails/views/city', locals:{column: column, model: model,var_model: var_model} -%>
   <%- elsif column[:name].index('city_name').present? -%>
   <$$= form.hidden_field :<%= column[:name]%> $$>
+  <%- elsif column[:options].present? && column[:options].length  > 0 -%>
+  <%= ApplicationController::render partial: 'rails/views/radio', locals:{ column: column, model: model,var_model: var_model } -%>
   <%- elsif column[:type] == :integer || column[:type] == :string -%>
   <%= ApplicationController::render partial: 'rails/views/text_field', locals:{column: column, model: model} -%>
   <%- elsif column[:type] == :attachment -%>
@@ -40,10 +42,6 @@
 <script>
   $(function () {
     new FormManager().init();
-    $('form').on('submit',function(){
-        setPrefectureNames();
-        return true;
-      });
   });
 </script>
 <%%- end %>

@@ -52,12 +52,15 @@ class ApplicationRecord < ActiveRecord::Base
               datetime_greater: '',
               datetime_greater_message: ''
           }
-        end
-
-        if column[:type] == :text
+        elsif column[:type] == :text
           column[:column] = 6
           column[:rows] = 5
           column[:icon] = ''
+
+        elsif column[:type] == :boolean
+          column[:column] = 12
+          column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
+          column[:default_option] = false
         end
 
         column[:validate] = validate

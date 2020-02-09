@@ -1,7 +1,7 @@
 var FormManager;
 
 (function(){
-	function MyForm(options) {
+	function LCForm(options) {
 		this.settings = $.extend({
 			el: 'form',
 			create: false,
@@ -103,7 +103,7 @@ var FormManager;
 	}
 
 	// 初期化
-	MyForm.prototype.init = function (el) {
+	LCForm.prototype.init = function (el) {
 		var self = this;
 
 		var settings = self.settings;
@@ -123,6 +123,11 @@ var FormManager;
 		} else {
 			$el.parsley(settings.parsley_options);
 		}
+
+		$el.on('submit',function () {
+            setPrefectureNames();
+            return true;
+		});
 
 		// カウンター初期化
 		$el.find('._counter').each(function () {
@@ -453,12 +458,12 @@ var FormManager;
         });
     };
 
-	MyForm.prototype.getParsleyOptions = function () {
+	LCForm.prototype.getParsleyOptions = function () {
 		return this.settings.parsley_options;
 	};
 
 	// IEチェック
-	MyForm.prototype.isIE = function (version) {
+	LCForm.prototype.isIE = function (version) {
 		if (navigator.appName !== 'Microsoft Internet Explorer') {
 			return false;
 		}
@@ -477,7 +482,7 @@ var FormManager;
 	};
 
 	// fileInputクリア
-	MyForm.prototype.clearFileInput = function ($fileinput) {
+	LCForm.prototype.clearFileInput = function ($fileinput) {
 		if (this.isIE(9) || this.isIE(10)) {
 			var $srcFrm = $fileinput.closest('form');
 			var $tmpFrm = $(document.createElement('form'));
@@ -499,7 +504,7 @@ var FormManager;
 	};
 
 
-    MyForm.prototype.setSubGenres = function ($el_sub_genre, subGenres, selected) {
+    LCForm.prototype.setSubGenres = function ($el_sub_genre, subGenres, selected) {
 
         $el_sub_genre.html("");
         if ($el_sub_genre.attr('placeholder')) {
@@ -522,7 +527,7 @@ var FormManager;
     };
 
 	// 市区町村設定
-	MyForm.prototype.setCities = function ($el_city, cities, selected) {
+	LCForm.prototype.setCities = function ($el_city, cities, selected) {
 
         $el_city.html("");
         if ($el_city.attr('placeholder')) {
@@ -549,14 +554,14 @@ var FormManager;
 	};
 
 	// 指定部分の削除
-	MyForm.prototype.itemDelete = function () {
+	LCForm.prototype.itemDelete = function () {
 		$('[data-delete=true]').each(function () {
 			$(this).remove();
 		});
 	};
 
 	// 入力項目ラベル変換
-	MyForm.prototype.itemToLabel = function (el) {
+	LCForm.prototype.itemToLabel = function (el) {
 		var self = this;
 		var $el = el === undefined ? $(this.settings.el) : $(el);
 
@@ -656,7 +661,7 @@ var FormManager;
 	};
 
 	// 状態切替
-	MyForm.prototype.changeStatus = function() {
+	LCForm.prototype.changeStatus = function() {
 		this.confirm = !this.confirm;
 
 		if (!this.confirm) {
@@ -808,7 +813,7 @@ var FormManager;
 		}
 	};
 
-	FormManager = MyForm;
+	FormManager = LCForm;
 })();
 
 // parsley独自バリデーション設定
