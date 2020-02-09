@@ -16,3 +16,4 @@ form:
     add: 追加
     clear: クリア
     select_file: ファイル選択
+    get_address: 住所取得

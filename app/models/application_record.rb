@@ -22,7 +22,9 @@ class ApplicationRecord < ActiveRecord::Base
             min_length: -1,
             min_length_message: '',
             pattern: '',
-            pattern_message: ''
+            pattern_message: '',
+            length: '',
+            length_message: ''
         }
 
         if column_name == 'name' || column_name == 'title'
@@ -31,14 +33,27 @@ class ApplicationRecord < ActiveRecord::Base
           validate[:required] = false
         end
 
-        if column_name == 'prefecture_code'
-          column[:default_prefecture_code] = 22
-          column[:default_city_code] = 221015
-          column[:city_column] = 'city_code'
+        if column_name.index("zip_code").present?
+          validate[:length] = '[7,7]'
+          validate[:length_message] = '郵便番号は7桁で入力して下さい。'
+          validate[:pattern] = '/^[0-9]+$/'
+          validate[:pattern_message] = '郵便番号は半角数字のみ有効です。'
+          z = column_name.split('zip_code')
+          column[:prefecture_code] = "#{z[0].nil? ? '' : z[0]}prefecture_code"
+          column[:city_code] = "#{z[0].nil? ? '' : z[0]}city_code"
+          column[:address1] = "#{z[0].nil? ? '' : z[0]}address1"
         end
 
-        if column_name == 'city_code'
-          column[:prefecture_column] = 'prefecture_code'
+        if column_name.index('prefecture_code').present?
+          column[:default_prefecture_code] = 22
+          column[:default_city_code] = 221015
+          p = column_name.split('prefecture_code')
+          column[:city_column] = "#{p[0].nil? ? '' : p[0]}city_code"
+        end
+
+        if column_name.index('city_code').present?
+          c = column_name.split('city_code')
+          column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
         end
 
         validate[:required_message] = ''
@@ -208,6 +223,13 @@ class ApplicationRecord < ActiveRecord::Base
             end
           end
 
+          if validate[:length].present?
+            data[:length] = validate[:length]
+            if validate[:length_message].present?
+              data[:length_message] = validate[:length_message]
+            end
+          end
+
           if validate[:datetime_greater].present?
             data[:datetime_greater] = validate[:datetime_greater]
             if validate[:datetime_greater_message].present?
@@ -216,6 +238,7 @@ class ApplicationRecord < ActiveRecord::Base
               data[:datetime_greater_message] = "開始日時と終了日時が正しくありません。"
             end
           end
+
 
           return data
         end
