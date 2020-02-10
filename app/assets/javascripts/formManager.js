@@ -448,6 +448,11 @@ var FormManager;
             }
         });
 
+        $el.find('.color-picker').colorpicker();
+        $el.find('.color-picker').on('colorpickerChange', function(event) {
+            $(this).parent().find('svg').css('color', event.color.toString());
+        });
+
         var buttons = $('.regist-buttons');
         buttons.hide();
         setTimeout(function () {
