@@ -326,6 +326,19 @@ var FormManager;
 			$(this).datepicker(options).on('hide', function () {
 				$(this).parsley().validate();
 			});
+
+			$(this).on('change',function () {
+			    var date = new Date($(this).val());
+                var day_of_week = date.getDay();
+                var className = 'week week_' + day_of_week;
+                if (isHoliday(date)) {
+                    className += ' week_holiday'
+                }
+                $(this).parent().find('svg').removeClass(function(index, className){
+                    return (className.match(/\bweek\S+/g) || []).join(' ');
+                });
+                $(this).parent().find('svg').addClass(className);
+            })
 		});
 
 		// bootstrap-timepicker初期化

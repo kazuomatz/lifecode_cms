@@ -29,6 +29,19 @@ module ApplicationHelper
     raw "#{date.strftime(format)} (<span class='week week_#{date.wday} #{holiday ? 'week_holiday' : ''}'>#{weeks[date.wday]}</span>)"
   end
 
+  def calendar_icon(date)
+    class_name =''
+    begin
+      if date.present?
+        holiday = date.to_date.national_holiday?
+        class_name = "week week_#{date.wday} #{holiday ? 'week_holiday' : ''}"
+      end
+    rescue
+      class_name = ''
+    end
+    raw  "<i class=\"far fa-calendar-alt #{class_name}\"></i>"
+  end
+
   def sanitize_content(html, shorten = false)
     return '' if html.nil?
 

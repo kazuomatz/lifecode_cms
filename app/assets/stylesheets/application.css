@@ -20,8 +20,6 @@
  *= require wowjs/css/site
  *= require parsley
  *= require wowjs/css/libs/animate
- *= require @coreui/coreui/dist/css/coreui.min
- *= require @coreui/icons/scss/coreui-icons
  *= require flag-icon-css/sass/flag-icon
  *= require simple-line-icons/scss/simple-line-icons
  *= require perfect-scrollbar/css/perfect-scrollbar

@@ -46,8 +46,8 @@
 //= require bootstrap-colorpicker/dist/js/bootstrap-colorpicker
 //= require sortablejs/Sortable
 //= require summernote/dist/summernote-bs4
-//= require activestorage
 //= require summernote/dist/lang/summernote-ja-JP
+//= require activestorage
 //= require @johmun/vue-tags-input/dist/vue-tags-input
 
 

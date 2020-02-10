@@ -37,7 +37,7 @@
     <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+        <span class="input-group-text"><$$= calendar_icon <%= var_model %>.<%= column[:name] %> $$></span>
       </div>
       <$$= form.text_field  <%= ':' + column[:name] %>,
       class: 'form-control _input-date',
