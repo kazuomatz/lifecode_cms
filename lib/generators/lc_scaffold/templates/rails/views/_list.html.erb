@@ -24,7 +24,7 @@
     <$$ end -$$>
     <td class="operator-column" width="300">
       <a class="btn-primary btn edit-btn" href="<%%= edit_admin_<%= var_model %>_path(<%= var_model %>,search_params)%>"><i class="far fa-edit"></i> <$$= Settings.form.label.edit -$$></a>
-      <button type="button" class="btn-danger btn delete-btn" data-id="<%%= <%= var_model %>.id %>" data-name="<%%= <%= var_model %>.name %>" data-page="<%%= params[:page] || 1  %>"><i class="fas fa-trash"></i>  <$$= Settings.form.label.destroy -$$></button>
+      <button type="button" class="btn-danger btn delete-btn" data-id="<%%= <%= var_model %>.id %>" data-page="<%%= params[:page] || 1  %>"><i class="fas fa-trash"></i>  <$$= Settings.form.label.destroy -$$></button>
     </td>
   </tr>
   <%%- end -%>

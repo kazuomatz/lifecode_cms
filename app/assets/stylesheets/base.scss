@@ -392,6 +392,14 @@ form, .search-box {
       }
     }
   }
+  .form-check.form-check-inline {
+    label {
+      margin: 0 10px 0 5px;
+      cursor: pointer;
+      border: none;
+      width: auto;
+    }
+  }
 }
 
 .btn.btn-default {

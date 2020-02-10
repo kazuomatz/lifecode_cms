@@ -238,12 +238,10 @@ class ApplicationRecord < ActiveRecord::Base
               data[:datetime_greater_message] = "開始日時と終了日時が正しくありません。"
             end
           end
-
-
           return data
         end
       end
-      return {}
+      {}
     end
 
     def load_config
@@ -252,6 +250,15 @@ class ApplicationRecord < ActiveRecord::Base
         YAML.load_file( file )
       else
         self.initial_form_attributes
+      end
+    end
+
+    def add_permission
+      file = File.join(Rails.root,'config','settings',"permission.yml")
+      permission_data = YAML.load_file( file )
+      if permission_data['permission'][self.name.pluralize.underscore].nil?
+        permission_data['permission'][self.name.pluralize.underscore] = '1,2,3'
+        YAML.dump(permission_data, File.open(file, 'w'))
       end
     end
   end
