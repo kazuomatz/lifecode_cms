@@ -36,6 +36,16 @@ module Admin
 
     def update
       begin
+
+        params.keys.each do |key|
+          if key.index('delete_') == 0
+            if params[key] == 'true'
+              item = key.gsub('delete_admin_','').gsub('<%= var_model%>_','')
+              @attr[item] = nil
+            end
+          end
+        end
+
         if @<%= var_model %>.update(@attr)
           redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
         else

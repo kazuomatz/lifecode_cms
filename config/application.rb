@@ -28,5 +28,7 @@ module LifecodeCms
     Settings.add_source!("#{Rails.root}/config/settings/permission.yml")
     Settings.add_source!("#{Rails.root}/config/settings/form.yml")
     Settings.reload!
+
+      #Rails.application.config.active_storage.previewers << DOCXPreviewer
   end
 end

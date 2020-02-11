@@ -6,6 +6,8 @@ var FormManager;
 			el: 'form',
 			create: false,
             img_noimage: '/images/noimage.jpg',
+            img_nodocument: '/images/nodocument.jpg',
+            img_document: '/images/document.jpg',
 			icheck_options : {
 				checkboxClass: 'icheckbox',
 				radioClass: 'iradio'
@@ -108,6 +110,9 @@ var FormManager;
 
 		var settings = self.settings;
 		var noimage = settings.img_noimage;
+        var nodocument = settings.img_nodocument;
+        var document = settings.img_document;
+
 		var $el = el === undefined ? $(settings.el) : $(el);
 
 		// 項目の削除、ラベル化
@@ -150,6 +155,8 @@ var FormManager;
 
 			var $el_input = $file_input.find('input[type="file"]');
 			var $delete_btn = $file_input.find('.btn-file-delete');
+            var param_name = 'delete_' + $file_input.find('input[type=file]').attr('id');
+            var attr = '[name=' + param_name + ']';
 
             $el_input.hide();
 
@@ -190,7 +197,9 @@ var FormManager;
 											});
 										};
 										img.src = url;
-									};
+                                        $delete_btn.show();
+                                        $el.find(attr).remove();
+                                    };
 									filereader.readAsDataURL(file);
 								});
 
@@ -202,39 +211,47 @@ var FormManager;
 					self.clearFileInput($(this));
 					$(this).parsley().validate();
 
-					// 削除用のinputを有効化
-					$file_input.find('input[type!=file]').prop('disabled', false);
+                    $delete_btn.hide();
 
 					// 画像の置き換え
 					$el_img.fadeOut('normal', function () {
 						$el_img.attr('src', noimage).fadeIn();
 						$file_input.addClass('empty');
 					});
-				});
+                    if ($el.find(attr).length == 0) {
+                        var delete_param = $('<input/>');
+                        delete_param.attr('type','hidden');
+                        delete_param.attr('value',true);
+                        delete_param.attr('name', param_name)
+                        $el.append(delete_param)
+                    }
+                });
 			} else {
-				// 画像以外
-				var $file_icon = $file_input.find('.container-fileicon');
-
 				$el_input.on('change', function () {
 					if (this.files.length) {
-						// 削除用のinputを無効化
-						$file_input.find('input[type!=file]').prop('disabled', true);
-
-						$file_icon.find('span').html(this.files[0].name);
-						$file_icon.fadeIn('normal', function () {
-							$file_input.removeClass('empty');
-						});
-					}
+                        var $el_img = $file_input.find('img');
+                        $el_img.attr('src', document);
+                        $delete_btn.show();
+                        $el.find(attr).remove();
+                    }
 				}).on('filedelete', function () {
-					self.clearFileInput($(this));
-					$(this).parsley().validate();
+                    self.clearFileInput($(this));
+                    $(this).parsley().validate();
+                    var $el_img = $file_input.find('img');
+                    $delete_btn.hide();
 
-					// 削除用のinputを有効化
-					$file_input.find('input[type!=file]').prop('disabled', false);
-
-					$file_icon.fadeOut('normal', function () {
-						$file_input.addClass('empty');
-					});
+                    // 画像の置き換え
+                    $el_img.fadeOut('normal', function () {
+                        $el_img.attr('src', nodocument).fadeIn();
+                        $file_input.addClass('empty');
+                    });
+                    if ($el.find(attr).length == 0) {
+                        var delete_param = $('<input/>');
+                        delete_param.attr('type','hidden');
+                        delete_param.attr('value',true);
+                        delete_param.attr('name', param_name)
+                        $el.append(delete_param)
+                    }
 				});
 			}
 		});

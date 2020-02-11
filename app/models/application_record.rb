@@ -2,84 +2,108 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   class << self
+
+    def initial_column(column_name)
+      column = {}
+      column[:name] = column_name
+      column[:label] = column_name
+      column[:icon] = "fas fa-info-circle"
+      column[:type] = self.columns_hash[column_name].type
+      column[:column] = 4
+
+      validate = {
+          max_length: -1,
+          max_length_message: '',
+          min_length: -1,
+          min_length_message: '',
+          pattern: '',
+          pattern_message: '',
+          length: '',
+          length_message: ''
+      }
+
+      if column_name == 'name' || column_name == 'title'
+        validate[:required] = true
+      else
+        validate[:required] = false
+      end
+
+      if column_name.index("zip_code").present?
+        validate[:length] = '[7,7]'
+        validate[:length_message] = '郵便番号は7桁で入力して下さい。'
+        validate[:pattern] = '/^[0-9]+$/'
+        validate[:pattern_message] = '郵便番号は半角数字のみ有効です。'
+        z = column_name.split('zip_code')
+        column[:prefecture_code] = "#{z[0].nil? ? '' : z[0]}prefecture_code"
+        column[:city_code] = "#{z[0].nil? ? '' : z[0]}city_code"
+        column[:address1] = "#{z[0].nil? ? '' : z[0]}address1"
+      end
+
+      if column_name.index('prefecture_code').present?
+        column[:default_prefecture_code] = 22
+        column[:default_city_code] = 221015
+        p = column_name.split('prefecture_code')
+        column[:city_column] = "#{p[0].nil? ? '' : p[0]}city_code"
+      end
+
+      if column_name.index('city_code').present?
+        c = column_name.split('city_code')
+        column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
+      end
+
+      validate[:required_message] = ''
+
+      if column[:type] == :datetime || column[:type] == :timestamp
+        column[:show_time] = false
+        column[:column] = 3
+        validate = {
+            required: '',
+            required_message: '',
+            datetime_greater: '',
+            datetime_greater_message: ''
+        }
+      elsif column[:type] == :text
+        column[:column] = 6
+        column[:rows] = 5
+        column[:icon] = ''
+
+      elsif column[:type] == :boolean
+        column[:column] = 12
+        column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
+        column[:default_option] = false
+      end
+      column[:validate] = validate
+      return column
+    end
+
+    def initial_attachment(attachment)
+      column = {}
+      column[:name] = attachment.to_s
+      column[:label] = attachment.to_s
+      column[:type] = :attachment
+      if column[:name].index("image").present? || column[:name].index("photo")
+        column[:content_type] = 'image/jpeg,image/png'
+      else
+        column[:content_type] = 'application/pdf'
+      end
+      column[:column] = 4
+      column[:validate] = {
+          required: '',
+          required_message: ''
+      }
+      return column
+    end
+
     def initial_form_attributes
       ret = {}
       ret[:label] = self.name
       ret[:icon] = 'fas fa-info-circle'
       columns = []
+      form_columns = []
       column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
       column_names.each do| column_name |
-        column = {}
-        column[:name] = column_name
-        column[:label] = column_name
-        column[:icon] = "fas fa-info-circle"
-        column[:type] = self.columns_hash[column_name].type
-        column[:column] = 4
-
-        validate = {
-            max_length: -1,
-            max_length_message: '',
-            min_length: -1,
-            min_length_message: '',
-            pattern: '',
-            pattern_message: '',
-            length: '',
-            length_message: ''
-        }
-
-        if column_name == 'name' || column_name == 'title'
-          validate[:required] = true
-        else
-          validate[:required] = false
-        end
-
-        if column_name.index("zip_code").present?
-          validate[:length] = '[7,7]'
-          validate[:length_message] = '郵便番号は7桁で入力して下さい。'
-          validate[:pattern] = '/^[0-9]+$/'
-          validate[:pattern_message] = '郵便番号は半角数字のみ有効です。'
-          z = column_name.split('zip_code')
-          column[:prefecture_code] = "#{z[0].nil? ? '' : z[0]}prefecture_code"
-          column[:city_code] = "#{z[0].nil? ? '' : z[0]}city_code"
-          column[:address1] = "#{z[0].nil? ? '' : z[0]}address1"
-        end
-
-        if column_name.index('prefecture_code').present?
-          column[:default_prefecture_code] = 22
-          column[:default_city_code] = 221015
-          p = column_name.split('prefecture_code')
-          column[:city_column] = "#{p[0].nil? ? '' : p[0]}city_code"
-        end
-
-        if column_name.index('city_code').present?
-          c = column_name.split('city_code')
-          column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
-        end
-
-        validate[:required_message] = ''
-
-        if column[:type] == :datetime || column[:type] == :timestamp
-          column[:show_time] = false
-          column[:column] = 3
-          validate = {
-              required: '',
-              required_message: '',
-              datetime_greater: '',
-              datetime_greater_message: ''
-          }
-        elsif column[:type] == :text
-          column[:column] = 6
-          column[:rows] = 5
-          column[:icon] = ''
-
-        elsif column[:type] == :boolean
-          column[:column] = 12
-          column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
-          column[:default_option] = false
-        end
-
-        column[:validate] = validate
-        columns << column
+        form_columns << column_name.to_sym
+        columns << initial_column(column_name)
       end
 
       attachments = self.reflect_on_all_attachments
@@ -87,20 +111,12 @@ class ApplicationRecord < ActiveRecord::Base
                     .map(&:name)
 
       attachments.each do |attachment|
-        column = {}
-        column[:name] = attachment.to_s
-        column[:label] = attachment.to_s
-        column[:type] = :attachment
-        column[:content_type] = 'image/jpeg,image/png'
-        column[:column] = 4
-        column[:validate] = {
-            required: '',
-            required_message: ''
-        }
-         columns << column
+        form_columns << attachment.to_sym
+        columns << initial_attachment(attachment)
       end
 
       ret[:columns] = columns
+      ret[:form_columns] = form_columns
       ret[:search_columns] = []
       ret[:list_columns] = [:id]
       if column_names.index('name')
@@ -119,6 +135,44 @@ class ApplicationRecord < ActiveRecord::Base
       ret
     end
 
+    def merge_form_attributes
+      config = self.load_config
+      columns = config[:columns]
+
+      column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
+      added_column_names = []
+      column_names.each do| column_name |
+        exists = false
+        columns.each do |column|
+          if column[:name].to_s == column_name.to_s
+            exists = true
+          end
+        end
+        if !exists
+          columns << initial_column(column_name)
+          added_column_names << column_name.to_sym
+        end
+      end
+
+      attachments = self.reflect_on_all_attachments
+                        .filter { |association| association.instance_of? ActiveStorage::Reflection::HasOneAttachedReflection }
+                        .map(&:name)
+      attachments.each do |attachment|
+        exists = false
+        columns.each do |column|
+          if column[:name].to_s == attachment.to_s
+            exists = true
+          end
+        end
+        if !exists
+          columns << initial_attachment(attachment)
+          added_column_names << attachment.to_sym
+        end
+      end
+      config[:form_columns] += added_column_names
+      config
+    end
+
     def label
       self.load_config[:label]
     end
@@ -128,7 +182,18 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def form_attributes
-      self.load_config[:columns]
+      config = self.load_config
+      columns = config[:columns]
+      ret = []
+      config[:form_columns].each do |column_name|
+        columns.each do |column|
+          if column[:name].to_s == column_name.to_s
+            ret << column
+            next
+          end
+        end
+      end
+      ret
     end
 
     def prefecture_attributes

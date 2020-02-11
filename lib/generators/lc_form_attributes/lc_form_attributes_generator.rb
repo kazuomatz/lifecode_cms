@@ -8,7 +8,12 @@ class LcFormAttributesGenerator < Rails::Generators::NamedBase
 
   def create_form_attributes_yaml
     model = class_eval(file_name.singularize.camelize)
-    create_file "config/form_attributes/#{file_name.singularize.underscore}.yml", model.initial_form_attributes.to_yaml
+    file =  File.join(Rails.root,"config/form_attributes/#{file_name.singularize.underscore}.yml")
+    if File.exist? file
+      create_file file, model.merge_form_attributes.to_yaml
+    else
+      create_file file, model.initial_form_attributes.to_yaml
+    end
   end
 
   def add_permission

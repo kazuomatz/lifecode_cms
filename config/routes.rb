@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'top/index'
+    get 'top', to: 'top#index'
     resources :users
     resources :groups
     resources :articles

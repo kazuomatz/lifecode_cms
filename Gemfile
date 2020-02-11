@@ -89,7 +89,8 @@ gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2
 
 gem 'aws-sdk-s3'
 gem 'rails-html-sanitizer'
-gem 'simple_form'
+#gem 'simple_form'
 gem 'acts-as-taggable-on', git:'https://github.com/alkhadher/acts-as-taggable-on', branch:  'support_rails_6'
 gem 'uglifier'
 gem 'natto'
+gem 'poppler'
