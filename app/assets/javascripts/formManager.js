@@ -348,6 +348,7 @@ var FormManager;
 			    var date = new Date($(this).val());
                 var day_of_week = date.getDay();
                 var className = 'week week_' + day_of_week;
+                var week = '(' + weekStrings[day_of_week] + ')';
                 if (isHoliday(date)) {
                     className += ' week_holiday'
                 }
@@ -355,6 +356,14 @@ var FormManager;
                     return (className.match(/\bweek\S+/g) || []).join(' ');
                 });
                 $(this).parent().find('svg').addClass(className);
+                $(this).parent().find('svg').removeClass(function(index, className){
+                    return (className.match(/\bweek\S+/g) || []).join(' ');
+                });
+                $(this).parent().find('.text-week').text(week);
+                $(this).parent().find('.text-week').removeClass(function(index, className){
+                    return (className.match(/\bweek\S+/g) || []).join(' ');
+                });
+                $(this).parent().find('.text-week').addClass(className);
             })
 		});
 

@@ -322,6 +322,14 @@ form {
     .card-body {
       padding: 20px 30px;
     }
+    .text-week {
+      position:absolute;
+      display: inline-block;
+      right:10px;
+      top:7.5px;
+      z-index: 1000;
+      font-weight: bold;
+    }
   }
   label {
     svg {

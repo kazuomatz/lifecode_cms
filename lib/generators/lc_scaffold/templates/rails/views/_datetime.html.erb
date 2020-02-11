@@ -12,6 +12,7 @@
                               class: 'form-control _input-date',
                               value: <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%Y/%m/%d') : '',
                               data: <%= model.name %>.parsley_data(column[:name]) $$>
+          <$$=week_string(<%= var_model %>.<%= column[:name] %>)$$>
         </div>
       </div>
     </div>
@@ -40,9 +41,10 @@
         <span class="input-group-text"><$$= calendar_icon <%= var_model %>.<%= column[:name] %> $$></span>
       </div>
       <$$= form.text_field  <%= ':' + column[:name] %>,
-      class: 'form-control _input-date',
-      value: <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%Y/%m/%d') : '',
-      data: <%= model.name %>.parsley_data(column[:name]) $$>
+            class: 'form-control _input-date',
+            value: <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%Y/%m/%d') : '',
+            data: <%= model.name %>.parsley_data(column[:name]) $$>
+      <$$=week_string(<%= var_model %>.<%= column[:name] %>)$$>
     </div>
   </div>
 </div>
