@@ -355,10 +355,11 @@ var FormManager;
                 $(this).parent().find('svg').removeClass(function(index, className){
                     return (className.match(/\bweek\S+/g) || []).join(' ');
                 });
-                $(this).parent().find('svg').addClass(className);
                 $(this).parent().find('svg').removeClass(function(index, className){
                     return (className.match(/\bweek\S+/g) || []).join(' ');
                 });
+                $(this).parent().find('svg').addClass(className);
+
                 $(this).parent().find('.text-week').text(week);
                 $(this).parent().find('.text-week').removeClass(function(index, className){
                     return (className.match(/\bweek\S+/g) || []).join(' ');

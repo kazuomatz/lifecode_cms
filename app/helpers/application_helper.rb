@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def week_string(date)
-    return '' if date.nil?
+    return raw '<span class="text-week"></span>' if date.nil?
     weeks = I18n.t 'date.abbr_day_names'
     holiday = date.to_date.national_holiday?
     raw "<span class='text-week week week_#{date.wday} #{holiday ? 'week_holiday' : ''}'>(#{weeks[date.wday]})</span>"
