@@ -13,9 +13,8 @@
  *= require pace-progress/pace.css
  *= require bootstrap/scss/bootstrap
  *= require bootstrap-datepicker
- *= require bootstrap-datepicker/dist/css/bootstrap-datepicker.min
- *= require bootstrap-datetimepicker
- *= require bootstrap-timepicker/css/bootstrap-timepicker.min
+ *= require bootstrap-datepicker/dist/css/bootstrap-datepicker
+ *= require bootstrap-timepicker/css/bootstrap-timepicker
  *= require animate.css/animate.min
  *= require wowjs/css/site
  *= require parsley

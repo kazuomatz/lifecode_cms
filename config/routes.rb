@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :animals
+  end
+  namespace :admin do
     resources :locations
+  end
+
+  namespace :admin do
+    resources :events
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 

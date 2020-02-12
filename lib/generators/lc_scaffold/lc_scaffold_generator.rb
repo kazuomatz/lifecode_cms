@@ -3,7 +3,7 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
   class_option :only, type: :string
 
-  def setOptions
+  def set_options
     if options[:only].nil?
       @exec_methods = %w(form_view list_view search_view edit_view new_view index_view controller route)
     else

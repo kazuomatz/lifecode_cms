@@ -12,6 +12,8 @@ class ApplicationRecord < ActiveRecord::Base
       column[:column] = 4
 
       validate = {
+          required: false,
+          required_message: '',
           max_length: -1,
           max_length_message: '',
           min_length: -1,
@@ -44,24 +46,19 @@ class ApplicationRecord < ActiveRecord::Base
         column[:default_city_code] = 221015
         p = column_name.split('prefecture_code')
         column[:city_column] = "#{p[0].nil? ? '' : p[0]}city_code"
+        validate = nil
       end
 
       if column_name.index('city_code').present?
         c = column_name.split('city_code')
         column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
+        validate = nil
       end
-
-      validate[:required_message] = ''
 
       if column[:type] == :datetime || column[:type] == :timestamp
         column[:show_time] = false
         column[:column] = 3
-        validate = {
-            required: '',
-            required_message: '',
-            datetime_greater: '',
-            datetime_greater_message: ''
-        }
+        validate = nil
       elsif column[:type] == :text
         column[:column] = 6
         column[:rows] = 5
@@ -71,9 +68,10 @@ class ApplicationRecord < ActiveRecord::Base
         column[:column] = 12
         column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
         column[:default_option] = false
+        validate = nil
       end
-      column[:validate] = validate
-      return column
+      column[:validate] = validate unless validate.nil?
+      column
     end
 
     def initial_attachment(attachment)
@@ -138,17 +136,20 @@ class ApplicationRecord < ActiveRecord::Base
     def merge_form_attributes
       config = self.load_config
       columns = config[:columns]
+      before_column_names = columns.map{|c|c[:name]}
+      exist_column_names = []
 
       column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
       added_column_names = []
       column_names.each do| column_name |
+        exist_column_names << column_name
         exists = false
         columns.each do |column|
           if column[:name].to_s == column_name.to_s
             exists = true
           end
         end
-        if !exists
+        unless exists
           columns << initial_column(column_name)
           added_column_names << column_name.to_sym
         end
@@ -158,18 +159,29 @@ class ApplicationRecord < ActiveRecord::Base
                         .filter { |association| association.instance_of? ActiveStorage::Reflection::HasOneAttachedReflection }
                         .map(&:name)
       attachments.each do |attachment|
+        exist_column_names << attachment
         exists = false
         columns.each do |column|
           if column[:name].to_s == attachment.to_s
             exists = true
           end
         end
-        if !exists
+        unless exists
           columns << initial_attachment(attachment)
           added_column_names << attachment.to_sym
         end
       end
       config[:form_columns] += added_column_names
+      after_column_names = config[:columns].map{|c|c[:name]}
+
+      p (before_column_names - exist_column_names).to_s
+
+      (before_column_names - exist_column_names).each do |name|
+        config[:columns] = config[:columns].select{ |column| column[:name].to_s != name.to_s }
+        config[:search_columns] = config[:search_columns].select{ |column_name| column_name.to_s != name.to_s }
+        config[:form_columns] = config[:form_columns].select{ |column_name| column_name.to_s != name.to_s }
+        config[:list_columns] = config[:list_columns].select{ |column_name| column_name.to_s != name.to_s }
+      end
       config
     end
 
@@ -223,6 +235,10 @@ class ApplicationRecord < ActiveRecord::Base
 
     def search_columns
       self.load_config[:search_columns]
+    end
+
+    def edit_mode
+      self.load_config[:edit_mode]
     end
 
     def form_column(column_name)
