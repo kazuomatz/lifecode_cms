@@ -299,6 +299,11 @@ span.danger {
       margin-bottom: 0;
       margin-right: 15px;
     }
+    .input-group-prepend {
+      .btn-attach-right {
+        margin-top: 2px;
+      }
+    }
   }
   .search-box-buttons {
     text-align: center;
@@ -318,17 +323,17 @@ span.danger {
 }
 
 form {
+  .text-week {
+    position:absolute;
+    display: inline-block;
+    right:10px;
+    top:7.5px;
+    z-index: 1000;
+    font-weight: bold;
+  }
   .card {
     .card-body {
       padding: 20px 30px;
-    }
-    .text-week {
-      position:absolute;
-      display: inline-block;
-      right:10px;
-      top:7.5px;
-      z-index: 1000;
-      font-weight: bold;
     }
   }
   label {
@@ -428,5 +433,14 @@ form {
     padding: 5px 0;
     font-size: 13px;
     color: #666;
+  }
+}
+
+#modal-form {
+  .modal-header {
+    padding: 0.5rem 1rem;
+  }
+  .container {
+    margin-top: 0;
   }
 }

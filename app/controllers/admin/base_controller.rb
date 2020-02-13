@@ -47,7 +47,7 @@ module Admin
     end
 
     def inquiry_num
-      @inquiry_num = Admin::Inquiry.where(is_supported: false).length
+      @inquiry_num = Admin::Inquiry.where(is_supported: false).length unless request.xhr?
     end
 
     # error_class

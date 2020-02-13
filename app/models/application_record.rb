@@ -130,6 +130,7 @@ class ApplicationRecord < ActiveRecord::Base
       if column_names.index('city_code')
         ret[:search_columns] << :city_code
       end
+      ret[:edit_mode] = :view_form
       ret
     end
 

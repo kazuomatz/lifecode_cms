@@ -41,6 +41,10 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
     file = File.join(Rails.root,@view_path, "_form.html.erb")
     template 'rails/views/_form.html.erb', file
     replace_erb_tag file
+
+    file = File.join(Rails.root,@view_path, "modal_form.html.erb")
+    template 'rails/views/modal_form.html.erb', file
+    replace_erb_tag file
   end
 
   def create_list_view
@@ -97,6 +101,4 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
     gsub_file(file,'<$$','<%')
     gsub_file(file,'$$>','%>')
   end
-
-
 end

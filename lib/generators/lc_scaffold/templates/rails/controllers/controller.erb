@@ -22,21 +22,33 @@ module Admin
 
     def new
       flash[:alert] = nil
+      if request.xhr?
+        render template: 'admin/<%= var_models %>/modal_form', locals: { <%= var_model %>: @<%= var_model %> }, layout: false
+      else
+        render
+      end
     end
 
     def edit
-
+      if request.xhr?
+        render template: 'admin/<%= var_models %>/modal_form', locals: { <%= var_model %>: @<%= var_model %> }, layout: false
+      else
+        render
+      end
     end
 
     def create
       @<%= var_model %> = Admin::<%= model_name %>.new(@attr)
       @<%= var_model.singularize.underscore %>.save!
-      redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+      if request.xhr?
+        render json:{ status: 200 }
+      else
+        redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+      end
     end
 
     def update
       begin
-
         params.keys.each do |key|
           if key.index('delete_') == 0
             if params[key] == 'true'
@@ -47,7 +59,11 @@ module Admin
         end
 
         if @<%= var_model %>.update(@attr)
-          redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+          if request.xhr?
+            render json:{ status: 200 }
+          else
+            redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+          end
         else
           flash[:alert] = @<%= var_model %>.errors.message
           render template: '<%= var_model %>/edit'

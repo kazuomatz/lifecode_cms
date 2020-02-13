@@ -43,12 +43,3 @@
   <%- end -%>
 <%- end -%>
 </div>
-
-<%%- content_for :add_js do %>
-<script>
-  var weekStrings = JSON.parse('<$$= raw I18n.t("date.abbr_day_names").to_json $$>');
-  $(function () {
-    new FormManager().init();
-  });
-</script>
-<%%- end %>
