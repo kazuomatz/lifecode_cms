@@ -18,3 +18,7 @@ form:
     clear: クリア
     select_file: ファイル選択
     get_address: 住所取得
+    latitude: 緯度
+    longitude: 経度
+    get_geom: 住所から座標を取得
+    undo: 元に戻す

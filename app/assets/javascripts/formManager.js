@@ -131,6 +131,7 @@ var FormManager;
 
 		$el.on('submit',function () {
             setPrefectureNames();
+            setSpatial();
             return true;
 		});
 
@@ -456,8 +457,6 @@ var FormManager;
                 }
             }
         });
-
-
         // 大ジャンル選択初期化
         $el.find('._el-genre').on('change', function (e, genre) {
             var $el_sub_genre = $($(this).data('sub-genre'));
@@ -923,4 +922,14 @@ function setPrefectureNames() {
         $('#' + this.id.replace("_city_code", "_city_name")).val(name);
     });
     return true;
+}
+
+function setSpatial () {
+    $('._spatial').each(function() {
+        var spatial = $(this);
+        var geom = '#' + spatial.attr('id');
+        var lat =  $(geom + '_lat').val();
+        var lng =  $(geom + '_lng').val();
+        $(geom).val('POINT(' + lat + ' ' + lng +')');
+    });
 }

@@ -55,7 +55,7 @@ module HolidayJapan
     name,year_range,mon,day,wday = data
     if year_range === year
       case day
-        when Fixnum
+        when Integer
           Date.new( year, mon, day )
         when Range
           wday0 = Date.new(year,mon,day.first).wday

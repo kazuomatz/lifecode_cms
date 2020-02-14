@@ -85,6 +85,7 @@ gem 'rb-readline'
 # Use Active Storage variant
 gem 'image_processing'
 #gem 'mini_magick'
+gem 'GeoRuby'
 gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2spatial-adapter', branch: 'rails-6'
 
 gem 'aws-sdk-s3'

@@ -54,8 +54,15 @@ class ApplicationRecord < ActiveRecord::Base
         column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
         validate = nil
       end
-
-      if column[:type] == :datetime || column[:type] == :timestamp
+      if column[:type] == :spatial
+        column[:column] = 8
+        column[:show_map] = false
+        column[:enable_geocoding] = false
+        column[:prefecture_name] = ""
+        column[:city_name] = ""
+        column[:address1_name] = ""
+        validate = nil
+      elsif column[:type] == :datetime || column[:type] == :timestamp
         column[:show_time] = false
         column[:column] = 3
         validate = nil

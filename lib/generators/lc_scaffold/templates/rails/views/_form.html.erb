@@ -28,6 +28,8 @@
   <%= ApplicationController::render partial: 'rails/views/color_code', locals:{ column: column, model: model,var_model: var_model } -%>
   <%- elsif column[:options].present? && column[:options].length  > 0 -%>
   <%= ApplicationController::render partial: 'rails/views/radio', locals:{ column: column, model: model,var_model: var_model } -%>
+  <%- elsif column[:type] == :spatial -%>
+  <%= ApplicationController::render partial: 'rails/views/map', locals:{ column: column, model: model,var_model: var_model } -%>
   <%- elsif column[:type] == :integer || column[:type] == :string -%>
   <%= ApplicationController::render partial: 'rails/views/text_field', locals:{column: column, model: model} -%>
   <%- elsif column[:type] == :attachment -%>
