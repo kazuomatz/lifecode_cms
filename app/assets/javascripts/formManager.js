@@ -702,7 +702,11 @@ var FormManager;
 				}
 			}
 		});
-	};
+
+        $el.find(".map_view").each(function () {
+            initMap(this);
+        });
+    };
 
 	// 状態切替
 	LCForm.prototype.changeStatus = function() {
@@ -714,6 +718,7 @@ var FormManager;
 			$('textarea, input[type!=file], select, .select2, ._hide-confirm, ._container-btn-input, ._container-radio, ._container-checkbox, .container-checkbox_nested').not('.sweet-alert input').show();
 
 			//マップのロック解除
+            /*
             $('.container-map').each(function () {
                 var $lock_btn = $(this).find('.btn-lock');
                 var mapObj = $($(this).data('map')).data('obj');
@@ -730,7 +735,8 @@ var FormManager;
                 if($lock_btn.hasClass('unlock')) {
                     $lock_btn.trigger('click');
                 }
-            });
+            });*/
+
             $('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
 
         } else {
@@ -834,6 +840,7 @@ var FormManager;
 			});
 
 			// マップ
+            /*
 			$('.container-map').each(function () {
 				var $lock_btn = $(this).find('.btn-lock');
 
@@ -852,7 +859,7 @@ var FormManager;
 					$lock_btn.trigger('click');
 				}
 			});
-
+            */
 			$('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
 		}
 	};
@@ -930,6 +937,111 @@ function setSpatial () {
         var geom = '#' + spatial.attr('id');
         var lat =  $(geom + '_lat').val();
         var lng =  $(geom + '_lng').val();
-        $(geom).val('POINT(' + lat + ' ' + lng +')');
+        $(geom).val('POINT(' + lng + ' ' + lat +')');
+    });
+}
+
+function initMap(el) {
+
+    if (typeof google === 'undefined') {
+        return;
+    }
+
+    var nameBase =  $(el).attr('id').replace("_map",'');
+    var $lat_input = $('#' + nameBase + '_lat');
+    var $lng_input = $('#' + nameBase + '_lng');
+    var lat = parseFloat($lat_input.val());
+    var lng = parseFloat($lng_input.val());
+
+    var map = new google.maps.Map(document.getElementById($(el).attr('id')), {
+        center: {
+            lat: lat,
+            lng: lng
+        },
+        zoom: 17
+    });
+
+    marker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map,
+        title: "POINT",
+        icon: {
+            url: '/images/marker.png',
+            scaledSize: new google.maps.Size(48, 48)
+        },
+        draggable: false
+    });
+
+    google.maps.event.addListener(map, 'center_changed', function(){
+        var position  = map.getCenter();
+        marker.setPosition(position);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){ marker.setAnimation(null); }, 1000);
+        $lat_input.val(position.lat());
+        $lng_input.val(position.lng());
+    });
+
+
+    $($lat_input).on("paste",function(){
+        var target = $(this);
+        setTimeout( function() {
+            var text = $(target).val();
+            var lanlng  = text.split(",");
+            if (lanlng.length == 2) {
+                var lat = parseFloat(lanlng[0]);
+                var lng = parseFloat(lanlng[1]);
+                if (lat != 0.0 && lng != 0.0) {
+                    $lat_input.val(lat);
+                    $lng_input.val(lng);
+                    map.setCenter({lat: lat, lng: lng});
+                }
+            }
+        }, 10 ) ;
+    });
+
+    $("#" + nameBase + "_lat, #" + nameBase + "_lng").on("keyup",function(){
+        var lat = $lat_input.val();
+        var lng = $lng_input.val();
+        map.setCenter(new google.maps.LatLng(lat,lng));
+    });
+
+    $('#' + nameBase + '_revert-btn').on("click",function () {
+        $lat_input.val(lat);
+        $lng_input.val(lng);
+        map.setCenter(new google.maps.LatLng(lat,lng));
+    });
+
+
+    $('#' + nameBase + '_address-btn').on('click',function () {
+        var geocoder = new google.maps.Geocoder();
+        var address = "";
+        var prefectureElement = '#' + $(this).data('prefecture');
+        if (!prefectureElement) return;
+        address =  $(prefectureElement + ' option:selected').text();
+
+        var cityElement = '#' + $(this).data('city');
+        if (!cityElement) return;
+        address +=  $(cityElement + ' option:selected').text();
+
+        var address1Element = '#' + $(this).data('address1');
+        if(address1Element) {
+            address +=  $(address1Element).val();
+        }
+
+        geocoder.geocode(
+            {
+                'address': address
+            },
+            function(results, status){
+                if(status == google.maps.GeocoderStatus.OK){
+                    if (results[0].geometry) {
+                        var latlng = results[0].geometry.location;
+                        $lat_input.val(latlng.lat());
+                        $lng_input.val(latlng.lng());
+                        map.setCenter(latlng);
+                    }
+                }
+            }
+        );
     });
 }

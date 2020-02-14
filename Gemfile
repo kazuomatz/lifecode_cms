@@ -67,7 +67,7 @@ gem 'migration_comments'
 gem 'parsley-rails'
 
 # devise
-gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'master'
+gem 'devise'
 
 gem 'config'
 

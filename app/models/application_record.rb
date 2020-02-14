@@ -57,10 +57,11 @@ class ApplicationRecord < ActiveRecord::Base
       if column[:type] == :spatial
         column[:column] = 8
         column[:show_map] = false
-        column[:enable_geocoding] = false
-        column[:prefecture_name] = ""
-        column[:city_name] = ""
-        column[:address1_name] = ""
+        column[:prefecture_column] = ""
+        column[:city_column] = ""
+        column[:address1_column] = ""
+        column[:default_latitude] = 34.973277
+        column[:default_longitude] = 138.388772
         validate = nil
       elsif column[:type] == :datetime || column[:type] == :timestamp
         column[:show_time] = false
