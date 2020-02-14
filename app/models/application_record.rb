@@ -7,7 +7,7 @@ class ApplicationRecord < ActiveRecord::Base
       column = {}
       column[:name] = column_name
       column[:label] = column_name
-      column[:icon] = "fas fa-info-circle"
+      column[:icon] = self.icon(column[:name])
       column[:type] = self.columns_hash[column_name].type
       column[:column] = 4
 
@@ -39,21 +39,25 @@ class ApplicationRecord < ActiveRecord::Base
         column[:prefecture_code] = "#{z[0].nil? ? '' : z[0]}prefecture_code"
         column[:city_code] = "#{z[0].nil? ? '' : z[0]}city_code"
         column[:address1] = "#{z[0].nil? ? '' : z[0]}address1"
-      end
-
-      if column_name.index('prefecture_code').present?
+      elsif column_name.index('prefecture_code').present?
         column[:default_prefecture_code] = 22
         column[:default_city_code] = 221015
         p = column_name.split('prefecture_code')
         column[:city_column] = "#{p[0].nil? ? '' : p[0]}city_code"
         validate = nil
-      end
-
-      if column_name.index('city_code').present?
+      elsif column_name.index('city_code').present?
         c = column_name.split('city_code')
         column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
         validate = nil
+      elsif column_name.index('url').present?
+        column[:type] = :url
+      elsif column_name.index('mail').present?
+        column[:type] = :email
+      elsif column_name.index('tel').present? || column_name.index('phone').present?
+        validate[:pattern] = '/^[0-9]+$/'
+        validate[:pattern_message] = '郵便番号は半角数字のみ有効です。'
       end
+
       if column[:type] == :spatial
         column[:column] = 8
         column[:show_map] = false
@@ -66,11 +70,16 @@ class ApplicationRecord < ActiveRecord::Base
       elsif column[:type] == :datetime || column[:type] == :timestamp
         column[:show_time] = false
         column[:column] = 3
-        validate = nil
+        validate = {
+            required: false,
+            required_message: '',
+            datetime_greater: '',
+            datetime_greater_message: ''
+        }
       elsif column[:type] == :text
         column[:column] = 6
         column[:rows] = 5
-        column[:icon] = ''
+        column[:icon] = 'far fa-file-alt'
 
       elsif column[:type] == :boolean
         column[:column] = 12
@@ -103,7 +112,7 @@ class ApplicationRecord < ActiveRecord::Base
     def initial_form_attributes
       ret = {}
       ret[:label] = self.name
-      ret[:icon] = 'fas fa-info-circle'
+      ret[:icon] = self.icon(self.name)
       columns = []
       form_columns = []
       column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
@@ -350,6 +359,44 @@ class ApplicationRecord < ActiveRecord::Base
         permission_data['permission'][self.name.pluralize.underscore] = '1,2,3'
         YAML.dump(permission_data, File.open(file, 'w'))
       end
+    end
+
+    def icon(column_name)
+      icon = 'fas fa-info-circle'
+      if column_name.index('mail')
+        icon = 'far fa-envelope'
+      elsif column_name.index('content') || column_name.index('description')
+        icon = 'fa-file-alt'
+      elsif column_name.index('tel')|| column_name.index('phone')
+        icon = 'fas fa-mobile-alt'
+      elsif column_name.index('fax')
+        icon = 'fas fa-fax'
+      elsif column_name.index('twitter')
+        icon = 'fab fa-twitter'
+      elsif column_name.index('facebook')
+        icon = 'fab fa-facebook'
+      elsif column_name.index('facebook')
+        icon = 'fab fa-facebook-f'
+      elsif column_name.index('github')
+        icon = 'fab fa-github'
+      elsif column_name.index('instagram')
+        icon = 'fab fa-instagram-square'
+      elsif column_name.index('url')
+        icon = 'fas fa-link'
+      elsif column_name.index('book')
+        icon = 'fas fa-book'
+      elsif column_name.index('location') || column_name.index('spot')
+        icon = 'fas fa-map-marker-alt'
+      elsif column_name.index('article')
+        icon = 'fas fa-pen'
+      elsif column_name.index('address1')
+        icon = 'fas fa-road'
+      elsif column_name.index('address2')
+        icon = 'fas fa-building'
+      elsif column_name.index('memo') || column_name.index('note')
+        icon = 'far fa-edit'
+      end
+      icon
     end
   end
 end

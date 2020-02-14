@@ -27,6 +27,10 @@
   <$$= form.hidden_field :<%= column[:name]%> $$>
   <%- elsif column[:name].index('color_code').present? -%>
   <%= ApplicationController::render partial: 'rails/views/color_code', locals:{ column: column, model: model,var_model: var_model } -%>
+  <%- elsif column[:name].index('url').present? -%>
+  <%= ApplicationController::render partial: 'rails/views/url_filed', locals:{ column: column, model: model,var_model: var_model } -%>
+  <%- elsif column[:name].index('mail').present? -%>
+  <%= ApplicationController::render partial: 'rails/views/mail_filed', locals:{ column: column, model: model,var_model: var_model } -%>
   <%- elsif column[:options].present? && column[:options].length  > 0 -%>
   <%= ApplicationController::render partial: 'rails/views/radio', locals:{ column: column, model: model,var_model: var_model } -%>
   <%- elsif column[:type] == :spatial -%>
