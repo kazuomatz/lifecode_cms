@@ -7,7 +7,7 @@ class ApplicationRecord < ActiveRecord::Base
       column = {}
       column[:name] = column_name
       column[:label] = column_name
-      column[:icon] = self.icon(column[:name])
+      column[:icon] = self.default_icon(column[:name])
       column[:type] = self.columns_hash[column_name].type
       column[:column] = 4
 
@@ -112,7 +112,7 @@ class ApplicationRecord < ActiveRecord::Base
     def initial_form_attributes
       ret = {}
       ret[:label] = self.name
-      ret[:icon] = self.icon(self.name)
+      ret[:icon] = self.default_icon(self.name)
       columns = []
       form_columns = []
       column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
@@ -122,8 +122,8 @@ class ApplicationRecord < ActiveRecord::Base
       end
 
       attachments = self.reflect_on_all_attachments
-                    .filter { |association| association.instance_of? ActiveStorage::Reflection::HasOneAttachedReflection }
-                    .map(&:name)
+                        .filter { |association| association.instance_of? ActiveStorage::Reflection::HasOneAttachedReflection }
+                        .map(&:name)
 
       attachments.each do |attachment|
         form_columns << attachment.to_sym
@@ -236,8 +236,8 @@ class ApplicationRecord < ActiveRecord::Base
       attr = self.form_attributes.map { |a| ':' + a[:name] }
       time_attr = self.form_attributes.select { |column|
         column[:type] == :datetime || column[:type] == :timestamp
-        }.map { |date_column |
-          ":#{date_column[:name]}_time"
+      }.map { |date_column |
+        ":#{date_column[:name]}_time"
       }
       (attr + time_attr).join(', ')
     end
@@ -361,7 +361,7 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end
 
-    def icon(column_name)
+    def default_icon(column_name)
       icon = 'fas fa-info-circle'
       if column_name.index('mail')
         icon = 'far fa-envelope'
