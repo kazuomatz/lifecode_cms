@@ -1,8 +1,7 @@
 <%= content_for :breadcrumb do %>
   <% items = [
-      {url: '/', title: Settings.form.label.home},
-      {title: "#{Location.label}#{Settings.form.label.list}"},
-  ]
+      {url: '/', title: Settings.form.label.home}
+]
   %>
   <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
 <% end %>

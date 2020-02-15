@@ -11,7 +11,7 @@
   %>
   <%%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
 <%% end %>
-<%%= render partial: 'base/search_script', locals: {page: params[:page] || 1}  %>
+<%%= render partial: 'base/search_script', locals: {page: params[:page] || 1, search_path: '/admin/<%= var_models %>'}  %>
 <div class="container-fluid base">
   <div>
     <div class="row">
@@ -104,13 +104,13 @@
         $('.modal .modal-footer .modal-btn-regist').text('<$$= Settings.form.label.create $$>');
         url = "<$$= new_admin_<%= var_model %>_path $$>";
       }
-      $('#modal-form').on('show.bs.modal',function() {
+      $('#modal-form').on('shown.bs.modal',function() {
           $.ajax({
             url: url,
             method: 'get'
           }).done(function(data) {
             $('.modal-body').html(data).ready(function(){
-                $('#modal-form').off('show.bs.modal');
+                $('#modal-form').off('shown.bs.modal');
                 new FormManager().init();
             });
           })
@@ -135,3 +135,6 @@
   });
 </script>
 <%%-end %>
+<$$- if <%= model.name %>.gmap_load_required? -$$>
+<script src="https://maps.googleapis.com/maps/api/js?key=<$$= Settings.google.api_key $$>"></script>
+<$$- end $$>

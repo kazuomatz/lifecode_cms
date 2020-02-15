@@ -271,6 +271,15 @@ class ApplicationRecord < ActiveRecord::Base
       self.load_config[:edit_mode]
     end
 
+    def gmap_load_required?
+      config = load_config
+      if config[:edit_mode] != :modal
+        return false
+      end
+      column_names = config[:columns].select{ |c| c[:type] == :spatial && c[:show_map]}.map{ |c| c[:name].to_sym }
+      (config[:form_columns] && column_names).length > 0
+    end
+
     def form_column(column_name)
       self.load_config[:columns].each do |column|
         if column[:name].to_s == column_name.to_s

@@ -52,6 +52,6 @@
   <%- end -%>
 </div>
 
-<$$= content_for :add_js do $$>
+<$$- if map_view && <%= model_name %>.edit_mode != :modal $$>
 <script src="https://maps.googleapis.com/maps/api/js?key=<$$= Settings.google.api_key $$>"></script>
-<$$- end if map_view -$$>
+<$$- end -$$>
