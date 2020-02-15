@@ -7,7 +7,7 @@
           <span class="input-group-text"><i class="<$$= column[:icon] $$>"></i></span>
         </div>
       <$$- end -$$>
-      <$$= form.url_field <%= ':' + column[:name] %>, class: 'form-control', data: <%= model.name %>.parsley_data(column[:name]) $$>
+      <$$= form.url_field <%= ':' + column[:name] %>, class: 'form-control', data: <%= model.name %>.parsley_data(column[:name]) ,placeholder: column[:placeholder] $$>
     </div>
   </div>
 </div>

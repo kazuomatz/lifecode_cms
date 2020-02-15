@@ -30,7 +30,7 @@ class ApplicationRecord < ActiveRecord::Base
         validate[:required] = false
       end
 
-      if column_name.index("zip_code").present?
+      if column_name.index("zip_code")
         validate[:length] = '[7,7]'
         validate[:length_message] = '郵便番号は7桁で入力して下さい。'
         validate[:pattern] = '/^[0-9]+$/'
@@ -39,23 +39,32 @@ class ApplicationRecord < ActiveRecord::Base
         column[:prefecture_code] = "#{z[0].nil? ? '' : z[0]}prefecture_code"
         column[:city_code] = "#{z[0].nil? ? '' : z[0]}city_code"
         column[:address1] = "#{z[0].nil? ? '' : z[0]}address1"
-      elsif column_name.index('prefecture_code').present?
+        column[:placeholder] = '7桁（ハイフンなし）'
+        column[:column] = 3
+      elsif column_name.index('prefecture_code')
         column[:default_prefecture_code] = 22
         column[:default_city_code] = 221015
         p = column_name.split('prefecture_code')
         column[:city_column] = "#{p[0].nil? ? '' : p[0]}city_code"
         validate = nil
-      elsif column_name.index('city_code').present?
+      elsif column_name.index('city_code')
         c = column_name.split('city_code')
         column[:prefecture_column] = "#{c[0].nil? ? '' : c[0]}prefecture_code"
         validate = nil
-      elsif column_name.index('url').present?
+      elsif column_name.index('address1')
+        column[:placeholder] = '町名番地'
+      elsif column_name.index('address2')
+        column[:placeholder] = '建物等'
+      elsif column_name.index('url')
         column[:type] = :url
-      elsif column_name.index('mail').present?
+        column[:placeholder] = ''
+      elsif column_name.index('mail')
         column[:type] = :email
-      elsif column_name.index('tel').present? || column_name.index('phone').present?
-        validate[:pattern] = '/^[0-9]+$/'
-        validate[:pattern_message] = '郵便番号は半角数字のみ有効です。'
+        column[:placeholder] = ''
+      elsif column_name.index('tel') || column_name.index('phone')
+        validate[:pattern] = '/^[0-9]\-+$/'
+        validate[:pattern_message] = '殿番号は半角数字とハイフンのみ有効です。'
+        column[:placeholder] = ''
       end
 
       if column[:type] == :spatial
@@ -80,12 +89,15 @@ class ApplicationRecord < ActiveRecord::Base
         column[:column] = 6
         column[:rows] = 5
         column[:icon] = 'far fa-file-alt'
+        column[:placeholder] = ''
 
       elsif column[:type] == :boolean
         column[:column] = 12
         column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
         column[:default_option] = false
         validate = nil
+     else
+        column[:placeholder] = ''  if column[:placeholder].blank?
       end
       column[:validate] = validate unless validate.nil?
       column
