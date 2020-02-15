@@ -119,18 +119,23 @@
   });
 
   $(document).on('click','.modal-btn-regist', function() {
-      var $form = $('#modal-form form');
-      if($($form).parsley().validate()) {
-        $.ajax({
-            url: $form.attr('action'),
-            type: $form.attr('method'),
-            data: $form.serialize()
-        }).done(function(data) {
-          if (data.status == 200) {
-              $('#modal-form').modal('hide');
-              searchManager.getList('<$$= params[:page] || 1 $$>', searchParams());
-          }
-        });
+      var form = $('#modal-form form').get()[0];
+      var formData = new FormData( form );
+      setPrefectureNames();
+      setSpatial();
+      if($(form).parsley().validate()) {
+          $.ajax({
+              url: $(form).attr('action'),
+              type: $(form).attr('method'),
+              data: formData,
+              processData: false,
+              contentType: false
+          }).done(function(data) {
+              if (data.status == 200) {
+                  $('#modal-form').modal('hide');
+                  searchManager.getList('<$$= params[:page] || 1 $$>', searchParams());
+              }
+          });
       }
   });
 </script>
