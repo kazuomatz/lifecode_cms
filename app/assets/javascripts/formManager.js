@@ -414,6 +414,10 @@ var FormManager;
         $el.find('._el-prefecture').on('change', function (e, city) {
             var $el_city = $($(this).data('city'));
             var target = $el_city.data('target');
+            if (! $(this).val() ) {
+                $el_city.html('<option>- 選択 -</option>');
+                return;
+            }
             if ($el_city[0]) {
                 $.ajax({
                     url: '/master/cities/' + $(this).val(),
@@ -876,8 +880,9 @@ var FormManager;
 
 
     LCForm.prototype.setPrefectureNames = function() {
-
-        $('._el-prefecture').each(function() {
+        var self  = this;
+        var $el = $(self.settings.el);
+        $el.find('._el-prefecture').each(function() {
             var name = $("#" + this.id + " option:selected").text();
             $('#' + this.id.replace("_prefecture_code", "_prefecture_name")).val(name);
         });
@@ -889,7 +894,10 @@ var FormManager;
     };
 
     LCForm.prototype.setSpatial = function () {
-        $('._spatial').each(function() {
+        var self  = this;
+        var $el = $(self.settings.el);
+
+        $el.find('._spatial').each(function() {
             var spatial = $(this);
             var geom = '#' + spatial.attr('id');
             var lat =  $(geom + '_lat').val();
@@ -898,16 +906,9 @@ var FormManager;
         });
     };
 
-    LCForm.prototype.reloadMap = function() {
-        for (var i = 0 ; i < this.maps.length ; i ++ ) {
-            google.maps.event.trigger(this.maps[i],'resize');
-        }
-    };
 
     LCForm.prototype._initMap = function (el) {
-
         if (typeof google === 'undefined') {
-            alert("google not laded")
             return;
         }
         var nameBase =  $(el).attr('id').replace("_map",'');

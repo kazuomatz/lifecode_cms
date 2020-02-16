@@ -96,7 +96,7 @@ class ApplicationRecord < ActiveRecord::Base
         column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
         column[:default_option] = false
         validate = nil
-     else
+      else
         column[:placeholder] = ''  if column[:placeholder].blank?
       end
       column[:validate] = validate unless validate.nil?
@@ -189,7 +189,7 @@ class ApplicationRecord < ActiveRecord::Base
                         .filter { |association| association.instance_of? ActiveStorage::Reflection::HasOneAttachedReflection }
                         .map(&:name)
       attachments.each do |attachment|
-        exist_column_names << attachment
+        exist_column_names << attachment.to_s
         exists = false
         columns.each do |column|
           if column[:name].to_s == attachment.to_s
@@ -202,9 +202,6 @@ class ApplicationRecord < ActiveRecord::Base
         end
       end
       config[:form_columns] += added_column_names
-      after_column_names = config[:columns].map{|c|c[:name]}
-
-      p (before_column_names - exist_column_names).to_s
 
       (before_column_names - exist_column_names).each do |name|
         config[:columns] = config[:columns].select{ |column| column[:name].to_s != name.to_s }

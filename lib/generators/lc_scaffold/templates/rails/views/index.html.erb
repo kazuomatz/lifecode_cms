@@ -117,6 +117,8 @@
                     url: url,
                     method: 'get'
                 }).done(function(data) {
+                    $('#modal-form').off('show.bs.modal');
+                    $('#modal-form').off('shown.bs.modal');
                     $('.modal-body').html(data).ready(function(){
                         modalForm = new FormManager({modal: true});
                         modalForm.init();
@@ -130,10 +132,10 @@
     });
 
     $(document).on('click','.modal-btn-regist', function() {
-        var form = $('#modal-form form').get()[0];
-        var formData = new FormData( form );
         modalForm.setPrefectureNames();
         modalForm.setSpatial();
+        var form = $('#modal-form form').get()[0];
+        var formData = new FormData( form );
         if($(form).parsley().validate()) {
             $.ajax({
                 url: $(form).attr('action'),
