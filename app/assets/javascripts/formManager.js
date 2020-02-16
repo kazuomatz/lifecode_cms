@@ -1,224 +1,226 @@
 var FormManager;
 
 (function(){
-	function LCForm(options) {
-		this.settings = $.extend({
-			el: 'form',
-			create: false,
+    function LCForm(options) {
+        this.maps = [];
+        this.settings = $.extend({
+            el: 'form',
+            modal: false,
+            create: false,
             img_noimage: '/images/noimage.jpg',
             img_nodocument: '/images/nodocument.jpg',
             img_document: '/images/document.jpg',
-			icheck_options : {
-				checkboxClass: 'icheckbox',
-				radioClass: 'iradio'
-			},
-			select2_options: {
-				width: '100%',
+            icheck_options : {
+                checkboxClass: 'icheckbox',
+                radioClass: 'iradio'
+            },
+            select2_options: {
+                width: '100%',
                 language: "ja",
                 allowClear: true,
                 placeholder: '選択してください'
-			},
-			datepicker_options: {
-				format: 'yyyy/mm/dd',
-				language: 'ja',
-				autoclose: true,
-				clearBtn: true,
-				beforeShowDay: function(date) {
-					var day_of_week = date.getDay();
+            },
+            datepicker_options: {
+                format: 'yyyy/mm/dd',
+                language: 'ja',
+                autoclose: true,
+                clearBtn: true,
+                beforeShowDay: function(date) {
+                    var day_of_week = date.getDay();
 
-					if (isHoliday(date)) {
-						return { classes: 'holiday' }
-					} else if (day_of_week === 0 ) {
-						return { classes: 'sunday' }
-					} else if (day_of_week === 6) {
-						return { classes: 'saturday' }
-					}
-				}
-			},
-			timepicker_options: {
-				showMeridian: false,
-				defaultTime: false
-			},
-			parsley_options: {
-				excluded: 'input[type=button], input[type=submit], input[type=reset], [disabled] ',
-				classHandler: function (el) {
-					return el.$element.closest('.container-input');
-				},
-				errorsContainer: function (el) {
-					return el.$element.closest('.container-input');
-				}
-			}
-		}, options);
+                    if (isHoliday(date)) {
+                        return { classes: 'holiday' }
+                    } else if (day_of_week === 0 ) {
+                        return { classes: 'sunday' }
+                    } else if (day_of_week === 6) {
+                        return { classes: 'saturday' }
+                    }
+                }
+            },
+            timepicker_options: {
+                showMeridian: false,
+                defaultTime: false
+            },
+            parsley_options: {
+                excluded: 'input[type=button], input[type=submit], input[type=reset], [disabled] ',
+                classHandler: function (el) {
+                    return el.$element.closest('.container-input');
+                },
+                errorsContainer: function (el) {
+                    return el.$element.closest('.container-input');
+                }
+            }
+        }, options);
 
-		// parsley独自バリデーション設定
-		window.Parsley.addValidator('extension', {
-			validate: function(value, requirement) {
-				var extension = value.split('.').pop();
-				return requirement.split(' ').indexOf(extension) >= 0
-			},
-			messages: {
-				'ja': '指定した拡張子のファイルを選択してください。'
-			}
-		});
+        // parsley独自バリデーション設定
+        window.Parsley.addValidator('extension', {
+            validate: function(value, requirement) {
+                var extension = value.split('.').pop();
+                return requirement.split(' ').indexOf(extension) >= 0
+            },
+            messages: {
+                'ja': '指定した拡張子のファイルを選択してください。'
+            }
+        });
 
-    	window.Parsley.addValidator('requiredGroup', {
-			validate: function (value, requirement) {
-				var result = true;
+        window.Parsley.addValidator('requiredGroup', {
+            validate: function (value, requirement) {
+                var result = true;
 
-				if (value !== '') {
-					return result;
-				}
+                if (value !== '') {
+                    return result;
+                }
 
-				$('[data-parsley-required-group="' + requirement + '"]').each(function () {
-					if ($(this).val() !== '') {
-						result = false;
-						return false;
-					}
-				});
+                $('[data-parsley-required-group="' + requirement + '"]').each(function () {
+                    if ($(this).val() !== '') {
+                        result = false;
+                        return false;
+                    }
+                });
 
-				return result;
-			}
-		});
+                return result;
+            }
+        });
 
-		window.Parsley.addValidator('uniquenessGroup', {
-			validate: function (value, requirement, instance) {
-				var result = true;
+        window.Parsley.addValidator('uniquenessGroup', {
+            validate: function (value, requirement, instance) {
+                var result = true;
 
-				if (value === '') {
-					return result;
-				}
+                if (value === '') {
+                    return result;
+                }
 
-				$('[data-parsley-uniqueness-group="' + requirement + '"]')
-					.not('#' + instance.$element.attr('id')).each(function () {
-					if ($(this).val() === value) {
-						result = false;
+                $('[data-parsley-uniqueness-group="' + requirement + '"]')
+                    .not('#' + instance.$element.attr('id')).each(function () {
+                    if ($(this).val() === value) {
+                        result = false;
 
-						return false;
-					}
-				});
+                        return false;
+                    }
+                });
 
-				return result;
-			}
-		});
+                return result;
+            }
+        });
 
-		this.comfirm = false;
-	}
+        this.comfirm = false;
+    }
 
-	// 初期化
-	LCForm.prototype.init = function (el) {
-		var self = this;
+    // 初期化
+    LCForm.prototype.init = function (el) {
+        var self = this;
 
-		var settings = self.settings;
-		var noimage = settings.img_noimage;
+        var settings = self.settings;
+        var noimage = settings.img_noimage;
         var nodocument = settings.img_nodocument;
         var document = settings.img_document;
 
-		var $el = el === undefined ? $(settings.el) : $(el);
+        var $el = el === undefined ? $(settings.el) : $(el);
 
-		// 項目の削除、ラベル化
-		self.itemDelete();
-		self.itemToLabel();
+        // 項目の削除、ラベル化
+        self.itemDelete();
+        self.itemToLabel();
 
-		// parsley初期化
-		if (el !== undefined ) {
-			$el.find('input, select').each(function () {
-				$(this).parsley().destroy();
-				$(this).parsley(settings.parsley_options);
-			});
-		} else {
-			$el.parsley(settings.parsley_options);
-		}
+        // parsley初期化
+        if (el !== undefined ) {
+            $el.find('input, select').each(function () {
+                $(this).parsley().destroy();
+                $(this).parsley(settings.parsley_options);
+            });
+        } else {
+            $el.parsley(settings.parsley_options);
+        }
 
-		$el.on('submit',function () {
-            setPrefectureNames();
-            setSpatial();
+        $el.on('submit',function () {
+            self.setPrefectureNames();
+            self.setSpatial();
             return true;
-		});
+        });
 
-		// カウンター初期化
-		$el.find('._counter').each(function () {
-			var $input = $(this).siblings('input[maxlength], textarea[maxlength]');
-			$(this).html('<span>' + $input.val().length + '</span>/' + $input.attr('maxlength'));
-		});
+        // カウンター初期化
+        $el.find('._counter').each(function () {
+            var $input = $(this).siblings('input[maxlength], textarea[maxlength]');
+            $(this).html('<span>' + $input.val().length + '</span>/' + $input.attr('maxlength'));
+        });
 
-		// 文字数カウンター初期化
-		$el.find('._input-count').on('keyup keydown keypress change', function () {
-			var $counter = $(this).siblings('._counter').children('span');
-			$counter.html($(this).val().length);
-		});
+        // 文字数カウンター初期化
+        $el.find('._input-count').on('keyup keydown keypress change', function () {
+            var $counter = $(this).siblings('._counter').children('span');
+            $counter.html($(this).val().length);
+        });
 
-		// テキストエリアのautosize適用
-		autosize($el.find('textarea'));
+        // テキストエリアのautosize適用
+        autosize($el.find('textarea'));
 
-		// ファイルインプットの初期化
-		$el.find('.container-fileinput').each(function () {
-			var $file_input = $(this);
+        // ファイルインプットの初期化
+        $el.find('.container-fileinput').each(function () {
+            var $file_input = $(this);
 
-			var $el_input = $file_input.find('input[type="file"]');
-			var $delete_btn = $file_input.find('.btn-file-delete');
+            var $el_input = $file_input.find('input[type="file"]');
+            var $delete_btn = $file_input.find('.btn-file-delete');
             var param_name = 'delete_' + $file_input.find('input[type=file]').attr('id');
             var attr = '[name=' + param_name + ']';
 
             $el_input.hide();
 
-			// ファイル削除ボタン動作
-			if ($delete_btn[0]) {
-				$delete_btn.on('click', function () {
-					$el_input.trigger('filedelete');
-				});
-			}
+            // ファイル削除ボタン動作
+            if ($delete_btn[0]) {
+                $delete_btn.on('click', function () {
+                    $el_input.trigger('filedelete');
+                });
+            }
 
-			if ($el_input.hasClass('_image')) {
-				// 画像
-				var $el_img = $file_input.find('img');
+            if ($el_input.hasClass('_image')) {
+                // 画像
+                var $el_img = $file_input.find('img');
 
-				$el_input.on('change', function () {
-					if (this.files.length) {
-						if (this.files[0].type.match('image.*')) {
-							if ($el_img[0]) {
-								var height = $el_img.height() === 0 ? 150 : $el_img.height();
-								var file = this.files[0];
+                $el_input.on('change', function () {
+                    if (this.files.length) {
+                        if (this.files[0].type.match('image.*')) {
+                            if ($el_img[0]) {
+                                var height = $el_img.height() === 0 ? 150 : $el_img.height();
+                                var file = this.files[0];
 
-								$el_img.fadeOut('normal', function () {
-									var filereader = new FileReader();
-									filereader.onload = function (e) {
-										var url = createObjectURL ? createObjectURL(file) : e.target.result;
+                                $el_img.fadeOut('normal', function () {
+                                    var filereader = new FileReader();
+                                    filereader.onload = function (e) {
+                                        var url = createObjectURL ? createObjectURL(file) : e.target.result;
 
-										// 削除用のinputを無効化
-										$file_input.find('input[type!=file]').prop('disabled', true);
+                                        // 削除用のinputを無効化
+                                        $file_input.find('input[type!=file]').prop('disabled', true);
 
-										// 画像の置き換え
-										var img = new Image();
-										img.onload = function () {
-											EXIF.getData(img, function () {
-												var url = rotate(img);
-												$el_img.attr('src', url).fadeIn();
-												$file_input.removeClass('empty');
-												img = null;
-											});
-										};
-										img.src = url;
+                                        // 画像の置き換え
+                                        var img = new Image();
+                                        img.onload = function () {
+                                            EXIF.getData(img, function () {
+                                                var url = rotate(img);
+                                                $el_img.attr('src', url).fadeIn();
+                                                $file_input.removeClass('empty');
+                                                img = null;
+                                            });
+                                        };
+                                        img.src = url;
                                         $delete_btn.show();
                                         $el.find(attr).remove();
                                     };
-									filereader.readAsDataURL(file);
-								});
+                                    filereader.readAsDataURL(file);
+                                });
 
-								$(this).trigger('setimage');
-							}
-						}
-					}
-				}).on('filedelete', function () {
-					self.clearFileInput($(this));
-					$(this).parsley().validate();
+                                $(this).trigger('setimage');
+                            }
+                        }
+                    }
+                }).on('filedelete', function () {
+                    self.clearFileInput($(this));
+                    $(this).parsley().validate();
 
                     $delete_btn.hide();
 
-					// 画像の置き換え
-					$el_img.fadeOut('normal', function () {
-						$el_img.attr('src', noimage).fadeIn();
-						$file_input.addClass('empty');
-					});
+                    // 画像の置き換え
+                    $el_img.fadeOut('normal', function () {
+                        $el_img.attr('src', noimage).fadeIn();
+                        $file_input.addClass('empty');
+                    });
                     if ($el.find(attr).length == 0) {
                         var delete_param = $('<input/>');
                         delete_param.attr('type','hidden');
@@ -227,15 +229,15 @@ var FormManager;
                         $el.append(delete_param)
                     }
                 });
-			} else {
-				$el_input.on('change', function () {
-					if (this.files.length) {
+            } else {
+                $el_input.on('change', function () {
+                    if (this.files.length) {
                         var $el_img = $file_input.find('img');
                         $el_img.attr('src', document);
                         $delete_btn.show();
                         $el.find(attr).remove();
                     }
-				}).on('filedelete', function () {
+                }).on('filedelete', function () {
                     self.clearFileInput($(this));
                     $(this).parsley().validate();
                     var $el_img = $file_input.find('img');
@@ -253,29 +255,29 @@ var FormManager;
                         delete_param.attr('name', param_name)
                         $el.append(delete_param)
                     }
-				});
-			}
-		});
+                });
+            }
+        });
 
-		// チェックボックス、ラジオボタン初期化
-		$el.find('input').iCheck(settings.icheck_options).on('ifChanged', function () {
-			if ($(this).hasClass('_nested')) {
-				var $container = $(this).closest('.container-checkbox_nested');
-				var $child = $container.find('[data-parent=' + $(this).val() + ']');
+        // チェックボックス、ラジオボタン初期化
+        $el.find('input').iCheck(settings.icheck_options).on('ifChanged', function () {
+            if ($(this).hasClass('_nested')) {
+                var $container = $(this).closest('.container-checkbox_nested');
+                var $child = $container.find('[data-parent=' + $(this).val() + ']');
 
-				if ($(this).iCheck('update')[0].checked) {
-					$child.fadeIn();
-				} else {
-					$child.fadeOut(function () {
-						$(this).find('input:checkbox').iCheck('uncheck');
-					});
-				}
-			}
+                if ($(this).iCheck('update')[0].checked) {
+                    $child.fadeIn();
+                } else {
+                    $child.fadeOut(function () {
+                        $(this).find('input:checkbox').iCheck('uncheck');
+                    });
+                }
+            }
 
-			$(this).parsley().validate();
-		});
+            $(this).parsley().validate();
+        });
 
-		// select2初期化
+        // select2初期化
         if ($el.find('._select2').length > 0) {
             if($el.find('._select2').data('ajax')){
                 var url = $el.find('._select2').data('url');
@@ -329,24 +331,24 @@ var FormManager;
                 $el.find('._select2').select2(settings.select2_options);
             }
         }
-		// bootstrap-datepicker初期化
-		$el.find('._input-date').each(function () {
-			var options = $.extend({}, settings.datepicker_options);
+        // bootstrap-datepicker初期化
+        $el.find('._input-date').each(function () {
+            var options = $.extend({}, settings.datepicker_options);
 
-			if ($(this).data('format')) {
-				options['format'] = $(this).attr('data-format');
-			}
+            if ($(this).data('format')) {
+                options['format'] = $(this).attr('data-format');
+            }
 
-			if ($(this).data('mode')) {
-				options['minViewMode'] = $(this).attr('data-mode');
-			}
+            if ($(this).data('mode')) {
+                options['minViewMode'] = $(this).attr('data-mode');
+            }
 
-			$(this).datepicker(options).on('hide', function () {
-				$(this).parsley().validate();
-			});
+            $(this).datepicker(options).on('hide', function () {
+                $(this).parsley().validate();
+            });
 
-			$(this).on('change',function () {
-			    var date = new Date($(this).val());
+            $(this).on('change',function () {
+                var date = new Date($(this).val());
                 var day_of_week = date.getDay();
                 var className = 'week week_' + day_of_week;
                 var week = '(' + weekStrings[day_of_week] + ')';
@@ -367,52 +369,52 @@ var FormManager;
                 });
                 $(this).parent().find('.text-week').addClass(className);
             })
-		});
+        });
 
-		// bootstrap-timepicker初期化
-		$el.find('._input-time').each(function () {
-			var options = $.extend({}, settings.timepicker_options);
+        // bootstrap-timepicker初期化
+        $el.find('._input-time').each(function () {
+            var options = $.extend({}, settings.timepicker_options);
 
-			if ($(this).data('meridian')) {
-				options['showMeridian'] = $(this).data('meridian');
-			}
+            if ($(this).data('meridian')) {
+                options['showMeridian'] = $(this).data('meridian');
+            }
 
-			$(this).timepicker(options).on('hide.timepicker', function () {
-				$(this).parsley().validate();
-			});
-		});
+            $(this).timepicker(options).on('hide.timepicker', function () {
+                $(this).parsley().validate();
+            });
+        });
 
-		// 郵便番号住所自動入力ボタン動作
-		$('._btn-zipcode').on('click', function () {
-			if ($(this).data('input') && $($(this).data('input'))[0]) {
-				var $el_input = $($(this).data('input'));
+        // 郵便番号住所自動入力ボタン動作
+        $('._btn-zipcode').on('click', function () {
+            if ($(this).data('input') && $($(this).data('input'))[0]) {
+                var $el_input = $($(this).data('input'));
 
-				$.ajax({
-					url: 'https://api.zipaddress.net/',
-					data: { 'zipcode': $el_input.val() },
-					dataType: 'json'
-				}).done(function (res) {
-					if (res && res.code === 200) {
-						if ($(this).data('prefecture') && $($(this).data('prefecture'))[0]) {
-							var $el_prefecture = $($(this).data('prefecture'));
+                $.ajax({
+                    url: 'https://api.zipaddress.net/',
+                    data: { 'zipcode': $el_input.val() },
+                    dataType: 'json'
+                }).done(function (res) {
+                    if (res && res.code === 200) {
+                        if ($(this).data('prefecture') && $($(this).data('prefecture'))[0]) {
+                            var $el_prefecture = $($(this).data('prefecture'));
 
-							$el_prefecture.val($el_prefecture.find('option[data-name="' + res.data.pref + '"]').val());
-							$el_prefecture.trigger('change', { name: res.data.city });
-						}
+                            $el_prefecture.val($el_prefecture.find('option[data-name="' + res.data.pref + '"]').val());
+                            $el_prefecture.trigger('change', { name: res.data.city });
+                        }
 
-						if ($(this).data('address') && $($(this).data('address'))[0]) {
-							$($(this).data('address')).val(res.data.town);
-						}
-					}
-				}.bind(this));
-			}
-		});
+                        if ($(this).data('address') && $($(this).data('address'))[0]) {
+                            $($(this).data('address')).val(res.data.town);
+                        }
+                    }
+                }.bind(this));
+            }
+        });
 
-		// 都道府県選択初期化
-		$el.find('._el-prefecture').on('change', function (e, city) {
-		    var $el_city = $($(this).data('city'));
+        // 都道府県選択初期化
+        $el.find('._el-prefecture').on('change', function (e, city) {
+            var $el_city = $($(this).data('city'));
             var target = $el_city.data('target');
-			if ($el_city[0]) {
+            if ($el_city[0]) {
                 $.ajax({
                     url: '/master/cities/' + $(this).val(),
                     type: 'get',
@@ -425,17 +427,17 @@ var FormManager;
 
                 });
             }
-		});
+        });
 
-		//郵便番号貼り付け
-		$el.find('._el-zipcode').on('paste',function(){
-		    var t = this;
+        //郵便番号貼り付け
+        $el.find('._el-zipcode').on('paste',function(){
+            var t = this;
             setTimeout( function() {
                 $(t).val($(t).val().replace(/-/g, ''));
             }, 5 ) ;
         });
 
-		// 市区町村選択初期化
+        // 市区町村選択初期化
         $el.find('._el-city').each(function () {
             var $el_city = $(this);
             if ($($el_city.data("prefecture"))) {
@@ -502,50 +504,50 @@ var FormManager;
         });
     };
 
-	LCForm.prototype.getParsleyOptions = function () {
-		return this.settings.parsley_options;
-	};
+    LCForm.prototype.getParsleyOptions = function () {
+        return this.settings.parsley_options;
+    };
 
-	// IEチェック
-	LCForm.prototype.isIE = function (version) {
-		if (navigator.appName !== 'Microsoft Internet Explorer') {
-			return false;
-		}
+    // IEチェック
+    LCForm.prototype.isIE = function (version) {
+        if (navigator.appName !== 'Microsoft Internet Explorer') {
+            return false;
+        }
 
-		if (version === 10) {
-			return new RegExp('msie\\s' + ver, 'i').test(navigator.userAgent);
-		}
+        if (version === 10) {
+            return new RegExp('msie\\s' + ver, 'i').test(navigator.userAgent);
+        }
 
-		var div = document.createElement('div'), status;
-		div.innerHTML = '<!--[if IE ' + version + ']> <i></i> <![endif]-->';
-		status = div.getElementsByTagName('i').length;
-		document.body.appendChild(div);
-		div.parentNode.removeChild(div);
+        var div = document.createElement('div'), status;
+        div.innerHTML = '<!--[if IE ' + version + ']> <i></i> <![endif]-->';
+        status = div.getElementsByTagName('i').length;
+        document.body.appendChild(div);
+        div.parentNode.removeChild(div);
 
-		return status;
-	};
+        return status;
+    };
 
-	// fileInputクリア
-	LCForm.prototype.clearFileInput = function ($fileinput) {
-		if (this.isIE(9) || this.isIE(10)) {
-			var $srcFrm = $fileinput.closest('form');
-			var $tmpFrm = $(document.createElement('form'));
-			var $tmpEl = $(document.createElement('div'));
+    // fileInputクリア
+    LCForm.prototype.clearFileInput = function ($fileinput) {
+        if (this.isIE(9) || this.isIE(10)) {
+            var $srcFrm = $fileinput.closest('form');
+            var $tmpFrm = $(document.createElement('form'));
+            var $tmpEl = $(document.createElement('div'));
 
-			$fileinput.before($tmpEl);
-			if ($srcFrm.length) {
-				$srcFrm.after($tmpFrm);
-			} else {
-				$tmpEl.after($tmpFrm);
-			}
+            $fileinput.before($tmpEl);
+            if ($srcFrm.length) {
+                $srcFrm.after($tmpFrm);
+            } else {
+                $tmpEl.after($tmpFrm);
+            }
 
-			$tmpFrm.append($fileinput).trigger('reset');
-			$tmpEl.before($fileinput).remove();
-			$tmpFrm.remove();
-		} else {
-			$fileinput.val('');
-		}
-	};
+            $tmpFrm.append($fileinput).trigger('reset');
+            $tmpEl.before($fileinput).remove();
+            $tmpFrm.remove();
+        } else {
+            $fileinput.val('');
+        }
+    };
 
 
     LCForm.prototype.setSubGenres = function ($el_sub_genre, subGenres, selected) {
@@ -570,8 +572,8 @@ var FormManager;
         }
     };
 
-	// 市区町村設定
-	LCForm.prototype.setCities = function ($el_city, cities, selected) {
+    // 市区町村設定
+    LCForm.prototype.setCities = function ($el_city, cities, selected) {
 
         $el_city.html("");
         if ($el_city.attr('placeholder')) {
@@ -595,129 +597,137 @@ var FormManager;
             $el_city.append(opt);
         }
 
-	};
+    };
 
-	// 指定部分の削除
-	LCForm.prototype.itemDelete = function () {
-		$('[data-delete=true]').each(function () {
-			$(this).remove();
-		});
-	};
-
-	// 入力項目ラベル変換
-	LCForm.prototype.itemToLabel = function (el) {
-		var self = this;
-		var $el = el === undefined ? $(this.settings.el) : $(el);
-
-		// テキストエリア、テキスト
-		$el.find('input, textarea').not(':checkbox, :radio, :hidden, :file, :submit, :reset, :button, :image, :password').each(function () {
-			var $form_group = $(this).closest('.form-group');
-
-			if ($form_group.data('tolabel')) {
-				if (self.settings.create) {
-					$form_group.remove();
-				} else {
-					var text = '(未設定)';
-					if ($(this).val().length !== 0) {
-						text = $(this).val().replace('\n','<br/>');
-					}
-
-					$form_group.find('.label_required').remove();
-					$form_group.find('.container-input').html('').append($('<p></p>', { class: 'el-label', html: text }));
-				}
-			}
-		});
-
-		// リスト
-		$el.find('select').each(function () {
-			var $form_group = $(this).closest('.form-group');
-
-			if ($form_group.data('tolabel')) {
-				if (self.settings.create) {
-					$form_group.remove();
-				} else {
-					var text = '';
-
-					if ($form_group.data('label')) {
-						text = $form_group.data('label');
-					} else {
-						var $selected_option = $(this).find('option:selected');
-
-						text = $selected_option.html();
-						if (text === '') {
-							text = '(未設定)';
-						}
-					}
-
-					$form_group.find('.label_required').remove();
-					$form_group.find('.container-input').html('').append($('<p></p>', {class: 'el-label', html: text}));
-				}
-			}
-		});
-
-		// ラジオ
-		$el.find('._container-radio').each(function () {
-			var $form_group = $(this).closest('.form-group');
-
-			if ($form_group.data('tolabel')) {
-				if (self.settings.create) {
-					$form_group.remove();
-				} else {
-					var $checked_radio = $(this).find(':radio:checked');
-
-					var text = '(未設定)';
-					if ($checked_radio.length !== 0) {
-						text = $('label[for="' + $checked_radio.attr('id') + '"]').html();
-					}
-
-					$form_group.find('.label_required').remove();
-					$form_group.find('.container-input').html('').append($('<p></p>', {class: 'el-label', html: text}));
-				}
-			}
-		});
-
-		// チェックボックス
-		$el.find('._container-checkbox, .container-checkbox_nested').each(function () {
-			var $form_group = $(this).closest('.form-group');
-
-			if ($form_group.data('tolabel')) {
-				if (self.settings.create) {
-					$form_group.remove();
-				} else {
-					var $checked_checkbox = $(this).find(':checkbox:checked');
-
-					var text = '(未設定)';
-					if ($checked_checkbox.length !== 0) {
-						text = $.map($checked_checkbox, function (obj) {
-							return $('label[for="' + $(obj).attr('id') + '"]').html();
-						}).join(' / ');
-
-						if (!text) {
-							text = '設定'
-						}
-					}
-
-					$form_group.find('.label_required').remove();
-					$form_group.find('.container-input').html('').append($('<p></p>', {class: 'el-label', html: text}));
-				}
-			}
-		});
-
-        $el.find(".map_view").each(function () {
-            initMap(this);
+    // 指定部分の削除
+    LCForm.prototype.itemDelete = function () {
+        $('[data-delete=true]').each(function () {
+            $(this).remove();
         });
     };
 
-	// 状態切替
-	LCForm.prototype.changeStatus = function() {
-		this.confirm = !this.confirm;
+    // 入力項目ラベル変換
+    LCForm.prototype.itemToLabel = function (el) {
+        var self = this;
+        var $el = el === undefined ? $(this.settings.el) : $(el);
 
-		if (!this.confirm) {
-			$('.el-confirm').remove();
-			$('._container-btn-confirm, ._show-confirm').hide();
-			$('textarea, input[type!=file], select, .select2, ._hide-confirm, ._container-btn-input, ._container-radio, ._container-checkbox, .container-checkbox_nested').not('.sweet-alert input').show();
+        // テキストエリア、テキスト
+        $el.find('input, textarea').not(':checkbox, :radio, :hidden, :file, :submit, :reset, :button, :image, :password').each(function () {
+            var $form_group = $(this).closest('.form-group');
 
-			//マップのロック解除
+            if ($form_group.data('tolabel')) {
+                if (self.settings.create) {
+                    $form_group.remove();
+                } else {
+                    var text = '(未設定)';
+                    if ($(this).val().length !== 0) {
+                        text = $(this).val().replace('\n','<br/>');
+                    }
+
+                    $form_group.find('.label_required').remove();
+                    $form_group.find('.container-input').html('').append($('<p></p>', { class: 'el-label', html: text }));
+                }
+            }
+        });
+
+        // リスト
+        $el.find('select').each(function () {
+            var $form_group = $(this).closest('.form-group');
+
+            if ($form_group.data('tolabel')) {
+                if (self.settings.create) {
+                    $form_group.remove();
+                } else {
+                    var text = '';
+
+                    if ($form_group.data('label')) {
+                        text = $form_group.data('label');
+                    } else {
+                        var $selected_option = $(this).find('option:selected');
+
+                        text = $selected_option.html();
+                        if (text === '') {
+                            text = '(未設定)';
+                        }
+                    }
+
+                    $form_group.find('.label_required').remove();
+                    $form_group.find('.container-input').html('').append($('<p></p>', {class: 'el-label', html: text}));
+                }
+            }
+        });
+
+        // ラジオ
+        $el.find('._container-radio').each(function () {
+            var $form_group = $(this).closest('.form-group');
+
+            if ($form_group.data('tolabel')) {
+                if (self.settings.create) {
+                    $form_group.remove();
+                } else {
+                    var $checked_radio = $(this).find(':radio:checked');
+
+                    var text = '(未設定)';
+                    if ($checked_radio.length !== 0) {
+                        text = $('label[for="' + $checked_radio.attr('id') + '"]').html();
+                    }
+
+                    $form_group.find('.label_required').remove();
+                    $form_group.find('.container-input').html('').append($('<p></p>', {class: 'el-label', html: text}));
+                }
+            }
+        });
+
+        // チェックボックス
+        $el.find('._container-checkbox, .container-checkbox_nested').each(function () {
+            var $form_group = $(this).closest('.form-group');
+
+            if ($form_group.data('tolabel')) {
+                if (self.settings.create) {
+                    $form_group.remove();
+                } else {
+                    var $checked_checkbox = $(this).find(':checkbox:checked');
+
+                    var text = '(未設定)';
+                    if ($checked_checkbox.length !== 0) {
+                        text = $.map($checked_checkbox, function (obj) {
+                            return $('label[for="' + $(obj).attr('id') + '"]').html();
+                        }).join(' / ');
+
+                        if (!text) {
+                            text = '設定'
+                        }
+                    }
+
+                    $form_group.find('.label_required').remove();
+                    $form_group.find('.container-input').html('').append($('<p></p>', {class: 'el-label', html: text}));
+                }
+            }
+        });
+
+        if (self.settings.modal == false) {
+            self.initMap();
+        }
+    };
+
+    LCForm.prototype.initMap = function () {
+        var self  = this;
+        var $el = $(self.settings.el);
+        $el.find(".map_view").each(function () {
+            self._initMap(this);
+        });
+    };
+
+    // 状態切替
+    LCForm.prototype.changeStatus = function() {
+        this.confirm = !this.confirm;
+
+        if (!this.confirm) {
+            $('.el-confirm').remove();
+            $('._container-btn-confirm, ._show-confirm').hide();
+            $('textarea, input[type!=file], select, .select2, ._hide-confirm, ._container-btn-input, ._container-radio, ._container-checkbox, .container-checkbox_nested').not('.sweet-alert input').show();
+
+            //マップのロック解除
             /*
             $('.container-map').each(function () {
                 var $lock_btn = $(this).find('.btn-lock');
@@ -740,106 +750,106 @@ var FormManager;
             $('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
 
         } else {
-			$('._hide-confirm, ._container-btn-input, .select2').hide();
-			$('._container-btn-confirm, ._show-confirm').show();
+            $('._hide-confirm, ._container-btn-input, .select2').hide();
+            $('._container-btn-confirm, ._show-confirm').show();
 
-			// テキストエリア、テキスト
-			$('input, textarea').not(':checkbox, :radio, :hidden, :file, :submit, :reset, :button, :image, :password').each(function () {
-				if (!$(this).parents('._hide-confirm')[0]) {
-					var text = '(設定なし)';
-					if ($(this).val().length !== 0) {
-						text = $(this).val().replace('\n','<br/>');
-					}
+            // テキストエリア、テキスト
+            $('input, textarea').not(':checkbox, :radio, :hidden, :file, :submit, :reset, :button, :image, :password').each(function () {
+                if (!$(this).parents('._hide-confirm')[0]) {
+                    var text = '(設定なし)';
+                    if ($(this).val().length !== 0) {
+                        text = $(this).val().replace('\n','<br/>');
+                    }
 
-					$(this).hide();
-					$(this).after($('<p></p>', { class: 'el-confirm', html: text }));
-				}
-			});
+                    $(this).hide();
+                    $(this).after($('<p></p>', { class: 'el-confirm', html: text }));
+                }
+            });
 
-			// パスワード
-			$('input:password').each(function () {
-				if (!$(this).parents('._hide-confirm')[0]) {
-					var text = '(変更なし)';
-					var length = $(this).val().length;
+            // パスワード
+            $('input:password').each(function () {
+                if (!$(this).parents('._hide-confirm')[0]) {
+                    var text = '(変更なし)';
+                    var length = $(this).val().length;
 
-					if ($(this).val().length !== 0) {
-						if (length < 2) {
-							text = new Array(length + 1).join('●')
-						} else {
-							text = $(this).val().slice(0, 2);
-							text += new Array(length - 2 + 1).join('●');
-						}
-					}
+                    if ($(this).val().length !== 0) {
+                        if (length < 2) {
+                            text = new Array(length + 1).join('●')
+                        } else {
+                            text = $(this).val().slice(0, 2);
+                            text += new Array(length - 2 + 1).join('●');
+                        }
+                    }
 
-					$(this).hide();
-					$(this).after($('<p></p>', { class: 'el-confirm', html: text }));
-				}
-			});
+                    $(this).hide();
+                    $(this).after($('<p></p>', { class: 'el-confirm', html: text }));
+                }
+            });
 
-			// ファイルインプット(画像以外)
-			$('.container-fileinput').each(function () {
-				if (!$(this).parents('._hide-confirm')[0]) {
-					var $el_input = $(this).find('input[type="file"]');
+            // ファイルインプット(画像以外)
+            $('.container-fileinput').each(function () {
+                if (!$(this).parents('._hide-confirm')[0]) {
+                    var $el_input = $(this).find('input[type="file"]');
 
-					if (!$el_input.hasClass('_image') && $(this).hasClass('empty') ) {
-						$(this).after($('<p></p>', { class: 'el-confirm', html: '(設定なし)' }));
-					}
-				}
-			});
+                    if (!$el_input.hasClass('_image') && $(this).hasClass('empty') ) {
+                        $(this).after($('<p></p>', { class: 'el-confirm', html: '(設定なし)' }));
+                    }
+                }
+            });
 
-			// リスト
-			$('select').each(function () {
-				if (!$(this).parents('._hide-confirm')[0]) {
-					var $selected_option = $(this).find('option:selected');
+            // リスト
+            $('select').each(function () {
+                if (!$(this).parents('._hide-confirm')[0]) {
+                    var $selected_option = $(this).find('option:selected');
 
-					var text = $selected_option.html();
-					if (text === '') {
-						text = '(設定なし)';
-					}
+                    var text = $selected_option.html();
+                    if (text === '') {
+                        text = '(設定なし)';
+                    }
 
-					$(this).hide();
-					$(this).after($('<p></p>', { class: 'el-confirm', html: text }));
-				}
-			});
+                    $(this).hide();
+                    $(this).after($('<p></p>', { class: 'el-confirm', html: text }));
+                }
+            });
 
-			// ラジオ
-			$('._container-radio').each(function () {
-				if (!$(this).parents('._hide-confirm')[0]) {
-					var $checked_radio = $(this).find(':radio:checked');
+            // ラジオ
+            $('._container-radio').each(function () {
+                if (!$(this).parents('._hide-confirm')[0]) {
+                    var $checked_radio = $(this).find(':radio:checked');
 
-					var text = '(設定なし)';
-					if ($checked_radio.length !== 0) {
-						text = $('label[for="' + $checked_radio.attr('id') + '"]').html();
-					}
+                    var text = '(設定なし)';
+                    if ($checked_radio.length !== 0) {
+                        text = $('label[for="' + $checked_radio.attr('id') + '"]').html();
+                    }
 
-					$(this).hide();
-					var p = $('<div class="col-sm-8"><p>' + text + '</p></div>');
-					$(this).after($(p, { class: 'el-confirm' }));
-				}
-			});
+                    $(this).hide();
+                    var p = $('<div class="col-sm-8"><p>' + text + '</p></div>');
+                    $(this).after($(p, { class: 'el-confirm' }));
+                }
+            });
 
-			// チェックボックス
-			$('._container-checkbox, .container-checkbox_nested').each(function () {
-				if (!$(this).parents('._hide-confirm')[0]) {
-					var $checked_checkbox = $(this).find(':checkbox:checked');
+            // チェックボックス
+            $('._container-checkbox, .container-checkbox_nested').each(function () {
+                if (!$(this).parents('._hide-confirm')[0]) {
+                    var $checked_checkbox = $(this).find(':checkbox:checked');
 
-					var text = '(設定なし)';
-					if ($checked_checkbox.length !== 0) {
-						text = $.map($checked_checkbox, function (obj) {
-							return $('label[for="' + $(obj).attr('id') + '"]').html();
-						}).join(' / ');
+                    var text = '(設定なし)';
+                    if ($checked_checkbox.length !== 0) {
+                        text = $.map($checked_checkbox, function (obj) {
+                            return $('label[for="' + $(obj).attr('id') + '"]').html();
+                        }).join(' / ');
 
-						if (!text) {
-							text = '設定'
-						}
-					}
+                        if (!text) {
+                            text = '設定'
+                        }
+                    }
 
-					$(this).hide();
-					$(this).after($('<p></p>', { class: 'el-confirm', html: text }));
-				}
-			});
+                    $(this).hide();
+                    $(this).after($('<p></p>', { class: 'el-confirm', html: text }));
+                }
+            });
 
-			// マップ
+            // マップ
             /*
 			$('.container-map').each(function () {
 				var $lock_btn = $(this).find('.btn-lock');
@@ -860,11 +870,151 @@ var FormManager;
 				}
 			});
             */
-			$('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
-		}
-	};
+            $('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
+        }
+    };
 
-	FormManager = LCForm;
+
+    LCForm.prototype.setPrefectureNames = function() {
+
+        $('._el-prefecture').each(function() {
+            var name = $("#" + this.id + " option:selected").text();
+            $('#' + this.id.replace("_prefecture_code", "_prefecture_name")).val(name);
+        });
+        $('._el-city').each(function() {
+            var name = $("#" + this.id + " option:selected").text();
+            $('#' + this.id.replace("_city_code", "_city_name")).val(name);
+        });
+        return true;
+    };
+
+    LCForm.prototype.setSpatial = function () {
+        $('._spatial').each(function() {
+            var spatial = $(this);
+            var geom = '#' + spatial.attr('id');
+            var lat =  $(geom + '_lat').val();
+            var lng =  $(geom + '_lng').val();
+            $(geom).val('POINT(' + lng + ' ' + lat +')');
+        });
+    };
+
+    LCForm.prototype.reloadMap = function() {
+        for (var i = 0 ; i < this.maps.length ; i ++ ) {
+            google.maps.event.trigger(this.maps[i],'resize');
+        }
+    };
+
+    LCForm.prototype._initMap = function (el) {
+
+        if (typeof google === 'undefined') {
+            alert("google not laded")
+            return;
+        }
+        var nameBase =  $(el).attr('id').replace("_map",'');
+        var $lat_input = $('#' + nameBase + '_lat');
+        var $lng_input = $('#' + nameBase + '_lng');
+        var lat = parseFloat($lat_input.val());
+        var lng = parseFloat($lng_input.val());
+
+        var map = new google.maps.Map(document.getElementById($(el).attr('id')), {
+            center: {
+                lat: lat,
+                lng: lng
+            },
+            zoom: 17
+        });
+        this.maps.push(map);
+        marker = new google.maps.Marker({
+            position: {lat: lat, lng: lng},
+            map: map,
+            title: "POINT",
+            icon: {
+                url: '/images/marker.png',
+                scaledSize: new google.maps.Size(48, 48)
+            },
+            draggable: false
+        });
+
+        google.maps.event.addListener(map, 'center_changed', function(){
+            var position  = map.getCenter();
+            marker.setPosition(position);
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function(){ marker.setAnimation(null); }, 1000);
+            $lat_input.val(position.lat());
+            $lng_input.val(position.lng());
+        });
+
+
+        $($lat_input).on("paste",function(){
+            var target = $(this);
+            setTimeout( function() {
+                var text = $(target).val();
+                var lanlng  = text.split(",");
+                if (lanlng.length == 2) {
+                    var lat = parseFloat(lanlng[0]);
+                    var lng = parseFloat(lanlng[1]);
+                    if (lat != 0.0 && lng != 0.0) {
+                        $lat_input.val(lat);
+                        $lng_input.val(lng);
+                        map.setCenter({lat: lat, lng: lng});
+                    }
+                }
+            }, 10 ) ;
+        });
+
+        $("#" + nameBase + "_lat, #" + nameBase + "_lng").on("keyup",function(){
+            var lat = $lat_input.val();
+            var lng = $lng_input.val();
+            map.setCenter(new google.maps.LatLng(lat,lng));
+        });
+
+        $('#' + nameBase + '_revert-btn').on("click",function () {
+            $lat_input.val(lat);
+            $lng_input.val(lng);
+            map.setCenter(new google.maps.LatLng(lat,lng));
+        });
+
+
+        $('#' + nameBase + '_address-btn').on('click',function () {
+            var geocoder = new google.maps.Geocoder();
+            var address = "";
+            var prefectureElement = '#' + $(this).data('prefecture');
+            if (!prefectureElement) return;
+            address =  $(prefectureElement + ' option:selected').text();
+
+            var cityElement = '#' + $(this).data('city');
+            if (!cityElement) return;
+            address +=  $(cityElement + ' option:selected').text();
+
+            var address1Element = '#' + $(this).data('address1');
+            if(address1Element) {
+                address +=  $(address1Element).val();
+            }
+
+            geocoder.geocode(
+                {
+                    'address': address
+                },
+                function(results, status){
+                    if(status == google.maps.GeocoderStatus.OK){
+                        if (results[0].geometry) {
+                            var latlng = results[0].geometry.location;
+                            $lat_input.val(latlng.lat());
+                            $lng_input.val(latlng.lng());
+                            map.setCenter(latlng);
+                        }
+                    }
+                }
+            );
+        });
+    };
+
+    LCForm.prototype.formRefresh = function  () {
+
+
+    };
+
+    FormManager = LCForm;
 })();
 
 // parsley独自バリデーション設定
@@ -919,129 +1069,3 @@ window.Parsley.addValidator('datetimeGreater', {
     }
 });
 
-function setPrefectureNames() {
-    $('._el-prefecture').each(function() {
-        var name = $("#" + this.id + " option:selected").text();
-        $('#' + this.id.replace("_prefecture_code", "_prefecture_name")).val(name);
-    });
-    $('._el-city').each(function() {
-        var name = $("#" + this.id + " option:selected").text();
-        $('#' + this.id.replace("_city_code", "_city_name")).val(name);
-    });
-    return true;
-}
-
-function setSpatial () {
-    $('._spatial').each(function() {
-        var spatial = $(this);
-        var geom = '#' + spatial.attr('id');
-        var lat =  $(geom + '_lat').val();
-        var lng =  $(geom + '_lng').val();
-        $(geom).val('POINT(' + lng + ' ' + lat +')');
-    });
-}
-
-function initMap(el) {
-
-    if (typeof google === 'undefined') {
-        return;
-    }
-
-    var nameBase =  $(el).attr('id').replace("_map",'');
-    var $lat_input = $('#' + nameBase + '_lat');
-    var $lng_input = $('#' + nameBase + '_lng');
-    var lat = parseFloat($lat_input.val());
-    var lng = parseFloat($lng_input.val());
-
-    var map = new google.maps.Map(document.getElementById($(el).attr('id')), {
-        center: {
-            lat: lat,
-            lng: lng
-        },
-        zoom: 17
-    });
-
-    marker = new google.maps.Marker({
-        position: {lat: lat, lng: lng},
-        map: map,
-        title: "POINT",
-        icon: {
-            url: '/images/marker.png',
-            scaledSize: new google.maps.Size(48, 48)
-        },
-        draggable: false
-    });
-
-    google.maps.event.addListener(map, 'center_changed', function(){
-        var position  = map.getCenter();
-        marker.setPosition(position);
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){ marker.setAnimation(null); }, 1000);
-        $lat_input.val(position.lat());
-        $lng_input.val(position.lng());
-    });
-
-
-    $($lat_input).on("paste",function(){
-        var target = $(this);
-        setTimeout( function() {
-            var text = $(target).val();
-            var lanlng  = text.split(",");
-            if (lanlng.length == 2) {
-                var lat = parseFloat(lanlng[0]);
-                var lng = parseFloat(lanlng[1]);
-                if (lat != 0.0 && lng != 0.0) {
-                    $lat_input.val(lat);
-                    $lng_input.val(lng);
-                    map.setCenter({lat: lat, lng: lng});
-                }
-            }
-        }, 10 ) ;
-    });
-
-    $("#" + nameBase + "_lat, #" + nameBase + "_lng").on("keyup",function(){
-        var lat = $lat_input.val();
-        var lng = $lng_input.val();
-        map.setCenter(new google.maps.LatLng(lat,lng));
-    });
-
-    $('#' + nameBase + '_revert-btn').on("click",function () {
-        $lat_input.val(lat);
-        $lng_input.val(lng);
-        map.setCenter(new google.maps.LatLng(lat,lng));
-    });
-
-
-    $('#' + nameBase + '_address-btn').on('click',function () {
-        var geocoder = new google.maps.Geocoder();
-        var address = "";
-        var prefectureElement = '#' + $(this).data('prefecture');
-        if (!prefectureElement) return;
-        address =  $(prefectureElement + ' option:selected').text();
-
-        var cityElement = '#' + $(this).data('city');
-        if (!cityElement) return;
-        address +=  $(cityElement + ' option:selected').text();
-
-        var address1Element = '#' + $(this).data('address1');
-        if(address1Element) {
-            address +=  $(address1Element).val();
-        }
-
-        geocoder.geocode(
-            {
-                'address': address
-            },
-            function(results, status){
-                if(status == google.maps.GeocoderStatus.OK){
-                    if (results[0].geometry) {
-                        var latlng = results[0].geometry.location;
-                        $lat_input.val(latlng.lat());
-                        $lng_input.val(latlng.lng());
-                        map.setCenter(latlng);
-                    }
-                }
-            }
-        );
-    });
-}

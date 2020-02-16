@@ -508,6 +508,31 @@ form, .search-box {
   }
 }
 
+.modal-regist-buttons-wrapper {
+  z-index: 999;
+  max-width: none;
+  width: 75%;
+  position: fixed;
+  bottom: 0;
+  margin: 1.75rem 12.5% 0 12.5%;
+  border: none;
+  @media screen and (max-width: 768px) {
+    right: 1rem;
+    bottom: 1rem;
+  }
+  .modal-regist-buttons {
+    text-align: right;
+    border: none;
+    box-shadow: 0 12px 10px -6px rgba(0, 0, 0, .3);
+
+    .btn.btn-primary {
+      margin-left: 15px;
+      float: right;
+    }
+  }
+}
+
+
 .btn.btn-default {
   background-color: #fff;
   border: solid 1px $color-primary;
