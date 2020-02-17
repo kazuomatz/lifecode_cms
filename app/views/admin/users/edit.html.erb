@@ -52,19 +52,19 @@
 
 
 <% content_for :add_js do %>
-<script>
-  $(document).on('click','.lock-btn', function () {
-      var status = $(this).data("status");
-      var  method = "put";
-      if (status == "locked") {
-          method = "delete";
-      }
-      $.ajax({
-          method: method,
-          url : '/users/lock/' + '<%= @user.id %>'
-      }).success(function (data) {
-          $("#lock-control").html(data.contents);
-      })
-  });
-</script>
+  <script>
+      $(document).on('click','.lock-btn', function () {
+          var status = $(this).data("status");
+          var  method = 'put';
+          if (status == 'locked') {
+              method = 'delete';
+          }
+          $.ajax({
+              method: method,
+              url: '/admin/users/lock/' + '<%= @user.id %>'
+          }).done(function (data) {
+              $("#lock-control").html(data.content);
+          })
+      });
+  </script>
 <%-end %>
