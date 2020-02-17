@@ -27,8 +27,8 @@ Rails.application.routes.draw do
   root 'top#index'
   get 'top/index'
 
-  put '/users/lock/:id', to: 'users#lock'
-  delete '/users/lock/:id', to: 'users#lock'
+  put '/admin/users/lock/:id', to: 'admin/users#lock'
+  delete '/admin/users/lock/:id', to: 'admin/users#lock'
 
   devise_for :users, only: [:session, :password, :confirmation], controllers: {
       sessions: 'users/sessions',
