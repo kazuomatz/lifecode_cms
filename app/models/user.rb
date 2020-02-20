@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  devise :database_authenticatable, :lockable, :rememberable, :recoverable, :confirmable
+  devise :database_authenticatable, :lockable, :rememberable, :recoverable, :confirmable, :trackable
   acts_as_paranoid
 
   has_many :groups_users
