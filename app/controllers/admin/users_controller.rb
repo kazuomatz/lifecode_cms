@@ -78,7 +78,7 @@ module Admin
       if @user.update_attributes(@attr)
         @user.confirm
         sign_in(@user)
-        redirect_to '/'
+        redirect_to admin_rallies_path
       else
         @user.errors
       end

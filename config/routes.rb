@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resources :groups
     resources :articles
     resources :inquiries
+    put 'users/lock/:id', to: 'users#lock'
+    delete 'users/lock/:id', to: 'users#lock'
+    patch 'users/confirm/:id', to: 'users#confirm_user', as: 'users_confirm'
   end
 
   namespace :public do
@@ -38,8 +41,6 @@ Rails.application.routes.draw do
   root 'top#index'
   get 'top/index'
 
-  put '/users/lock/:id', to: 'users#lock'
-  delete '/users/lock/:id', to: 'users#lock'
 
   devise_for :users, only: [:session, :password, :confirmation], controllers: {
       sessions: 'users/sessions',
