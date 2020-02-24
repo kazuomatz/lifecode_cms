@@ -78,7 +78,7 @@ module Admin
       if @user.update_attributes(@attr)
         @user.confirm
         sign_in(@user)
-        redirect_to admin_rallies_path
+        redirect_to admin_top_index_path
       else
         @user.errors
       end
@@ -93,6 +93,16 @@ module Admin
       end
       content = render_to_string(partial: 'lock', locals: { user: user })
       render json: { content: content, status: 'OK' }
+    end
+
+    def resend_confirmation
+      user = User.where(id: params[:id]).first
+      if user.present?
+        user.send_confirmation_instructions
+        render json: {status: 'OK'}
+      else
+        render json: {status: 'ERROR'}
+      end
     end
 
     private

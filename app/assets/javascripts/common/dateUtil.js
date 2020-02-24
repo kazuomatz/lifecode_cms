@@ -406,3 +406,17 @@ var formatDate = function (date, format) {
 var isHoliday = function (date) {
 	return Object.keys(getHolidays(date.getFullYear())).indexOf(formatDate(date, 'YYYY/MM/DD')) >= 0
 };
+
+var date2HTML = function(date) {
+    var dateString = formatDate(date, 'YYYY-MM-DD');
+    var className;
+    var week = date.getDay();
+    if (isHoliday(date)) {
+        className = 'week week_holiday';
+    }
+    else {
+        className = 'week week_' + week;
+    }
+    var dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][date.getDay()];
+    return dateString + ' (<span class="' + className + '">' + dayOfWeekStr  + '</span>)';
+};

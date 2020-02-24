@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     put 'users/lock/:id', to: 'users#lock'
     delete 'users/lock/:id', to: 'users#lock'
     patch 'users/confirm/:id', to: 'users#confirm_user', as: 'users_confirm'
+    post 'users/resend_confirmation', to: 'users#resend_confirmation'
   end
 
   namespace :public do
