@@ -63,7 +63,7 @@ class ApplicationRecord < ActiveRecord::Base
         column[:placeholder] = ''
       elsif column_name.index('tel') || column_name.index('phone')
         validate[:pattern] = '/^[0-9]\-+$/'
-        validate[:pattern_message] = '殿番号は半角数字とハイフンのみ有効です。'
+        validate[:pattern_message] = '電話番号は半角数字とハイフンのみ有効です。'
         column[:placeholder] = ''
       end
 
