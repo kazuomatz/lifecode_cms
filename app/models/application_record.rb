@@ -63,7 +63,7 @@ class ApplicationRecord < ActiveRecord::Base
         column[:placeholder] = ''
       elsif column_name.index('tel') || column_name.index('phone')
         validate[:pattern] = '/^[0-9]\-+$/'
-        validate[:pattern_message] = '殿番号は半角数字とハイフンのみ有効です。'
+        validate[:pattern_message] = '電話番号は半角数字とハイフンのみ有効です。'
         column[:placeholder] = ''
       end
 
@@ -322,7 +322,7 @@ class ApplicationRecord < ActiveRecord::Base
           if validate[:pattern].present?
             data[:pattern] = validate[:pattern]
             if validate[:pattern_message].present?
-              data[:pattern_message] = validate[:max_length_message]
+              data[:pattern_message] = validate[:pattern_message]
             end
           end
 
@@ -417,4 +417,11 @@ class ApplicationRecord < ActiveRecord::Base
       icon
     end
   end
+
+  def representation_path(image)
+    Rails.application.routes.url_helpers.rails_representation_path(image, only_path: true)
+  end
+
+
+
 end
