@@ -36,6 +36,8 @@ module Admin
     def create
       if User.where(email: @attr[:email]).first
         @user = Admin::User.new(@attr)
+        @user.groups_users.build
+        @group_ids = []
         flash[:alert] = 'このメールアドレスは登録済みです。'
         render template: 'admin/users/new'
         return
