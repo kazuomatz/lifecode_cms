@@ -420,7 +420,7 @@ form {
     }
     &.col-sm-1, &.col-sm-2, &.col-sm-3, &.col-sm-4 {
       .image-preview {
-        min-height: 200px;
+        min-height: 150px;
       }
     }
 
@@ -454,3 +454,9 @@ form {
   }
 }
 
+.nav-item.px-3 {
+  .avatar {
+    margin-top: 5px;
+    margin-right: -20px;
+  }
+}

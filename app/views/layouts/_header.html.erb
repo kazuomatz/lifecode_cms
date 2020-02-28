@@ -17,6 +17,15 @@
   <ul class="nav navbar-nav ml-auto">
     <% if current_user.present? %>
       <li class="nav-item px-3 welcome-name">
+        <div class="avatar">
+          <%- if current_user.avatar.attached? %>
+            <%= image_tag( url_for(current_user.avatar.variant(combine_options:{resize:"120x120^",crop:"120x120+0+0",gravity: :center}).processed)) %>
+          <%- else %>
+            <%= image_tag( asset_path('nouser-circle.jpg')) %>
+          <%-end %>
+        </div>
+      </li>
+      <li class="nav-item px-3 welcome-name">
         ようこそ <b><%=current_user.name%></b> さん
       </li>
       <li class="nav-item px-3">

@@ -58,17 +58,18 @@ module Admin
           flash[:alert] = '入力されたパスワードが一致しません'
           render template: 'users/edit'
         else
-          begin
+          #begin
             if @user.update(@attr)
               set_groups
-              redirect_to admin_users_path
+              if current_user.normal_role?
+                redirect_to admin_top_path
+              else
+                redirect_to admin_users_path
+              end
             else
               flash[:alert] = user.errors.message
               render template: 'users/edit'
             end
-          rescue StandardError => e
-            rescue_500(e)
-          end
         end
       else
         rescue_404
@@ -110,6 +111,7 @@ module Admin
     private
 
     def set_groups
+      return if params[:groups_users].blank?
       groups_users = params[:groups_users]
       group_ids = []
       groups_users.keys.each do |key|
@@ -119,7 +121,7 @@ module Admin
     end
 
     def permit_params
-      @attr = params.require('admin_user').permit(:name, :name_kana, :email, :password, :password_confirmation, :role )
+      @attr = params.require('admin_user').permit(:name, :name_kana, :email, :password, :password_confirmation, :role, :avatar )
       @attr[:email] = @attr[:email].downcase if @attr[:email].present?
       if @attr[:password].blank? || params[:edit_password].nil?
         @attr.delete(:password)

@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_many :groups_users
   has_many :groups, through: :groups_users
+  has_one_attached :avatar
 
   def operator_role?
     role == 2
