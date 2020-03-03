@@ -1,5 +1,4 @@
-## 権限
-## コントローラー名 + アクション名に対して権限を指定する
+---
 permission:
   top: '1,2,3'
   articles: '1,2,3'
@@ -15,3 +14,7 @@ permission:
     destroy: '1,2,3'
     confirm_user: '1,2,3'
     lock: '1,2'
+  events: '1,2,3'
+  animals: '1,2,3'
+  companies: '1,2,3'
+  login_histories: '1,2'

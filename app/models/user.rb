@@ -44,4 +44,60 @@ class User < ApplicationRecord
       Settings.admin.user.role["3"]
     end
   end
+
+  def lock_expired?
+    locked_at && locked_at < UNLOCK_IN.ago
+  end
+
+  if Rails.env == 'production'
+    UNLOCK_IN = 60.minutes             # 1時間ロック継続
+    MAXIMUN_ATTEMPTS = 10              # 10回連続ミスでロック
+  else
+    UNLOCK_IN = 30.seconds             	# 1分ロック継続
+    MAXIMUN_ATTEMPTS = 3              	# 3回連続ミスでロック
+  end
+
+  def password_required?
+    !persisted? || !password.blank? || !password_confirmation.blank?
+  end
+
+  def lock_access!(opts = { })
+    self.locked_at = Time.now.utc
+    save(validate: false)
+  end
+
+  # Unlock a user by cleaning locked_at and failed_attempts.
+  def unlock_access!
+    self.locked_at = nil
+    self.failed_attempts = 0
+    save(validate: false)
+  end
+
+  def unlock_access
+    self.locked_at = nil
+    self.failed_attempts = 0
+  end
+
+
+  # Verifies whether a user is locked or not.
+  def access_locked?
+    !!locked_at && !lock_expired?
+  end
+
+  def attempts_exceeded?
+    if self.access_locked?
+      self.failed_attempts >= MAXIMUN_ATTEMPTS
+    else
+      false
+    end
+  end
+
+  def update_failed_attempts
+    self.failed_attempts += 1
+    save(validate: false)
+    if self.failed_attempts >= MAXIMUN_ATTEMPTS
+      self.lock_access!
+    end
+  end
+
 end

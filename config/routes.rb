@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :login_histories
+  end
+  namespace :admin do
+    resources :companies
+  end
+  namespace :admin do
     resources :animals
   end
   namespace :admin do
@@ -30,6 +36,7 @@ Rails.application.routes.draw do
     delete 'users/lock/:id', to: 'users#lock'
     patch 'users/confirm/:id', to: 'users#confirm_user', as: 'users_confirm'
     post 'users/resend_confirmation', to: 'users#resend_confirmation'
+    resources :login_histories, only: :index
   end
 
   namespace :public do

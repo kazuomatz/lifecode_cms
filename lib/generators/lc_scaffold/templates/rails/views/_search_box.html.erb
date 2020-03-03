@@ -17,9 +17,9 @@
       <%= ApplicationController::render partial: 'rails/views/search_box_prefecture', locals:{ column: column, model: model } -%>
       <%- elsif name.to_s.index('city_code').present? -%>
       <%= ApplicationController::render partial: 'rails/views/search_box_city', locals:{ column: column, model: model } -%>
-      <%- elsif column[:type] == :datetime || column[:type] == :timestamp -%>
+      <%- elsif column && (column[:type] == :datetime || column[:type]) == :timestamp -%>
       <%= ApplicationController::render partial: 'rails/views/search_box_datetime', locals:{ column: column, model: model } -%>
-      <%- elsif column[:options].present? -%>
+      <%- elsif column && (column[:options].present?) -%>
       <%= ApplicationController::render partial: 'rails/views/search_box_radio', locals:{ column: column, model: model } -%>
       <%- else -%>
       <%= ApplicationController::render partial: 'rails/views/search_box_text_field', locals:{ column: column, model: model } -%>
