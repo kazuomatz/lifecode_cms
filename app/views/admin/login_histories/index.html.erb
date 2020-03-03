@@ -20,13 +20,6 @@
         <div class="card">
           <div class="card-header">
             <strong><i class="<%= LoginHistory.icon %>"></i>　<%= LoginHistory.label %>一覧</strong>
-            <div class="right-button-element">
-              <%- if  LoginHistory.edit_mode == :modal %>
-              <button class="btn-primary btn edit-modal-btn" data-id="0"><i class="fas fa-plus"></i> <%= LoginHistory.label %>追加</button>
-              <%- else -%>
-              <a class="btn-primary btn" href="<%= new_admin_login_history_path %>"><i class="fas fa-plus"></i> <%= LoginHistory.label %>追加</a>
-              <%- end -%>
-            </div>
           </div>
           <div class="card-body">
             <div class="row mt-10">
