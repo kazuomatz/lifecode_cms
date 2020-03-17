@@ -1,0 +1,2 @@
+class LoginHistory < ApplicationRecord
+end

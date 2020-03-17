@@ -16,6 +16,16 @@ module Admin
         content = render_to_string(partial: 'list.html', locals: { search_params: merge_search_params, login_histories: login_histories  })
         render json: { pagination: pagination, content: content, page: params[:page] || 1, status: 'OK' }
       else
+        if params[:start_at].present?
+          @start_at = Time.zone.parse(params[:start_at])
+        else
+          @start_at = Time.zone.now - 1.day
+        end
+        if params[:end_at].present?
+          @end_at = Time.zone.parse(params[:end_at])
+        else
+          @end_at = Time.zone.now + 1.minute
+        end
         render
       end
     end

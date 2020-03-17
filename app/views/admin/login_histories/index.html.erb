@@ -61,91 +61,13 @@
     var weekStrings = JSON.parse('<%= raw I18n.t("date.abbr_day_names").to_json %>');
     var modalForm;
     $(function() {
-        $(document).on('click','.delete-btn', function() {
-            var id = $(this).data('id');
-            swal({
-                title: "<%= Settings.form.label.destroy %>",
-                text: 'この<%= LoginHistory.label %>を削除してよろしいですか？',
-                buttons: ["<%= Settings.form.label.cancel %>","<%= Settings.form.label.destroy %>"],
-                dangerMode: true,
-                icon: 'warning'
-            }).then(function(willDelete) {
-                if (willDelete) {
-                    $.ajax({
-                        method: 'delete',
-                        url: '/admin/login_histories/' + id
-                    }).then(
-                        function (data) {
-                            searchManager.getList('<%= params[:page] || 1 %>', searchParams());
-                        },
-                        function(data) {
-                            //error
-                        }
-                    );
-                }
-            });
+        setTimeout(function () {
+          $('[name=start_at], [name=end_at]').trigger('change');
+        },500);
+
+        $('.clear-button').on('click',function () {
+            $('[name=start_at], [name=end_at]').trigger('change');
         });
-
-        $(document).on('click','.edit-modal-btn', function() {
-            var id = $(this).data('id');
-            var url = '';
-            var data = {};
-            if( parseInt(id) > 0 ) {
-                $('.modal .modal-title span').text('<%= Settings.form.label.edit %>');
-                $('.modal .modal-regist-buttons .modal-btn-regist span').text('<%= Settings.form.label.update %>');
-                url = "/admin/login_histories/" + id + '/edit';
-            }
-            else {
-                $('.modal .modal-title span').text('<%= Settings.form.label.create %>');
-                $('.modal .modal-regist-buttons .modal-btn-regist span').text('<%= Settings.form.label.create %>');
-                url = "<%= new_admin_login_history_path %>";
-            }
-            $('.modal-body').html('');
-            $('#modal-form').off('show.bs.modal');
-            $('#modal-form').off('shown.bs.modal');
-
-            $('#modal-form').on('show.bs.modal',function() {
-                $.ajax({
-                    url: url,
-                    method: 'get'
-                }).done(function(data) {
-                    $('#modal-form').off('show.bs.modal');
-                    $('#modal-form').off('shown.bs.modal');
-                    $('.modal-body').html(data).ready(function(){
-                        modalForm = new FormManager({modal: true});
-                        modalForm.init();
-                        setTimeout(function () {
-                            modalForm.reloadMap();
-                        },1000)
-                    });
-                })
-            }).on('shown.bs.modal',function(){ modalForm.initMap() }).modal('show');
-        });
-    });
-
-    $(document).on('click','.modal-btn-regist', function() {
-        modalForm.setPrefectureNames();
-        modalForm.setSpatial();
-        var form = $('#modal-form form').get()[0];
-        var formData = new FormData( form );
-        if($(form).parsley().validate()) {
-            $.ajax({
-                url: $(form).attr('action'),
-                type: $(form).attr('method'),
-                data: formData,
-                processData: false,
-                contentType: false
-            }).done(function(data) {
-                if (data.status == 200) {
-                    $('#modal-form').modal('hide');
-                    searchManager.getList('<%= params[:page] || 1 %>', searchParams());
-                }
-            });
-        }
     });
 </script>
-<%- end %>
-
-<%- if LoginHistory.gmap_load_required? -%>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= Settings.google.api_key %>"></script>
 <%- end %>
