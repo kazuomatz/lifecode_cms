@@ -253,7 +253,7 @@ class ApplicationRecord < ActiveRecord::Base
 
     def required?(column_name)
       validate = self.validate_data column_name
-      validate[:parsley_required] == true ? true : false
+      validate[:required] == true ? true : false
     end
 
     def list_columns
@@ -421,7 +421,5 @@ class ApplicationRecord < ActiveRecord::Base
   def representation_path(image)
     Rails.application.routes.url_helpers.rails_representation_path(image, only_path: true)
   end
-
-
-
 end
+
