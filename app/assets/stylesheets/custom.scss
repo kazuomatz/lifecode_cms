@@ -470,3 +470,9 @@ form, .search-box {
     color: #000 !important;
   }
 }
+
+.search-box {
+  .card-body {
+    padding: 1.25rem 1.5rem;
+  }
+}
