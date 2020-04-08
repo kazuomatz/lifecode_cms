@@ -167,6 +167,9 @@ main.main_public {
           width: 27px;
           height: 34px;
           padding: 10px 0;
+          &.zip-code {
+            line-height: 1;
+          }
         }
       }
     }
@@ -176,6 +179,16 @@ main.main_public {
       .input-group-prepend {
         & + .form-control {
           width: 80%;
+        }
+        text-align: center;
+        .input-group-text {
+          display: inline-block;
+          width: 27px;
+          height: 34px;
+          padding: 10px 0;
+          &.zip-code {
+            line-height: 1;
+          }
         }
       }
     }
@@ -325,7 +338,7 @@ h1.func-title {
 
 
 select.form-control {
-  background: url('/images/arrow-down.png');
+  background: url(asset_path('arrow-down.png'));
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: right 6px top 14px;

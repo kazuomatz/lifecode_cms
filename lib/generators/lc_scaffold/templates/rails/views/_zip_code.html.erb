@@ -5,7 +5,7 @@
         <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
         <div class="input-group mb-0">
           <div class="input-group-prepend">
-            <span class="input-group-text">〒</span>
+            <span class="input-group-text zip-code">〒</span>
           </div>
           <$$= form.text_field :<%= column[:name] %>, class: 'form-control _el-zipcode', maxlength: 8,
                 placeholder: column[:placeholder],
