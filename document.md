@@ -79,7 +79,7 @@ MySQL 6.7.x / 8.xに対応しています。
 
 
 ## nodeモジュールとGemライブラリのインストール
-nodeモジュールとGemライブラリをインストールします。
+プロジェクトディレクトリーに移動して、nodeモジュールとGemライブラリをインストールします。
 
 ```
 $ yarn install
@@ -173,7 +173,7 @@ class CreateCompanies < ActiveRecord::Migration[6.0]
     create_table :companies do |t|
       t.string :name, comment: '会社名'
       t.string :kana, comment: '会社名カナ'
-      t.text :description, comment: '会社名概要'
+      t.text :description, comment: '会社概要'
       t.string :zip_code, comment: '郵便番号'
       t.string :prefecture_code, comment: '都道府県コード'
       t.string :prefecture_name, comment: '都道府県名'
@@ -191,7 +191,7 @@ class CreateCompanies < ActiveRecord::Migration[6.0]
 end
 ```
 
-commentを書くのがミソです。
+commentを書くのがポイントです。理由はのちほど。
 
 では、migrationを実行します。
 
@@ -254,7 +254,7 @@ $ bundle exec rails g lc_scaffold company
 end
 ```
 
-いくつかファイルが作成されました。ここれらのファイルはあとで見ることとして、もう一度、Raisアプリケーションを起動して、https://localhost:3000 にアクセスしてみます。
+いくつかファイルが作成されました。ここれらのファイルはあとで見ることとして、もう一度、Railsアプリケーションを起動して、https://localhost:3000 にアクセスしてみます。
 ログオフした場合は、再度ログインして下さい。
 
   <img src="https://user-images.githubusercontent.com/2704723/78966133-f743f600-7b39-11ea-98c6-47a3d837fc08.jpg" width='70%'/>
@@ -262,13 +262,19 @@ end
 フォーム一覧に「Company」というリンクが追加されているかと思いますのでクリックして下さい。
 
 
-一覧画面ができています。ラベルが「Company登録」とやや残念な感じににあっていますが、「+ Company追加」をクリックして下さい。
+一覧画面ができています。ラベルが「Company登録」とやや残念な感じにあっていますが、「+ Company追加」をクリックして下さい。
 
   <img src="https://user-images.githubusercontent.com/2704723/78980979-e905d200-7b59-11ea-8182-242ff94ec078.jpg" width='70%'/>
 
 Companyの入力フォームができています。
 
-  <img src="https://user-images.githubusercontent.com/2704723/78981109-32562180-7b5a-11ea-88e0-681e8e556caf.jpg" width='70%'/>
+  <img src="https://user-images.githubusercontent.com/2704723/78982270-be694880-7b5c-11ea-86dc-b7c7b616c3cc.jpg" width='70%'/>
+  
+
+ここでのポイントとしては、マイグレーションファイルで設定したコメントが項目のラベル名となっていること、あと、項目のアイコン、電話やメールなどが項目に応じて適切なのもが表示されていることに注目してください。
+この画面から必要な項目を入力して登録するとレコードが作成されます。
+
+ 
 
 
 
