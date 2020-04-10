@@ -1,8 +1,12 @@
+##
+#  Init Database
+#
+email = 'admin@example.com'
+password = 'your-password'
 
-
-u = User.create(name:'システム管理者',email:'admin@lifecode.jp',password:'l1f3-c0d3', role:1)
-u.confirmed_at = DateTime.now
-u.save
+user = User.create(name:'システム管理者',email: email ,password: password, role:1)
+user.confirmed_at = DateTime.now
+user.save
 
 Migration::City.load_data
 Migration::Prefecture.load_data

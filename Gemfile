@@ -78,20 +78,25 @@ gem 'kaminari'
 
 gem 'sprockets'
 
-#gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'rb-readline'
 
 # Use Active Storage variant
 gem 'image_processing'
-#gem 'mini_magick'
-gem 'GeoRuby'
-gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2spatial-adapter', branch: 'rails-6'
+gem 'mini_magick'
+
+# User Geometry
+# gem 'GeoRuby'
+# gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2spatial-adapter', branch: 'rails-6'
 
 gem 'aws-sdk-s3'
 gem 'rails-html-sanitizer'
 #gem 'simple_form'
 gem 'acts-as-taggable-on', git:'https://github.com/alkhadher/acts-as-taggable-on', branch:  'support_rails_6'
 gem 'uglifier'
-gem 'natto'
-gem 'poppler'
+
+# feature - FullText Index Search
+# gem 'natto'
+
+# feature Document File Preview
+# gem 'poppler'

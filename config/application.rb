@@ -23,12 +23,13 @@ module LifecodeCms
     config.i18n.default_locale = :ja
     config.assets.precompile += %w( public.css public.js )
 
-    config.active_storage.routes_prefix = '/s3_images/'
+    config.active_storage.routes_prefix = '/active_storage_images/'
 
     Settings.add_source!("#{Rails.root}/config/settings/permission.yml")
     Settings.add_source!("#{Rails.root}/config/settings/form.yml")
     Settings.reload!
 
-      #Rails.application.config.active_storage.previewers << DOCXPreviewer
+    # feature
+    # Rails.application.config.active_storage.previewers << DOCXPreviewer
   end
 end

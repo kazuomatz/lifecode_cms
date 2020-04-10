@@ -37,7 +37,7 @@
     :length: ''
     :length_message: ''
 - :name: name
-  :label: name
+  :label: アカウント
   :icon: fas fa-info-circle
   :type: :string
   :column: 4

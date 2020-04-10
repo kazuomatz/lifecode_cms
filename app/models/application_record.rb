@@ -6,7 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
     def initial_column(column_name)
       column = {}
       column[:name] = column_name
-      column[:label] = column_name
+      column[:label] = self.default_label(column[:name])
       column[:icon] = self.default_icon(column[:name])
       column[:type] = self.columns_hash[column_name].type
       column[:column] = 4
@@ -106,7 +106,7 @@ class ApplicationRecord < ActiveRecord::Base
     def initial_attachment(attachment)
       column = {}
       column[:name] = attachment.to_s
-      column[:label] = attachment.to_s
+      column[:label] = self.default_label attachment.to_s
       column[:type] = :attachment
       if column[:name].index("image").present? || column[:name].index("photo")
         column[:content_type] = 'image/jpeg,image/png'
@@ -377,6 +377,43 @@ class ApplicationRecord < ActiveRecord::Base
         permission_data['permission'][self.name.pluralize.underscore] = '1,2,3'
         YAML.dump(permission_data, File.open(file, 'w'))
       end
+    end
+
+    def default_label(column_name)
+
+      columns = self.columns.select{ |column|  column.name == column_name }
+      if columns.length == 1
+        return columns[0].comment if columns[0].comment.present?
+      end
+
+      if column_name.index('name')
+        name = "#{column_name.gsub('name','名称')}"
+      elsif column_name.index('mail')
+        name = "#{column_name.gsub('mail','メール')}"
+      elsif column_name.index('content') || column_name.index('description')
+        name = "#{column_name.gsub('content','概要').gsub('description','概要')}"
+      elsif column_name.index('tel')|| column_name.index('phone')
+        name = "#{column_name.gsub('tel','電話番号').gsub('phone','電話番号')}"
+      elsif column_name.index('fax')
+        name = "#{column_name.gsub('fax','FAX')}"
+      elsif column_name.index('url')
+        name = "#{column_name.gsub('url','URL')}"
+      elsif column_name.index('zip_code')
+        name = "#{column_name.gsub('zip_code','郵便番号')}"
+      elsif column_name.index('prefecture_code')
+        name = "#{column_name.gsub('prefecture_code','都道府県')}"
+      elsif column_name.index('city_code')
+        name = "#{column_name.gsub('city_code','市区町村')}"
+      elsif column_name.index('address1')
+        name = "#{column_name.gsub('address1','町名番地')}"
+      elsif column_name.index('address2')
+        name = '建物等'
+      elsif column_name.index('image')
+        name = "#{column_name.gsub('image','画像')}"
+      elsif column_name.index('photo')
+        name = "#{column_name.gsub('photo','写真')}"
+      end
+      name.present? ? name :  column_name
     end
 
     def default_icon(column_name)
