@@ -62,7 +62,7 @@ class ApplicationRecord < ActiveRecord::Base
         column[:type] = :email
         column[:placeholder] = ''
       elsif column_name.index('tel') || column_name.index('phone')
-        validate[:pattern] = '/^[0-9]\-+$/'
+        validate[:pattern] =  '/^[-0-9]+$/'
         validate[:pattern_message] = '電話番号は半角数字とハイフンのみ有効です。'
         column[:placeholder] = ''
       end
@@ -253,7 +253,7 @@ class ApplicationRecord < ActiveRecord::Base
 
     def required?(column_name)
       validate = self.validate_data column_name
-      validate[:parsley_required] == true ? true : false
+      validate[:required] == true ? true : false
     end
 
     def list_columns
@@ -421,7 +421,5 @@ class ApplicationRecord < ActiveRecord::Base
   def representation_path(image)
     Rails.application.routes.url_helpers.rails_representation_path(image, only_path: true)
   end
-
-
-
 end
+

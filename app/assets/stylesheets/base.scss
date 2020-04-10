@@ -161,15 +161,34 @@ main.main_public {
         & + .form-control {
           width: 90%;
         }
+        text-align: center;
+        .input-group-text {
+          display: inline-block;
+          width: 27px;
+          height: 34px;
+          padding: 10px 0;
+          &.zip-code {
+            line-height: 1;
+          }
+        }
       }
     }
-
     .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5,
     .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5,
     .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5 {
       .input-group-prepend {
         & + .form-control {
           width: 80%;
+        }
+        text-align: center;
+        .input-group-text {
+          display: inline-block;
+          width: 27px;
+          height: 34px;
+          padding: 10px 0;
+          &.zip-code {
+            line-height: 1;
+          }
         }
       }
     }
@@ -304,7 +323,7 @@ h1.func-title {
   box-sizing: border-box;
   color: rgb(35, 40, 44);
   margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   @media (max-width: 768px) {
     font-size: 1.2rem;
   }
@@ -319,7 +338,7 @@ h1.func-title {
 
 
 select.form-control {
-  background: url('/images/arrow-down.png');
+  background: url(asset_path('arrow-down.png'));
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: right 6px top 14px;
@@ -338,7 +357,8 @@ select.form-control {
   -ms-transition: 0.3s ease all;
   -o-transition: 0.3s ease all;
   transition: 0.3s ease all;
-  font-weight: normal
+  font-weight: normal;
+  height: 34px !important;
 }
 
 select.form-control::-ms-expand {

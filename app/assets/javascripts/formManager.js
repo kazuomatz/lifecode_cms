@@ -302,9 +302,11 @@ var FormManager;
                                         id: object.id,
                                         text: object[textName]
                                     };
-                                    $.each(option_items.split(","),function(){
+                                    if(option_items) {
+                                      $.each(option_items.split(","), function () {
                                         ret[this] = object[this];
-                                    })
+                                      });
+                                    }
                                     return ret;
                                 });
                                 return {

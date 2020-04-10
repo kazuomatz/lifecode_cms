@@ -460,3 +460,19 @@ form, .search-box {
     margin-right: -20px;
   }
 }
+.select2-selection.select2-selection--single {
+  border: 1px solid #e4e7ea !important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  .select2-selection__rendered {
+    padding: 0.24rem 0.75rem;
+    color: #000 !important;
+  }
+}
+
+.search-box {
+  .card-body {
+    padding: 1.25rem 1.5rem;
+  }
+}
