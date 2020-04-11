@@ -167,8 +167,16 @@ main.main_public {
           width: 27px;
           height: 34px;
           padding: 10px 0;
-          &.zip-code {
+          &.zip-code{
             line-height: 1;
+          }
+          &.date-select  {
+            line-height: 1;
+            border: none;
+            padding-left: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #fff;
           }
         }
       }
@@ -188,6 +196,14 @@ main.main_public {
           padding: 10px 0;
           &.zip-code {
             line-height: 1;
+          }
+          &.date-select  {
+            line-height: 1;
+            padding-left: 5px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #fff;
           }
         }
       }
@@ -663,5 +679,15 @@ li.select2-results__option {
   }
   .form-control {
     width: 85% !important;
+  }
+}
+
+._date_input_selector {
+  .week-container {
+    .week {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 2.5;
+    }
   }
 }

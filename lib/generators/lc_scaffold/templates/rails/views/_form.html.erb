@@ -35,7 +35,7 @@
     <%- elsif column[:type] == :spatial -%>
       <$$ map_view = (column[:show_map] == true) $$>
       <%= ApplicationController::render partial: 'rails/views/map', locals:{ column: column, model: model,var_model: var_model } -%>
-    <%- elsif column[:type] == :integer || column[:type] == :string -%>
+    <%- elsif column[:type] == :integer || column[:type] == :string || column[:type] == :float || column[:type] == :decimal -%>
       <%= ApplicationController::render partial: 'rails/views/text_field', locals:{column: column, model: model} -%>
     <%- elsif column[:type] == :attachment -%>
       <%- if column[:content_type].index('image') -%>
@@ -49,6 +49,7 @@
       <%= ApplicationController::render partial: 'rails/views/datetime', locals:{column: column, model: model, var_model: var_model} -%>
     <%- end -%>
   <%- end -%>
+
 </div>
 
 <$$- if map_view && <%= model_name %>.edit_mode != :modal $$>

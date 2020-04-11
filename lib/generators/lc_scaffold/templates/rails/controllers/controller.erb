@@ -87,6 +87,9 @@ module Admin
       <%= model.name %>.form_attributes.select {| column |  column[:type] == :datetime || column[:type] == :timestamp }.each do |date_column|
         time = params['admin_<%= var_model %>'][date_column[:name] + '_time'] || '00:00'
         @attr[date_column[:name]] = "#{@attr[date_column[:name]]} #{time}"
+        @attr.delete(date_column[:name] + '_year')
+        @attr.delete(date_column[:name] + '_month')
+        @attr.delete(date_column[:name] + '_day')
         @attr.delete(date_column[:name] + '_time')
       end
     end

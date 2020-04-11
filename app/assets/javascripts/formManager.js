@@ -492,6 +492,123 @@ var FormManager;
             }
         });
 
+        //日付セレクターの初期化
+       $el.find('._date_input_selector').each(function () {
+          var target = $(this);
+          var yearSelector = $($(target).find("select")[0]);
+          var date = new Date();
+          var year = date.getFullYear();
+          var weekContainer = $(target).find(".week-container");
+
+          var to = year;
+          var from = year - 100;
+
+          if (yearSelector.data('max-year')) {
+            to = parseInt(yearSelector.data('max-year'));
+          }
+          if (yearSelector.data('min-year')) {
+            from = parseInt(yearSelector.data('min-year'));
+          }
+
+          yearSelector.html('');
+          var defaultYear = yearSelector.data('default-year');
+          if (defaultYear) {
+            defaultYear = parseInt(defaultYear);
+          }
+          else {
+            defaultYear = from + parseInt((to - from) / 2 );
+          }
+
+          for (var y = from ; y <= to ; y ++ ) {
+            var opt = $("<option></option>");
+            opt.val(y);
+            opt.text(y);
+            if ( y == defaultYear) {
+              opt.attr('selected', true);
+            }
+            yearSelector.append(opt);
+         }
+          var monthSelector = $($(target).find("select")[1]);
+         for (var i = 1 ; i <= 12 ; i ++ ) {
+           var opt = $("<option></option>");
+           opt.val(i);
+           opt.text((i < 10 ? '0': '') + i);
+           if ( i == 6 ) {
+             opt.attr('selected', true);
+           }
+           monthSelector.append(opt);
+         }
+         var daySelector = $($(target).find("select")[2]);
+         $('#'+ yearSelector.attr('id') + ', #' + monthSelector.attr('id')).on('change', function() {
+           var year = yearSelector.val();
+           var month = monthSelector.val();
+           var day = daySelector.val();
+           var lastDay = new Date(year, month, 0).getDate();
+           daySelector.html('');
+           for (var i = 1; i <= lastDay ; i ++) {
+             var opt = $("<option></option>");
+             opt.val(i);
+             opt.text((i < 10 ? '0': '') + i);
+             if ( ! day ) {
+               if (i == parseInt(lastDay / 2)) {
+                 opt.attr('selected', true);
+               }
+             }
+             else {
+               if ( i == parseInt(day)) {
+                 opt.attr('selected', true);
+               }
+             }
+             daySelector.append(opt);
+           }
+         });
+
+         var setWeek = function (dateString) {
+           var date = new Date(dateString);
+           var day_of_week = date.getDay();
+           var className = 'week week_' + day_of_week;
+           var week = '(' + weekStrings[day_of_week] + ')';
+           if (isHoliday(date)) {
+             className += ' week_holiday'
+           }
+           var span = $('<span></span>');
+           span.addClass(className);
+           span.text(week);
+           weekContainer.html('');
+           weekContainer.append(span);
+         };
+
+         $('#'+ yearSelector.attr('id') + ', #' +
+             monthSelector.attr('id') + ', #' +
+             daySelector.attr('id')).on('change', function() {
+             var year = yearSelector.val();
+             var month = monthSelector.val();
+             var day = daySelector.val();
+             var target = yearSelector.attr('id').replace('_year','');
+             $('#' + target).val(year + "/" + month + "/" + day);
+             setWeek(year + "/" + month + "/" + day);
+         });
+
+         if ( yearSelector.data('selected')) {
+           $(yearSelector).val(parseInt(yearSelector.data('selected')));
+         }
+
+         if ( monthSelector.data('selected')) {
+           $(monthSelector).val(parseInt(monthSelector.data('selected')));
+         }
+
+         $(yearSelector).trigger('change');
+         if (daySelector.data('selected')) {
+           $(daySelector).val(parseInt(daySelector.data('selected')));
+         }
+
+         var year = yearSelector.val();
+         var month = monthSelector.val();
+         var day = daySelector.val();
+         setWeek(year + "/" + month + "/" + day);
+       });
+
+
         $el.find('.color-picker').colorpicker();
         $el.find('.color-picker').on('colorpickerChange', function(event) {
             $(this).parent().find('svg').css('color', event.color.toString());
