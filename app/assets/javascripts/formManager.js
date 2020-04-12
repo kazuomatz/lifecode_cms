@@ -522,46 +522,66 @@ var FormManager;
           for (var y = from ; y <= to ; y ++ ) {
             var opt = $("<option></option>");
             opt.val(y);
-            opt.text(y);
+            if (yearSelector.data('era') == true) {
+              opt.text(y + '('+ getEra(new Date(y,1,1)) +')');
+            }
+            else {
+              opt.text(y);
+            }
             if ( y == defaultYear) {
               opt.attr('selected', true);
             }
             yearSelector.append(opt);
-         }
+          }
           var monthSelector = $($(target).find("select")[1]);
-         for (var i = 1 ; i <= 12 ; i ++ ) {
-           var opt = $("<option></option>");
-           opt.val(i);
-           opt.text((i < 10 ? '0': '') + i);
-           if ( i == 6 ) {
-             opt.attr('selected', true);
-           }
-           monthSelector.append(opt);
-         }
-         var daySelector = $($(target).find("select")[2]);
-         $('#'+ yearSelector.attr('id') + ', #' + monthSelector.attr('id')).on('change', function() {
-           var year = yearSelector.val();
-           var month = monthSelector.val();
-           var day = daySelector.val();
-           var lastDay = new Date(year, month, 0).getDate();
-           daySelector.html('');
-           for (var i = 1; i <= lastDay ; i ++) {
-             var opt = $("<option></option>");
-             opt.val(i);
-             opt.text((i < 10 ? '0': '') + i);
-             if ( ! day ) {
-               if (i == parseInt(lastDay / 2)) {
-                 opt.attr('selected', true);
-               }
-             }
-             else {
-               if ( i == parseInt(day)) {
-                 opt.attr('selected', true);
-               }
-             }
-             daySelector.append(opt);
-           }
+          for (var i = 1 ; i <= 12 ; i ++ ) {
+            var opt = $("<option></option>");
+            opt.val(i);
+            opt.text((i < 10 ? '0': '') + i);
+            if ( i == 6 ) {
+              opt.attr('selected', true);
+            }
+            monthSelector.append(opt);
+          }
+          var daySelector = $($(target).find("select")[2]);
+          $('#'+ yearSelector.attr('id') + ', #' + monthSelector.attr('id')).on('change', function() {
+            var year = yearSelector.val();
+            var month = monthSelector.val();
+            var day = daySelector.val();
+            var lastDay = new Date(year, month, 0).getDate();
+            daySelector.html('');
+            for (var i = 1; i <= lastDay ; i ++) {
+              var opt = $("<option></option>");
+              opt.val(i);
+              opt.text((i < 10 ? '0': '') + i);
+              if ( ! day ) {
+                if (i == parseInt(lastDay / 2)) {
+                  opt.attr('selected', true);
+                }
+              }
+              else {
+                if ( i == parseInt(day)) {
+                  opt.attr('selected', true);
+                }
+              }
+              daySelector.append(opt);
+            }
          });
+
+         if (yearSelector.data('era') == true) {
+           $('#' + yearSelector.attr('id') + ', #' + monthSelector.attr('id') + ', #' + daySelector.attr('id')).on('change', function () {
+             var year = yearSelector.val();
+             var month = monthSelector.val();
+             var day = daySelector.val();
+             var era = getEra(new Date(year, month -1, day));
+             yearSelector.find('option').each(function () {
+               if ($(this).val() == year) {
+                 $(this).text(year + '('+ era +')');
+                 return;
+               }
+             });
+           });
+         }
 
          var setWeek = function (dateString) {
            var date = new Date(dateString);
@@ -859,27 +879,6 @@ var FormManager;
             $('.el-confirm').remove();
             $('._container-btn-confirm, ._show-confirm').hide();
             $('textarea, input[type!=file], select, .select2, ._hide-confirm, ._container-btn-input, ._container-radio, ._container-checkbox, .container-checkbox_nested').not('.sweet-alert input').show();
-
-            //マップのロック解除
-            /*
-            $('.container-map').each(function () {
-                var $lock_btn = $(this).find('.btn-lock');
-                var mapObj = $($(this).data('map')).data('obj');
-                if (mapObj.map) {
-                    mapObj.map.dragging.enable();
-                    mapObj.map.touchZoom.enable();
-                    mapObj.map.scrollWheelZoom.enable();
-                    mapObj.map.doubleClickZoom.enable();
-                    mapObj.map.boxZoom.enable();
-                    if (mapObj.marker) {
-                        mapObj.marker.dragging.enable();
-                    }
-                }
-                if($lock_btn.hasClass('unlock')) {
-                    $lock_btn.trigger('click');
-                }
-            });*/
-
             $('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
 
         } else {
@@ -981,28 +980,6 @@ var FormManager;
                     $(this).after($('<p></p>', { class: 'el-confirm', html: text }));
                 }
             });
-
-            // マップ
-            /*
-			$('.container-map').each(function () {
-				var $lock_btn = $(this).find('.btn-lock');
-
-                var mapObj = $($(this).data('map')).data('obj');
-                if (mapObj.map) {
-                    mapObj.map.dragging.disable();
-                    mapObj.map.touchZoom.disable();
-                    mapObj.map.scrollWheelZoom.disable();
-                    mapObj.map.doubleClickZoom.disable();
-                    mapObj.map.boxZoom.disable();
-                    if (mapObj.marker) {
-                        mapObj.marker.dragging.disable();
-                    }
-                }
-				if($lock_btn.hasClass('unlock')) {
-					$lock_btn.trigger('click');
-				}
-			});
-            */
             $('html, body').animate({ scrollTop: $('#pageTop').offset().top }, 500, 'swing');
         }
     };

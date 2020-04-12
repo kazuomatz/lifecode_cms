@@ -685,9 +685,13 @@ li.select2-results__option {
 ._date_input_selector {
   .week-container {
     .week {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
-      line-height: 2.5;
+      line-height: 2.9;
+      margin-left: -5px;
     }
+  }
+  select._year {
+    padding: 0 10px 0 10px;
   }
 }

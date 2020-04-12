@@ -356,6 +356,27 @@ class ApplicationRecord < ActiveRecord::Base
             end
           end
 
+          if validate[:range].present?
+            data[:range] = validate[:range]
+            if validate[:range_message].present?
+              data[:range_message] = validate[:range_message]
+            end
+          end
+
+          if validate[:min].present?
+            data[:min] = validate[:min]
+            if validate[:min_message].present?
+              data[:min_message] = validate[:min_message]
+            end
+          end
+
+          if validate[:max].present?
+            data[:max] = validate[:max]
+            if validate[:max_message].present?
+              data[:max_message] = validate[:max_message]
+            end
+          end
+
           if validate[:datetime_greater].present?
             data[:datetime_greater] = validate[:datetime_greater]
             if validate[:datetime_greater_message].present?
@@ -364,6 +385,7 @@ class ApplicationRecord < ActiveRecord::Base
               data[:datetime_greater_message] = "開始日時と終了日時が正しくありません。"
             end
           end
+
           return data
         end
       end

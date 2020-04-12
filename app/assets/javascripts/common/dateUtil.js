@@ -420,3 +420,11 @@ var date2HTML = function(date) {
     var dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][date.getDay()];
     return dateString + ' (<span class="' + className + '">' + dayOfWeekStr  + '</span>)';
 };
+
+var getEra = function(date) {
+  var options = { era:'short', year:'2-digit', month:'2-digit', day:'2-digit',  hour:'2-digit', minute:'2-digit', second:'2-digit', weekday:'short', hour12:false, timeZoneName:'short' };
+  var dt = new Intl.DateTimeFormat('ja-JP-u-ca-japanese', options).format(date);
+  var ret = dt.split('年');
+  return ret[0] ;
+};
+
