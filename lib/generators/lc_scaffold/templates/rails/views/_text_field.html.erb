@@ -1,3 +1,6 @@
+<$$- if column[:options].present? && column[:options].length > 0 -$$>
+<%= ApplicationController::render partial: 'rails/views/radio', locals:{ column: column, model: model,var_model: var_model } -%>
+<$$- else -$$>
 <div class="col-sm-<$$= column[:column] $$>">
   <div class="form-group">
     <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
@@ -11,3 +14,5 @@
     </div>
   </div>
 </div>
+<$$- end -$$>
+
