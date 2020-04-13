@@ -39,7 +39,7 @@ $ rake db:seed
 # Author
 Kazuomatz(kazuomatz@lifecode.jp)
 
-# collaborator
+# Collaborator
 sakaki (formManager.js and searchView design)
 
 # License
