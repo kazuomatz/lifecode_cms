@@ -36,13 +36,13 @@ $ rake db:migrate
 $ rake db:seed
 ```
 
-# Author
+## Author
 Kazuomatz(kazuomatz@lifecode.jp)
 
-# Collaborator
+## Collaborator
 sakaki (formManager.js, searchView / permission management design)
 
-# License
+## License
 MIT
 
 # LifeCode CMS
