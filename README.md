@@ -40,7 +40,7 @@ $ rake db:seed
 Kazuomatz(kazuomatz@lifecode.jp)
 
 # Collaborator
-sakaki (formManager.js, searchView / permittion management design)
+sakaki (formManager.js, searchView / permission management design)
 
 # License
 MIT
