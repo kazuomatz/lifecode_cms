@@ -21,7 +21,7 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
   def create_views
     @file_name = file_name
     @view_path = "app/views/admin/#{file_name.pluralize}"
-    create_form if @exec_methods.index('form_view')
+    create_form if @exec_methods.select{ |m| m.index('form_view') }.length > 0
     create_list_view if @exec_methods.index('list_view')
     create_search_view if @exec_methods.index('search_view')
     create_edit_view if @exec_methods.index('edit_view')
@@ -38,13 +38,20 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
   protected
 
   def create_form
-    file = File.join(Rails.root,@view_path, "_form.html.erb")
-    template 'rails/views/_form.html.erb', file
-    replace_erb_tag file
+    item = var_model_item
+    if item.nil?
+      file = File.join(Rails.root,@view_path, "_form.html.erb")
+      template 'rails/views/_form.html.erb', file
+      replace_erb_tag file
 
-    file = File.join(Rails.root,@view_path, "modal_form.html.erb")
-    template 'rails/views/modal_form.html.erb', file
-    replace_erb_tag file
+      file = File.join(Rails.root,@view_path, "modal_form.html.erb")
+      template 'rails/views/modal_form.html.erb', file
+      replace_erb_tag file
+    elsif
+      file = File.join(Rails.root,'tmp',"#{file_name.pluralize}_form_#{item}.erb")
+      template 'rails/views/_item.html.erb', file
+      replace_erb_tag file
+    end
   end
 
   def create_list_view
@@ -91,6 +98,20 @@ class LcScaffoldGenerator < Rails::Generators::NamedBase
 
   def var_models
     @file_name.pluralize.underscore
+  end
+
+  def var_model_item
+    item = @exec_methods.select {|m| m.index('form_view') }[0]
+    if item
+      items = item.split(':')
+      if items.length == 2
+        items[1]
+      else
+        nil
+      end
+    else
+      nil
+    end
   end
 
   def source_root
