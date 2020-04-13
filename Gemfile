@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 6.0.2.2'
 # Use sqlite3 as the database for Active Record
 gem 'device'
 gem 'mysql2'
@@ -89,7 +89,9 @@ gem 'mini_magick'
 # gem 'GeoRuby'
 # gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2spatial-adapter', branch: 'rails-6'
 
-gem 'aws-sdk-s3'
+# use ActiveStorage Amazon S3
+# gem 'aws-sdk-s3'
+
 gem 'rails-html-sanitizer'
 #gem 'simple_form'
 gem 'acts-as-taggable-on', git:'https://github.com/alkhadher/acts-as-taggable-on', branch:  'support_rails_6'
