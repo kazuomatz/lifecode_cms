@@ -1,5 +1,5 @@
 #!/bin/bash
-APP_NAME=life_code
+APP_NAME=lifecode_cms
 USER=ec2-user
 APP_DIR=/home/$USER/$APP_NAME
 

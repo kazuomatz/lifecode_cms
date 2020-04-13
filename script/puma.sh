@@ -1,7 +1,8 @@
 #!/bin/bash
+# Sample for Amazon Linux2
 NAME=puma
 USER=ec2-user
-APP_NAME=life_code
+APP_NAME=lifecode_cms
 APP_DIR=/home/$USER/$APP_NAME
 LOG_DIR=$APP_DIR/log
 LOG_FILE=$APP_DIR/log/puma.log

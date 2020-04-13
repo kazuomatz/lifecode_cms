@@ -2,7 +2,7 @@
 # chkconfig: 345 80 20
 # description: Sidekiq 
 
-APP="life_code"
+APP="lifecode_cms"
 AS_USER="ec2-user"
 APP_DIR="/home/ec2-user/${APP}"
 
