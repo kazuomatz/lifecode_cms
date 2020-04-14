@@ -29,7 +29,13 @@
 </div>
 
 <%=render partial:'layouts/footer'%>
-
+<div
+  id="image-path"
+  data-noimage-image-path="<%= asset_path('noimage.jpg') %>"
+  data-nodocument-image-path="<%= asset_path('nodocument.jpg')%>"
+  data-document-image-path="<%= asset_path('document.jpg') %>"
+  style="display: none">
+</div>
 </body>
 <%= javascript_include_tag 'application' %>
 <script src="https://www.promisejs.org/polyfills/promise-done-7.0.4.min.js"></script>

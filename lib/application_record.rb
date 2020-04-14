@@ -117,7 +117,7 @@ class ApplicationRecord < ActiveRecord::Base
       column[:name] = attachment.to_s
       column[:label] = self.default_label attachment.to_s
       column[:type] = :attachment
-      if column[:name].index("image").present? || column[:name].index("photo")
+      if column[:name].index("image").present? || column[:name].index("photo") || column[:name].index("avatar") || column[:name].index("icon") || column[:name].index("picture")
         column[:content_type] = 'image/jpeg,image/png'
       else
         column[:content_type] = 'application/pdf'

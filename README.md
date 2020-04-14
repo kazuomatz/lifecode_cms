@@ -604,6 +604,46 @@ eraをtrueにすると、元号が合わせて表示されます。
   <img src="https://user-images.githubusercontent.com/2704723/79064068-a1f61900-7ce0-11ea-9848-8af30ab6fb2d.jpg" width='50%'/>
 
 
+##### ファイルアップロードの実装
+
+画像やファイルアップロードのためのUIを実装するには、クラスファイルに、ActiveStorageのAttachmentを記述します。
+
+```ruby
+class Company < ApplicationRecord
+  has_one_attached :image
+end
+```
+
+ファイルの参照はAdminネームスペースではなく、ApplicationRecordを派生したクラスの方に記述して下さい。
+今のところ ActiveStorageのhas_one_attachedマクロのみに対応しています。 複数のファイルをアタッチできるhas_many_attachedマクロには対応していません。
+
+カラム名がimage,photo,avatar,icon,pictureを含む場合は画像登録用、その他の場合は添付ファイル登録用のUIが生成されます。
+
+以下がフォーム属性ファイルの内容です。
+
+```yaml
+- :name: avotor
+  :label: プロフィール画像
+  :type: :attachment
+  :content_type: image/jpeg,image/png
+  :column: 4
+  :validate:
+    :required: ''
+    :required_message: ''
+- :name: document
+  :label: 添付文書
+  :type: :attachment
+  :content_type: application/pdf
+  :column: 4
+  :validate:
+    :required: ''
+    :required_message: ''
+```
+
+content_typeにmime typeを記述することで添付できるファイルを制限できます。
+画像ファイルの場合は、JPEG、PNG、その他のファイルの場合はPDFがデフォルトです。
+
+
 ### バリデーション
 
 LifeCode CMSは、JavaScriptのバリデーションライブラリー[Parsley](https://parsleyjs.org)を使用してます。Parsleyのvalidateの設定値をここに設定します。以下のバリデーションが設定できます。
@@ -950,6 +990,44 @@ end
 ~~~
 
 例では完全一致のコードを示しましたが、場合によっては部分一致にするなど、適宜記述して下さい。
+
+
+### lc_scaffoldのオプション
+
+lc_scaffoldジェネレーターには、以下のオプションがあります。データベースのマイグレーションでデータベースの項目が増えたときなど、自動生成したいファイルを限定したいときに使用します。
+
+```bash
+$ bundle exec rails g lc_scaffold [model名] --only form_view
+```
+
+onlyを指定することで、自動生成するファイルを限定できます。指定できるファイルは、form_view,list_view,search_view,edit_view,new_view,index_view,controller,routeです。
+また、form_viewを指定したとき、以下のように記述すると、その項目のみのHTMLをRails.root/tmpディレクトリーに書き出します。
+
+```bash
+# CompanyのnameカラムのみのHTMLを書き出す。
+$ bundle exec rails g lc_scaffold company --only form_view:name
+```
+
+### データベースのマイグレーションに伴う注意事項
+
+データベースのマイグレーションを行って、カラムの追加が削除があった場合に、lc_form_attributesジェネレータを再実行すると、フォーム属性ファイルの既存のカラム定義については変更されません。
+削除されたカラムは、フォーム属性ファイルから削除され、追加のあったカラムはフォーム属性ファイルに追加されます。
+
+
+カラムの追加があった場合、controllerの permit_params メソッドに、追加になったカラムを追加する必要があります。
+
+```ruby
+def permit_params
+  @attr = params.require('admin_person').permit(
+        :name, :sex, :birthday, :fee, :float, :tax, :birthday_time, :option1  # option1というカラムが追加になった場合、ここに追加
+  )
+end
+````
+
+カラムの削除があった場合、そのカラムを参照しているViewは動作しなくなりますので、再度、lc_scaffoldジェネレータを実行するか、form_view, search_view, index_viewから削除されたカラムを参照している箇所は編集して削除を行って下さい。
+
+
+
 
 
 

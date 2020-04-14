@@ -7,9 +7,9 @@ var FormManager;
             el: 'form',
             modal: false,
             create: false,
-            img_noimage: '/images/noimage.jpg',
-            img_nodocument: '/images/nodocument.jpg',
-            img_document: '/images/document.jpg',
+            img_noimage: $('#image-path').data('noimage-image-path'),
+            img_nodocument:  $('#image-path').data('nodocument-image-path'),
+            img_document:  $('#image-path').data('document-image-path'),
             icheck_options : {
                 checkboxClass: 'icheckbox',
                 radioClass: 'iradio'
