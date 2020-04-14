@@ -610,7 +610,8 @@ eraをtrueにすると、元号が合わせて表示されます。
 
 ```ruby
 class Company < ApplicationRecord
-  has_one_attached :image
+  has_one_attached :avatar
+  has_one_attached :document
 end
 ```
 
@@ -622,7 +623,7 @@ end
 以下がフォーム属性ファイルの内容です。
 
 ```yaml
-- :name: avotor
+- :name: avatar
   :label: プロフィール画像
   :type: :attachment
   :content_type: image/jpeg,image/png
