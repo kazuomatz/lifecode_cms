@@ -66,15 +66,17 @@ class Users::SessionsController < Devise::SessionsController
         render template:'users/sessions/new'
       end
     else
-      @user.update_failed_attempts
-      LoginHistory.create ({
-          account: params[:user][:email],
-          user_type: 0,
-          user_id: @user.present? ? @user.id : -1,
-          status: 0,
-          name: @user.present? ? @user.name : '',
-          ip_address: request.remote_ip
-      })
+      if @user
+        @user.update_failed_attempts
+        LoginHistory.create ({
+            account: params[:user][:email],
+            user_type: 0,
+            user_id: @user.present? ? @user.id : -1,
+            status: 0,
+            name: @user.present? ? @user.name : '',
+            ip_address: request.remote_ip
+        })
+      end
 
       flash[:alert] = 'メールアドレスまたはパスワードが違います'
       @user = User.new
