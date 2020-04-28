@@ -49,7 +49,8 @@ var FormManager;
                 errorsContainer: function (el) {
                     return el.$element.closest('.container-input');
                 }
-            }
+            },
+			initialized: function() {}
         }, options);
 
         // parsley独自バリデーション設定
@@ -513,7 +514,7 @@ var FormManager;
           yearSelector.html('');
           var defaultYear = yearSelector.data('default-year');
           if (defaultYear) {
-            defaultYear = parseInt(defaultYear);
+          	defaultYear = parseInt(defaultYear);
           }
           else {
             defaultYear = from + parseInt((to - from) / 2 );
@@ -548,6 +549,9 @@ var FormManager;
             var year = yearSelector.val();
             var month = monthSelector.val();
             var day = daySelector.val();
+            if (year == '' || month == '' || day == '') {
+            	return;
+			}
             var lastDay = new Date(year, month, 0).getDate();
             daySelector.html('');
             for (var i = 1; i <= lastDay ; i ++) {
@@ -573,6 +577,9 @@ var FormManager;
              var year = yearSelector.val();
              var month = monthSelector.val();
              var day = daySelector.val();
+             if (year == '' || month == '' || day == '') {
+             	return;
+			 }
              var era = getEra(new Date(year, month -1, day));
              yearSelector.find('option').each(function () {
                if ($(this).val() == year) {
@@ -584,6 +591,10 @@ var FormManager;
          }
 
          var setWeek = function (dateString) {
+         	if (dateString == '') {
+				weekContainer.html('');
+				return;
+			}
            var date = new Date(dateString);
            var day_of_week = date.getDay();
            var className = 'week week_' + day_of_week;
@@ -604,7 +615,12 @@ var FormManager;
              var year = yearSelector.val();
              var month = monthSelector.val();
              var day = daySelector.val();
-             var target = yearSelector.attr('id').replace('_year','');
+			 var target = yearSelector.attr('id').replace('_year','');
+             if (year == '' || month == '' || day == '') {
+             	setWeek('');
+				 $('#' + target).val('');
+             	return;
+			 }
              $('#' + target).val(year + "/" + month + "/" + day);
              setWeek(year + "/" + month + "/" + day);
          });
@@ -625,7 +641,9 @@ var FormManager;
          var year = yearSelector.val();
          var month = monthSelector.val();
          var day = daySelector.val();
-         setWeek(year + "/" + month + "/" + day);
+         if (year != '' && month != '' && day != '') {
+			 setWeek(year + "/" + month + "/" + day);
+		 }
        });
 
 
@@ -655,6 +673,7 @@ var FormManager;
                 self.changeStatus();
             }
         });
+        settings.initialized();
     };
 
     LCForm.prototype.getParsleyOptions = function () {
