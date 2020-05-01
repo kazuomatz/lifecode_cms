@@ -108,15 +108,17 @@ var FormManager;
     }
 
     // 初期化
-    LCForm.prototype.init = function (el) {
+    LCForm.prototype.init = function (el, opt) {
         var self = this;
-
+        if(opt){
+          $.extend(self.settings,opt);
+        }
         var settings = self.settings;
         var noimage = settings.img_noimage;
         var nodocument = settings.img_nodocument;
         var document = settings.img_document;
 
-        var $el = el === undefined ? $(settings.el) : $(el);
+        var $el = (el === undefined  || el == null ) ? $(settings.el) : $(el);
 
         // 項目の削除、ラベル化
         self.itemDelete();
@@ -209,6 +211,11 @@ var FormManager;
 
                                 $(this).trigger('setimage');
                             }
+                        }
+                        else {
+                          $el_img.attr('src', document);
+                          $delete_btn.show();
+                          $el.find(attr).remove();
                         }
                     }
                 }).on('filedelete', function () {
