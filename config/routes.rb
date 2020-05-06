@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :customer_mails
+  end
+  namespace :admin do
+    resources :reports
+  end
+  namespace :admin do
     resources :people
   end
   namespace :admin do

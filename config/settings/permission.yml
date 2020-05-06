@@ -19,4 +19,6 @@ permission:
   companies: '1,2,3'
   login_histories: '1,2'
   people: '1,2,3'
-
+  customers: '1,2,3'
+  reports: '1,2,3'
+  customer_mails: '1,2,3'

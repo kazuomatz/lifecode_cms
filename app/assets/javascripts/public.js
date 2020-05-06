@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require promise
 //= require jquery3
 //= require jquery-drawer/dist/js/drawer
 //= require iscroll/build/iscroll

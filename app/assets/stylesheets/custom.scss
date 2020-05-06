@@ -413,11 +413,7 @@ form, .search-box {
     }
   }
   .container-fileinput {
-    .image-preview {
-      img {
-        width: 100%;
-      }
-    }
+    .image-preview {}
     &.col-sm-1, &.col-sm-2, &.col-sm-3, &.col-sm-4 {
       .image-preview {
         min-height: 150px;
