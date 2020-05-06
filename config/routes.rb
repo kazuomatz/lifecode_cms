@@ -1,28 +1,7 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    resources :customer_mails
-  end
-  namespace :admin do
-    resources :reports
-  end
-  namespace :admin do
-    resources :people
-  end
-  namespace :admin do
-    resources :login_histories
-  end
-  namespace :admin do
-    resources :companies
-  end
-  namespace :admin do
-    resources :animals
-  end
-  namespace :admin do
-    resources :locations
-  end
 
   namespace :admin do
-    resources :events
+    resources :login_histories
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
