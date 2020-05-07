@@ -558,6 +558,11 @@ form, .search-box {
       position:relative;
       float: right;
     }
+    .btn {
+      &:only-child {
+        margin-right: 0;
+      }
+    }
   }
 }
 
