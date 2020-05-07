@@ -538,18 +538,24 @@ form, .search-box {
   bottom: 2rem;
   right: 2rem;
   border: none;
-  width: 250px;
   @media screen and (max-width: 768px) {
     right: 1rem;
     bottom: 1rem;
   }
   .regist-buttons {
+    height: 60px;
+    width:100%;
     display: none;
     border: none;
     box-shadow: 0 12px 10px -6px rgba(0, 0, 0, .3);
-
-    .btn.btn-primary {
-      margin-left: 15px;
+    a.btn {
+      display: inline-block;
+      position:relative;
+      float: left;
+      margin-right: 15px;
+    }
+    .btn:first-child {
+      position:relative;
       float: right;
     }
   }
