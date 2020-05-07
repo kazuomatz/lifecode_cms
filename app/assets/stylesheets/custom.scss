@@ -413,7 +413,43 @@ form, .search-box {
     }
   }
   .container-fileinput {
-    .image-preview {}
+    @media all and (-ms-high-contrast: none) {
+      .form-group {
+        .input-group {
+          .row {
+            display: block;
+            width: 100%;
+          }
+        }
+        .row:last-child {
+          width: 100%;
+          margin-left: 0;
+          .col-sm-6, .col-6 {
+            max-width: none;
+            display: inline-block;
+            float: left;
+            padding-left: 0;
+            padding-right: 0;
+            width: 50%;
+            &:last-child {
+              label {
+                text-align: left !important;
+              };
+            }
+          }
+        }
+      }
+    }
+
+    .image-preview {
+      img.img-fluid {
+        @media all and (-ms-high-contrast: none) {
+          max-width: none;
+          width: 200px;
+        }
+        height: auto;
+      };
+    }
     &.col-sm-1, &.col-sm-2, &.col-sm-3, &.col-sm-4 {
       .image-preview {
         min-height: 150px;
@@ -431,6 +467,7 @@ form, .search-box {
       }
     }
   }
+
 }
 .form-group {
   ._counter {
