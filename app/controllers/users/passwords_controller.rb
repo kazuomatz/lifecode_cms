@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
-  layout 'application'
+  layout 'application_sign_in'
   # GET /resource/password/new
   # def new
   #   super
   # end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  def create
+    super
+    flash[:alert] = 'パスワードをリセットするためのメールを送信しました。'
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit

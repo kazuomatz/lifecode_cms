@@ -14,25 +14,25 @@
               <div class="input-group mb-4">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="icon-lock"></i>
+                      <i class="fas fa-lock"></i>
                     </span>
                 </div>
                 <%= form.password_field :password, class: 'form-control', placeholder:'8文字以上',
-                      data: {
-                        parsley_minlength: Settings.security.password.min_length || 8 ,
-                        parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
-                        parsley_pattern: Settings.security.password.regex,
-                        parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
-                      }
+                                        data: {
+                                            parsley_minlength: Settings.security.password.min_length || 8 ,
+                                            parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
+                                            parsley_pattern: Settings.security.password.regex,
+                                            parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
+                                        }
                 %>
               </div>
 
               <label for="user_role">パスワード(再入力)</label>
               <div class="input-group mb-4">
                 <div class="input-group-prepend">
-                                  <span class="input-group-text">
-                                    <i class="icon-lock"></i>
-                                  </span>
+                  <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                  </span>
                 </div>
 
                 <%= form.password_field :password_confirmation, class: 'form-control',placeholder:'もう一度入力',
@@ -74,13 +74,13 @@
 
 <%= content_for :add_js do %>
   <script>
-      $(function(){
-          var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
-          form.init();
-          $("#user_email").on('keyup',function(){
-              $(".alert.alert-danger").hide();
-          });
+    $(function(){
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+      $("#user_email").on('keyup',function(){
+        $(".alert.alert-danger").hide();
       });
+    });
 
   </script>
 <%-end%>

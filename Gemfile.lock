@@ -6,6 +6,15 @@ GIT
     acts-as-taggable-on (6.5.0)
       activerecord (>= 5.0, < 6.1)
 
+GIT
+  remote: https://github.com/kazuomatz/activerecord-mysql2spatial-adapter.git
+  revision: 605cc2f408b425209795da31dc96456574ca4e61
+  branch: rails-6
+  specs:
+    activerecord-mysql2spatial-adapter (0.6.1.nonrelease)
+      mysql2 (~> 0.5)
+      rgeo-activerecord (~> 6.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -246,6 +255,10 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rgeo (2.1.1)
+    rgeo-activerecord (6.2.1)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
     ruby-debug-ide (0.7.0)
       rake (>= 0.8.1)
     ruby-vips (2.0.17)
@@ -291,6 +304,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-mysql2spatial-adapter!
   activerecord-session_store
   acts-as-taggable-on!
   annotate

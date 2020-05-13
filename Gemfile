@@ -87,7 +87,7 @@ gem 'mini_magick'
 
 # User Geometry
 # gem 'GeoRuby'
-# gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2spatial-adapter', branch: 'rails-6'
+gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2spatial-adapter', branch: 'rails-6'
 
 # use ActiveStorage Amazon S3
 # gem 'aws-sdk-s3'
