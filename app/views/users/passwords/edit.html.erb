@@ -17,6 +17,7 @@
                       <i class="fas fa-lock"></i>
                     </span>
                 </div>
+                <%= form.hidden_field :email %>
                 <%= form.password_field :password, class: 'form-control', placeholder:'8文字以上',
                                         data: {
                                             parsley_minlength: Settings.security.password.min_length || 8 ,

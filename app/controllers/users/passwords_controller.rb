@@ -14,9 +14,11 @@ class Users::PasswordsController < Devise::PasswordsController
   end
 
   # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
-  # end
+  def edit
+    super
+    user = User.reset_password_by_token(params)
+    resource.email = user.email
+  end
 
   # PUT /resource/password
   # def update
