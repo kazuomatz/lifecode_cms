@@ -39,11 +39,17 @@ module Admin
 
     def create
       @<%= var_model %> = Admin::<%= model_name %>.new(@attr)
-      @<%= var_model.singularize.underscore %>.save!
-      if request.xhr?
-        render json:{ status: 200 }
+      if @<%= var_model.singularize.underscore %>.save
+        if request.xhr?
+          render json:{ status: 200 }
+        else
+          redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+        end
       else
-        redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
+        flash[:alert] = @<%= var_model %>.errors.messages
+        set_default_params
+        @<%= var_model %> = Admin::<%= model_name %>.new(@attr)
+        render template: :new
       end
     end
 
@@ -65,8 +71,8 @@ module Admin
             redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_<%= var_models %>_path
           end
         else
-          flash[:alert] = @<%= var_model %>.errors.message
-          render template: '<%= var_model %>/edit'
+          flash[:alert] = @<%= var_model %>.errors.messages
+          render template: :edit
         end
       rescue StandardError => e
           rescue_500(e)
@@ -95,7 +101,7 @@ module Admin
     end
 
     def set_default_params
-      if params[:action] == 'new'
+      if params[:action] == 'new' || params[:action] == 'create'
         @<%= var_model %> = Admin::<%= model_name %>.new
       else
         @<%= var_model %> = Admin::<%= model_name %>.where(id: params[:id]).first

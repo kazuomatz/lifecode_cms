@@ -105,6 +105,7 @@ module Admin
     def clear_flush
       flash[:message] = nil
       flash[:error] = nil
+      flush[:alert] = nil
     end
 
     def set_referer
