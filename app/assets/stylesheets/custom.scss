@@ -554,3 +554,15 @@ form, .search-box {
     }
   }
 }
+
+.field_with_errors {
+  width: 100%;
+  input, select {
+    background-color: #fee2e1;
+  }
+}
+.input-group-prepend {
+  ~ .field_with_errors {
+    width: 90%;
+  }
+}
