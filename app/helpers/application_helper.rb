@@ -115,4 +115,28 @@ module ApplicationHelper
       raw '<i class="fas fa-ticket-alt"></i>'
     end
   end
+
+  def print_flash_alert(object, alert)
+    html = '<ul class="flash-alert">'
+    if alert.respond_to?('each')
+      alert.each do |key, values|
+        if values.respond_to?('each')
+          values.each do |value|
+            if object.respond_to?('form_column') && object.form_column(key).present?
+              html += '<li>' + object.form_column(key)[:label] + ' : ' + value + '</li>'
+            else
+              html += '<li>' + key + ' : ' + value + '</li>'
+            end
+          end
+        else
+          html += '<li>' + key + ' : ' + values + '</li>'
+        end
+      end
+    else
+      html += '<li>' + alert + '</li>'
+    end
+    html += '</ul>'
+    raw html
+  end
+
 end

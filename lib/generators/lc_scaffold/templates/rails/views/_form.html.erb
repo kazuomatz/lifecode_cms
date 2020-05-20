@@ -6,7 +6,9 @@
 <div class="row">
   <%%- if flash[:alert] -%>
   <div class="col-sm-8">
-    <div class="alert alert-danger"><%%= flash[:alert] %></div>
+    <div class="alert alert-danger">
+      <$$= print_flash_alert <%= model_name %>, flash[:alert] $$>
+    </div>
   </div>
   <%%- end -%>
   <$$- map_view = false $$>

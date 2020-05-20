@@ -543,3 +543,14 @@ form, .search-box {
     border-color: $color-primary;
   }
 }
+
+.alert {
+  ul.flash-alert {
+    margin: 0;
+    padding : 0 15px;
+    li {
+      padding: 2.5px 0;
+      list-style: dot;
+    }
+  }
+}
