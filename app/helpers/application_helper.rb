@@ -123,17 +123,17 @@ module ApplicationHelper
         if values.respond_to?('each')
           values.each do |value|
             if object.respond_to?('form_column') && object.form_column(key).present?
-              html += '<li>' + object.form_column(key)[:label] + ' : ' + value + '</li>'
+              html += '<li>' + object.form_column(key)[:label] + ' : ' + value.to_s + '</li>'
             else
-              html += '<li>' + key + ' : ' + value + '</li>'
+              html += '<li>' + key.to_s + ' : ' + value.to_s + '</li>'
             end
           end
         else
-          html += '<li>' + key + ' : ' + values + '</li>'
+          html += '<li>' + key.to_s + ' : ' + values.to_s + '</li>'
         end
       end
     else
-      html += '<li>' + alert + '</li>'
+      html += '<li>' + key.to_s + '</li>'
     end
     html += '</ul>'
     raw html
