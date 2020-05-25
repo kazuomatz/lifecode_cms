@@ -21,7 +21,9 @@
                                             parsley_required: true,
                                             parsley_required_message: 'パスワードを入力して下さい',
                                             parsley_minlength: 8,
-                                            parsley_minlength_message: 'パスワードは８文字以上入力してください'
+                                            parsley_minlength_message: 'パスワードは８文字以上入力してください',
+                                            parsley_pattern: Settings.security.password.regex,
+                                            parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
                                         }
                 %>
               </div>
