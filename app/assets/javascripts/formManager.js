@@ -3,7 +3,7 @@ var FormManager;
 (function(){
     function LCForm(options) {
         this.maps = [];
-        this.settings = $.extend({
+        this.settings = $.extend(true, {
             el: 'form',
             modal: false,
             create: false,
