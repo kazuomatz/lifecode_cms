@@ -86,7 +86,7 @@ autosize@4.0.0:
   integrity sha1-egWZsbqE1zvXWJsNnaOHAVLGkjc=
 
 bootstrap-colorpicker@^3.1.2:
-  version "3.2.0"
+  version "3.5.0"
   resolved "https://registry.yarnpkg.com/bootstrap-colorpicker/-/bootstrap-colorpicker-3.2.0.tgz#42b053b865a866b2674527813cd59f90137b9704"
   integrity sha512-twW93EFLf4MzZ/st+MkfdLCWEEA7r43WPlPnGckzm3Lj2FsbmVS/qgJH2c9IcmO3re5Q1320NO9bhuViwHR9Qw==
   dependencies:
