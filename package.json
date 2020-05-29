@@ -19,6 +19,7 @@
     "chart.js": "^2.7.2",
     "flag-icon-css": "3.0.0",
     "iscroll": "^5.2.0",
+    "jquery": "^3.5.1",
     "jquery-drawer": "^3.2.2",
     "jquery-ui-sortable-npm": "1.0.0",
     "jquery.finger": "0.1.6",
