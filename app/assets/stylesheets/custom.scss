@@ -566,3 +566,24 @@ form, .search-box {
     width: 90%;
   }
 }
+
+.sidebar {
+  nav.sidebar-nav {
+    ul.nav {
+      li.nav-item {
+        a.nav-link {
+          i, [data-icon] {
+            width: 16px;
+            position: absolute;
+            margin-right: 20px;
+          }
+          span {
+            position: relative;
+            left: 25px;
+            top: -2.5px;
+          }
+        }
+      }
+    }
+  }
+}
