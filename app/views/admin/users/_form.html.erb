@@ -142,6 +142,7 @@
           </span>
             </div>
             <%= form.password_field :password, class: 'form-control',
+                                    autocomplete: 'off',
                                     data: {
                                         parsley_minlength: Settings.security.password.min_length || 8 ,
                                         parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
@@ -160,6 +161,7 @@
           </span>
             </div>
             <%= form.password_field :password_confirmation, class: 'form-control',
+                                    autocomplete: 'off',
                                     data: {
                                         parsley_equalto: '#admin_user_password',
                                         parsley_equalto_message: 'パスワードが一致していません'
