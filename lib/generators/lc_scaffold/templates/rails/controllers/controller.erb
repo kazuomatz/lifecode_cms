@@ -49,7 +49,7 @@ module Admin
         flash[:alert] = @<%= var_model %>.errors.messages
         set_default_params
         @<%= var_model %> = Admin::<%= model_name %>.new(@attr)
-        render template: :new
+        render template: '/admin/<%= model_name.pluralize.underscore %>/new'
       end
     end
 
@@ -72,7 +72,7 @@ module Admin
           end
         else
           flash[:alert] = @<%= var_model %>.errors.messages
-          render template: :edit
+          render template: '/admin/<%= model_name.pluralize.underscore %>/new'
         end
       rescue StandardError => e
           rescue_500(e)
