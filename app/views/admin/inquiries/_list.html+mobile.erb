@@ -7,7 +7,7 @@
           <span class="badge-success badge"><i class="fas fa-check"></i></span>
         <% else %>
           <span class="badge-danger badge"><i class="fas fa-exclamation-triangle"></i></span>
-        <%-end %>
+        <%- end %>
       </td>
       <td><%= sprintf '%08d', object.id %></td>
     </tr>
@@ -17,7 +17,8 @@
     </tr>
     <tr>
       <td colspan="3" align="right">
-        <a class="btn-primary btn edit-btn" href="<%= edit_admin_inquiry_path(object) %>"><i class="fas fa-info-circle"></i> 詳細</a>
+        <a class="btn-primary btn edit-btn" href="<%= edit_admin_inquiry_path(object) %>"><i class="fas fa-info-circle"></i>
+          詳細</a>
       </td>
     </tr>
   <%- end %>

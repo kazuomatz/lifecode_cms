@@ -24,7 +24,9 @@
       <td align="right">
         <a class="btn-primary btn edit-btn" href="<%= edit_admin_article_path(object) %>"><i class="far fa-edit"></i> 編集</a>&nbsp;
         <a class="btn-primary btn preview-btn" href="<%= admin_article_path(object) %>"><i class="far fa-eye"></i> プレビュー</a>&nbsp;
-        <button type="button" class="btn-danger btn delete-btn" data-id="<%=object.id %>"><i class="fas fa-trash"></i> 削除</button>
+        <button type="button" class="btn-danger btn delete-btn" data-id="<%= object.id %>"><i class="fas fa-trash"></i>
+          削除
+        </button>
       </td>
     </tr>
   <%- end %>

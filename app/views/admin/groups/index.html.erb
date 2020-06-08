@@ -4,10 +4,10 @@
       {title: 'グループ一覧'}
   ]
   %>
-  <%= render partial: 'layouts/breadcrumb',locals:{items:items}%>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
 <% end %>
 
-<%= render partial: 'base/search_script', locals: {page: params[:landing_page] || 1}  %>
+<%= render partial: 'base/search_script', locals: {page: params[:landing_page] || 1} %>
 
 <div class="container-fluid base">
   <div>
@@ -16,7 +16,7 @@
       <div class="col-sm-12 ">
         <h1 class="func-title">グループ管理</h1>
 
-        <%= render partial: 'admin/groups/search_box'%>
+        <%= render partial: 'admin/groups/search_box' %>
 
         <div class="card">
           <div class="card-header">

@@ -6,7 +6,9 @@ module Admin
     before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :set_variant
     before_action :inquiry_num
+
     protected
+
     @inquiry_num = 0
 
     # キャッシュ設定
@@ -51,13 +53,14 @@ module Admin
     end
 
     # error_class
-    class Forbidden < StandardError; end
+    class Forbidden < StandardError;
+    end
 
     # rescue_from
     # if Rails.env.production?
     rescue_from Exception, with: :rescue_500 if Rails.env == 'production'
-    rescue_from ActionController::RoutingError,    with: :rescue_404
-    rescue_from ActiveRecord::RecordNotFound,      with: :rescue_404
+    rescue_from ActionController::RoutingError, with: :rescue_404
+    rescue_from ActiveRecord::RecordNotFound, with: :rescue_404
     # end
     rescue_from Forbidden, with: :rescue_403
 
@@ -68,7 +71,7 @@ module Admin
       @error = error
       respond_to do |format|
         format.html { render 'error/forbidden', status: :forbidden, layout: 'application', content_type: 'text/html' }
-        format.json { render json: { error: '403 error' }, status: :forbidden }
+        format.json { render json: {error: '403 error'}, status: :forbidden }
       end
     end
 
@@ -78,7 +81,7 @@ module Admin
 
       respond_to do |format|
         format.html { render 'error/not_found', status: :not_found, layout: 'application', content_type: 'text/html' }
-        format.json { render json: { error: '404 error' }, status: :not_found }
+        format.json { render json: {error: '404 error'}, status: :not_found }
       end
     end
 
@@ -88,7 +91,7 @@ module Admin
 
       respond_to do |format|
         format.html { render file: 'error/internal_server_error', status: :internal_server_error, layout: 'application', content_type: 'text/html' }
-        format.json { render json: { error: '500 error' }, status: :internal_server_error }
+        format.json { render json: {error: '500 error'}, status: :internal_server_error }
       end
     end
 

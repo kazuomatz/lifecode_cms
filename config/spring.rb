@@ -1,8 +1,8 @@
 Spring.watch(
-  ".ruby-version",
-  ".rbenv-vars",
-  "tmp/restart.txt",
-  "tmp/caching-dev.txt"
+    ".ruby-version",
+    ".rbenv-vars",
+    "tmp/restart.txt",
+    "tmp/caching-dev.txt"
 )
 Spring.after_fork do
   if ENV['DEBUGGER_STORED_RUBYLIB']

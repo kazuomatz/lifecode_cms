@@ -52,7 +52,7 @@ class Devise::RegistrationsController < DeviseController
     if resource_updated
       if is_flashing_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
-          :update_needs_confirmation : :updated
+                        :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key
       end
       bypass_sign_in resource, scope: resource_name
@@ -70,7 +70,7 @@ class Devise::RegistrationsController < DeviseController
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     set_flash_message! :notice, :destroyed
     yield resource if block_given?
-    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+    respond_with_navigational(resource) { redirect_to after_sign_out_path_for(resource_name) }
   end
 
   # GET /resource/cancel
@@ -87,8 +87,8 @@ class Devise::RegistrationsController < DeviseController
 
   def update_needs_confirmation?(resource, previous)
     resource.respond_to?(:pending_reconfirmation?) &&
-      resource.pending_reconfirmation? &&
-      previous != resource.unconfirmed_email
+        resource.pending_reconfirmation? &&
+        previous != resource.unconfirmed_email
   end
 
   # By default we want to require a password checks on update.

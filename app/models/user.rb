@@ -50,18 +50,18 @@ class User < ApplicationRecord
   end
 
   if Rails.env == 'production'
-    UNLOCK_IN = 60.minutes             # 1時間ロック継続
-    MAXIMUN_ATTEMPTS = 10              # 10回連続ミスでロック
+    UNLOCK_IN = 60.minutes # 1時間ロック継続
+    MAXIMUN_ATTEMPTS = 10 # 10回連続ミスでロック
   else
-    UNLOCK_IN = 30.seconds             	# 1分ロック継続
-    MAXIMUN_ATTEMPTS = 3              	# 3回連続ミスでロック
+    UNLOCK_IN = 30.seconds # 1分ロック継続
+    MAXIMUN_ATTEMPTS = 3 # 3回連続ミスでロック
   end
 
   def password_required?
     !persisted? || !password.blank? || !password_confirmation.blank?
   end
 
-  def lock_access!(opts = { })
+  def lock_access!(opts = {})
     self.locked_at = Time.now.utc
     save(validate: false)
   end

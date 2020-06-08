@@ -1,9 +1,9 @@
 <div class="row">
   <% if flash[:alert] %>
     <div class="col-sm-12">
-      <div class="alert alert-danger"><%=flash[:alert]%></div>
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
     </div>
-  <%end%>
+  <% end %>
   <div class="col-12">
     <div class="row">
       <div class="col-sm-8">
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-          <label for="user_name">メールアドレス<span class="label_required"><%=user.new_record? ? '必須' : '変更不可'%></span></label>
+          <label for="user_name">メールアドレス<span class="label_required"><%= user.new_record? ? '必須' : '変更不可' %></span></label>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -56,13 +56,13 @@
             <label for="user_role">権限</label>
             <div class="col-md-9 col-form-label">
               <% if current_user.administrator_role? %>
-                <% Settings.admin.user.role.keys.each_with_index do | role_key, index |%>
+                <% Settings.admin.user.role.keys.each_with_index do |role_key, index| %>
                   <div class="form-check form-check-inline mr-1">
                     <%= form.radio_button :role, Settings.admin.user.role_value[Settings.admin.user.role_value.keys[index]] %>
                     <label class="form-check-label" for="admin_user_role_<%= Settings.admin.user.role_value[Settings.admin.user.role_value.keys[index]] %>"><%= Settings.admin.user.role[role_key] %></label>
                   </div>
                 <% end %>
-              <%end%>
+              <% end %>
             </div>
           </div>
           <div class="form-group">
@@ -77,7 +77,7 @@
                          <%= @group_ids.index(group.id) ? 'checked' : '' %> />
                   <label for="<%= "groups_users_#{index}_group_id" %>"><%= group.name %></label>
                 </div>
-              <%-end %>
+              <%- end %>
             </div>
           </div>
         <%- end -%>
@@ -104,7 +104,7 @@
             <span class="btn btn-primary">
               <i class="fas fa-portrait"></i>
               ファイル選択
-              <%= form.file_field :avatar, class:'_image', style: 'display:none', accept: 'image/jpeg,image/png' -%>
+              <%= form.file_field :avatar, class: '_image', style: 'display:none', accept: 'image/jpeg,image/png' -%>
             </span>
                 </label>
               </div>
@@ -144,7 +144,7 @@
             <%= form.password_field :password, class: 'form-control',
                                     autocomplete: 'off',
                                     data: {
-                                        parsley_minlength: Settings.security.password.min_length || 8 ,
+                                        parsley_minlength: Settings.security.password.min_length || 8,
                                         parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
                                         parsley_pattern: Settings.security.password.regex,
                                         parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
@@ -171,34 +171,33 @@
         </div>
       </div>
     </div>
-  <%-else %>
+  <%- else %>
     <div class="col-sm-8">
       <div class="alert alert-info">
         ユーザー登録すると、登録の手順がメールでユーザーに通知されます。
       </div>
     </div>
-  <%- end%>
+  <%- end %>
 
 </div>
 
 
 <%- content_for :add_js do %>
   <script>
-      $(function () {
-          var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
-          form.init();
-          $("#set-password").on('ifChanged',function(){
-              if ($(this).prop("checked")) {
-                  $(".password-config").fadeIn();
-              }
-              else {
-                  $(".password-config").fadeOut();
-              }
-          });
-
-          <% if params[:edit_password] %>
-          $("#set-password").iCheck("check").iCheck("update");
-          <% end %>
+    $(function () {
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+      $("#set-password").on('ifChanged', function () {
+        if ($(this).prop("checked")) {
+          $(".password-config").fadeIn();
+        } else {
+          $(".password-config").fadeOut();
+        }
       });
+
+      <% if params[:edit_password] %>
+      $("#set-password").iCheck("check").iCheck("update");
+      <% end %>
+    });
   </script>
 <%- end %>

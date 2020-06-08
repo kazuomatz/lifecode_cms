@@ -3,18 +3,18 @@
 module Admin
   class LoginHistoriesController < Admin::BaseController
     layout 'application'
-    before_action  :authenticate_user!
-    before_action  :check_execute_permission
-    before_action  :permit_params, only: %i[create update]
-    before_action  :set_referer, only: [:edit, :new]
-    before_action  :set_default_params, only: [:edit, :new, :update, :destroy]
+    before_action :authenticate_user!
+    before_action :check_execute_permission
+    before_action :permit_params, only: %i[create update]
+    before_action :set_referer, only: [:edit, :new]
+    before_action :set_default_params, only: [:edit, :new, :update, :destroy]
 
     def index
       if request.xhr?
         login_histories = Admin::LoginHistory.search(params).order('created_at desc').page(params[:page]).per(20)
         pagination = view_context.paginate(login_histories, remote: true, window: 1)
-        content = render_to_string(partial: 'list.html', locals: { search_params: merge_search_params, login_histories: login_histories  })
-        render json: { pagination: pagination, content: content, page: params[:page] || 1, status: 'OK' }
+        content = render_to_string(partial: 'list.html', locals: {search_params: merge_search_params, login_histories: login_histories})
+        render json: {pagination: pagination, content: content, page: params[:page] || 1, status: 'OK'}
       else
         if params[:start_at].present?
           @start_at = Time.zone.parse(params[:start_at])
@@ -33,7 +33,7 @@ module Admin
     def new
       flash[:alert] = nil
       if request.xhr?
-        render template: 'admin/login_histories/modal_form', locals: { login_history: @login_history }, layout: false
+        render template: 'admin/login_histories/modal_form', locals: {login_history: @login_history}, layout: false
       else
         render
       end
@@ -41,7 +41,7 @@ module Admin
 
     def edit
       if request.xhr?
-        render template: 'admin/login_histories/modal_form', locals: { login_history: @login_history }, layout: false
+        render template: 'admin/login_histories/modal_form', locals: {login_history: @login_history}, layout: false
       else
         render
       end
@@ -51,7 +51,7 @@ module Admin
       @login_history = Admin::LoginHistory.new(@attr)
       @login_history.save!
       if request.xhr?
-        render json:{ status: 200 }
+        render json: {status: 200}
       else
         redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_login_histories_path
       end
@@ -62,7 +62,7 @@ module Admin
         params.keys.each do |key|
           if key.index('delete_') == 0
             if params[key] == 'true'
-              item = key.gsub('delete_admin_','').gsub('login_history_','')
+              item = key.gsub('delete_admin_', '').gsub('login_history_', '')
               @attr[item] = nil
             end
           end
@@ -70,7 +70,7 @@ module Admin
 
         if @login_history.update(@attr)
           if request.xhr?
-            render json:{ status: 200 }
+            render json: {status: 200}
           else
             redirect_to session[params[:controller]] && session[params[:controller]]['return_path'] || admin_login_histories_path
           end
@@ -79,22 +79,22 @@ module Admin
           render template: 'login_history/edit'
         end
       rescue StandardError => e
-          rescue_500(e)
+        rescue_500(e)
       end
     end
 
     def destroy
       @login_history.destroy
-      render json: { status:200 }
+      render json: {status: 200}
     end
 
     private
 
     def permit_params
       @attr = params.require('admin_login_history').permit(
-        :user_type, :account, :name, :user_id, :ip_address, :status
+          :user_type, :account, :name, :user_id, :ip_address, :status
       )
-      LoginHistory.form_attributes.select {| column |  column[:type] == :datetime || column[:type] == :timestamp }.each do |date_column|
+      LoginHistory.form_attributes.select { |column| column[:type] == :datetime || column[:type] == :timestamp }.each do |date_column|
         time = params['admin_login_history'][date_column[:name] + '_time'] || '00:00'
         @attr[date_column[:name]] = "#{@attr[date_column[:name]]} #{time}"
         @attr.delete(date_column[:name] + '_time')
@@ -123,10 +123,10 @@ module Admin
               city = City.where(code: column[:default_city_code]).first
             end
             @login_history[column[:city_column]] = city.code
-            @login_history[column[:name].gsub('_code','_name')] = prefecture.name
-            @login_history[column[:city_column].gsub('_code','_name')] = city.name
+            @login_history[column[:name].gsub('_code', '_name')] = prefecture.name
+            @login_history[column[:city_column].gsub('_code', '_name')] = city.name
           end
-          @city_data[column[:city_column]] = City.where(prefecture_code: @login_history[column[:name]]).map {|c| [c.name, c.code, {'data-name' => c.name}]}
+          @city_data[column[:city_column]] = City.where(prefecture_code: @login_history[column[:name]]).map { |c| [c.name, c.code, {'data-name' => c.name}] }
         end
       end
     end

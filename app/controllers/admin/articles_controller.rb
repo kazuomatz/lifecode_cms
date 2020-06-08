@@ -1,5 +1,5 @@
 module Admin
-  class ArticlesController <  BaseController
+  class ArticlesController < BaseController
     def index
       if request.xhr?
         objects = Admin::Article.all
@@ -13,7 +13,7 @@ module Admin
         end
         objects = objects.order('updated_at desc').page(params[:page] || 1).per(20)
         pagination = view_context.paginate(objects, remote: true, window: 1)
-        content = render_to_string(partial: 'list.html', locals: { objects: objects })
+        content = render_to_string(partial: 'list.html', locals: {objects: objects})
         render json: {pagination: pagination, content: content, page: params[:page] || 1, status: 'OK'}
       end
     end
@@ -27,7 +27,7 @@ module Admin
     def create
       @article = Admin::Article.new(update_params)
       @article.save!
-      Upload.where(article_id: session[:article_session_id]).each do | up |
+      Upload.where(article_id: session[:article_session_id]).each do |up|
         up.article_id = @article.id
         up.save
       end
@@ -49,7 +49,7 @@ module Admin
     def destroy
       @article = Admin::Article.find params[:id]
       @article.destroy
-      render json: { status: 200}
+      render json: {status: 200}
     end
 
     def show

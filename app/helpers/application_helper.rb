@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def calendar_icon(date)
-    class_name =''
+    class_name = ''
     begin
       if date.present?
         holiday = date.to_date.national_holiday?
@@ -46,7 +46,7 @@ module ApplicationHelper
     rescue
       class_name = ''
     end
-    raw  "<i class=\"far fa-calendar-alt #{class_name}\"></i>"
+    raw "<i class=\"far fa-calendar-alt #{class_name}\"></i>"
   end
 
   def sanitize_content(html, shorten = false)
@@ -152,7 +152,7 @@ module ApplicationHelper
             end
           end
         else
-          html += '<li>' + key.to_s +  values.to_s + '</li>'
+          html += '<li>' + key.to_s + values.to_s + '</li>'
         end
       end
     else

@@ -26,7 +26,7 @@ module Admin
           if params[:end_at_time].present?
             end_at += ' ' + params[:end_at_time]
           end
-          objects = objects.where('created_at <= ?',end_at)
+          objects = objects.where('created_at <= ?', end_at)
         end
 
         objects

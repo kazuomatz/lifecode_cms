@@ -1,8 +1,10 @@
 # This migration comes from acts_as_taggable_on_engine (originally 1)
 if ActiveRecord.gem_version >= Gem::Version.new('5.0')
-  class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2]; end
+  class ActsAsTaggableOnMigration < ActiveRecord::Migration[4.2];
+  end
 else
-  class ActsAsTaggableOnMigration < ActiveRecord::Migration; end
+  class ActsAsTaggableOnMigration < ActiveRecord::Migration;
+  end
 end
 ActsAsTaggableOnMigration.class_eval do
   def self.up
@@ -12,7 +14,7 @@ ActsAsTaggableOnMigration.class_eval do
     end
 
     create_table ActsAsTaggableOn.taggings_table do |t|
-      t.references :tag, foreign_key: { to_table: ActsAsTaggableOn.tags_table }
+      t.references :tag, foreign_key: {to_table: ActsAsTaggableOn.tags_table}
 
       # You should make sure that the column created is
       # long enough to store the required class names.

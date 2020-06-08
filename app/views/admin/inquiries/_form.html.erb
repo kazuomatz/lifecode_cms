@@ -1,4 +1,4 @@
-<%= form_for inquiry, html:{class: 'form-inquiry'} do |form| %>
+<%= form_for inquiry, html: {class: 'form-inquiry'} do |form| %>
   <div class="card">
     <div class="card-header">
       <strong><i class="fas fa-home"></i>　お問い合わせ</strong>
@@ -43,7 +43,9 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label>お名前</label>
-            <div class="iq-item"><%= inquiry.name %> <%= inquiry.name_kana.present? ? " (#{inquiry.name_kana}) " : "" %>様</div>
+            <div class="iq-item"><%= inquiry.name %> <%= inquiry.name_kana.present? ? " (#{inquiry.name_kana}) " : "" %>
+              様
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +59,8 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label>メールアドレス <a href="mailto:<%= inquiry.email %>" class="btn btn-primary btn-xs" style="float: right"><i class="fas fa-envelope"></i></a></label>
+            <label>メールアドレス
+              <a href="mailto:<%= inquiry.email %>" class="btn btn-primary btn-xs" style="float: right"><i class="fas fa-envelope"></i></a></label>
             <div class="iq-item"><%= inquiry.email %></div>
           </div>
         </div>
@@ -100,18 +103,18 @@
         <div class="col-sm-6">
           <div class="form-group">
             <label>対応者</label>
-            <%= form.text_field :supporter_name, class:'form-control' %>
+            <%= form.text_field :supporter_name, class: 'form-control' %>
           </div>
         </div>
       </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label>対応内容</label>
-              <%= form.text_area :support_note, class:'form-control',rows: 5 %>
-            </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>対応内容</label>
+            <%= form.text_area :support_note, class: 'form-control', rows: 5 %>
           </div>
         </div>
+      </div>
     </div>
   </div>
   <div class="regist-buttons-wrapper">
@@ -129,8 +132,8 @@
 <% content_for :add_js do %>
   <script>
     $(function () {
-        var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
-        form.init();
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
     });
   </script>
 <% end %>

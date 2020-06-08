@@ -6,14 +6,15 @@ form.form-inquiry {
 
 table.inquiry-table {
   .badge-col {
-      .badge {
-        display: inline-block;
-        padding: 5px;
-        width: 24px;
-        height: 24px;
-        svg {
-          vertical-align: middle;
-        }
+    .badge {
+      display: inline-block;
+      padding: 5px;
+      width: 24px;
+      height: 24px;
+
+      svg {
+        vertical-align: middle;
       }
+    }
   }
 }

@@ -1,12 +1,12 @@
-<%- content_for :title do%>
+<%- content_for :title do %>
   プレビュー
 <%- end %>
 <% content_for :breadcrumb do %>
   <%- items = [
       {url: '/admin', title: 'ホーム'},
-      {title: "記事一覧", url: admin_articles_path },
+      {title: "記事一覧", url: admin_articles_path},
       {title: "記事プレビュー"}
-  ]%>
+  ] %>
   <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
 <% end %>
 
@@ -21,15 +21,15 @@
                 <h1 class="title"><%= @article.title %></h1>
               </div>
               <% if @article.main_image.present? %>
-                <div class="col-sm-12" >
-                    <div 
-                      class="main-image" 
-                      style="background-image: url(<%=rails_representation_path(@article.main_image.variant(combine_options:{resize:"1200x630^",crop:"1200x630+0+0",gravity: :center}).processed)%>)"%>
-                    </div>
+                <div class="col-sm-12">
+                  <div
+                    class="main-image"
+                    style="background-image: url(<%=rails_representation_path(@article.main_image.variant(combine_options:{resize:"1200x630^",crop:"1200x630+0+0",gravity: :center}).processed)%>)" %>
+                  </div>
                 </div>
-              <%- end%>
+              <%- end %>
               <% if @article.catch.present? %>
-                <div class="col-sm-12" >
+                <div class="col-sm-12">
                   <div class="catch">
                     <%= @article.catch %>
                   </div>
@@ -49,9 +49,9 @@
 
     <div class="regist-buttons-wrapper">
       <div class="card-footer regist-buttons">
-          <a href="<%= admin_articles_path %>" class="btn btn-default">
-            キャンセル
-          </a>
+        <a href="<%= admin_articles_path %>" class="btn btn-default">
+          キャンセル
+        </a>
         <a href="<%= edit_admin_article_path(id: @article.id) %>" class="btn btn-primary">
           <i class="fas fa-pen"></i> 編集
         </a>
@@ -62,9 +62,9 @@
 </div>
 <%= content_for :add_js do %>
   <script>
-      $(function () {
-          var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
-          form.init();
-      })
+    $(function () {
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+    })
   </script>
 <%- end %>

@@ -35,7 +35,7 @@ html {
 body {
   background: none;
   font-size: 14px;
-  font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Segoe UI,Hiragino Kaku Gothic ProN,Hiragino Sans,ヒラギノ角ゴ ProN W3,Arial,メイリオ,Meiryo,sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Segoe UI, Hiragino Kaku Gothic ProN, Hiragino Sans, ヒラギノ角ゴ ProN W3, Arial, メイリオ, Meiryo, sans-serif;
   letter-spacing: 0.1em;
   color: #282828;
   position: relative;
@@ -1183,6 +1183,7 @@ header {
                 .head dl dt {
                   //color: $color-primary;
                 }
+
                 .arrow {
                   //background-color: $color-primary;
                 }
@@ -1222,6 +1223,7 @@ header {
               margin-top: 1em;
             }
           }
+
           &.single {
             width: 50%;
             @media screen and (max-width: 768px) {
@@ -3177,6 +3179,7 @@ header {
   padding: 0 15px;
   z-index: 100;
   opacity: 0.8;
+
   .inner a {
     display: inline-block;
   }
@@ -3209,7 +3212,6 @@ header {
     padding: 0;
     bottom: 0.5em;
   }
-
 
 
 }
@@ -3446,6 +3448,7 @@ footer {
     color: #fff;
     font-size: 12px;
     margin-bottom: -10px;
+
     .inner p {
       margin: 0;
       text-align: center;
@@ -6032,6 +6035,7 @@ footer {
         justify-content: center;
         align-items: center;
         padding: 0.3em 0;
+
         img {
           width: 20px;
         }
@@ -6106,16 +6110,19 @@ footer {
   .head {
     padding: 2em 0;
     text-align: center;
+
     .ja {
       font-size: 26px;
       font-weight: bold;
     }
+
     .en {
       font-size: 12px;
       padding: 0.5em 0 0;
       font-weight: bold;
     }
   }
+
   padding: 0 1em;
 
   &.shop_entry {
@@ -6129,9 +6136,11 @@ footer {
 
   background-color: #fff;
   margin-top: 3.5em;
+
   ul.list li {
     border-bottom: 1px solid #c0c0c0;
     padding: 1em 0.5em;
+
     .address {
       br {
         display: none;
@@ -6147,6 +6156,7 @@ footer {
           font-weight: bold;
           color: $color-primary-text;
           font-size: 15px;
+
           a:link, a:visited {
             color: $color-primary-text;
           }
@@ -6231,10 +6241,12 @@ footer {
     max-width: 1050px;
     margin: 4em auto 1em auto;
     padding: 2em 2em;
+
     &.shop_entry {
       margin: 1em auto 1em auto;
       padding: 0 2em;
     }
+
     ul.list {
       max-width: 900px;
       margin: 0 auto;
@@ -6396,10 +6408,12 @@ footer {
 .shop_profile {
   margin: 0;
   padding: 0;
+
   .sns {
     margin-top: 1em;
     margin-bottom: 1em;
     text-align: right;
+
     li {
       display: inline-block;
       margin-left: 15px;
@@ -6426,6 +6440,7 @@ footer {
           display: inline-block;
           width: 56px;
           height: 56px;
+
           img {
             vertical-align: middle !important;
             width: 56px;
@@ -6478,10 +6493,12 @@ footer {
     }
   }
 }
+
 @media screen and (min-width: 768px) {
   .shop_profile {
     .sns {
       margin-bottom: 0;
+
       li {
         margin-bottom: 0;
       }
@@ -6508,9 +6525,10 @@ footer {
   .shop_entry section .shop_message {
     margin: 0;
     padding: 0em 2em 0;
+
     .content {
       font-size: 16px;
-      line-height:1.6;
+      line-height: 1.6;
     }
   }
 }
@@ -6532,9 +6550,10 @@ footer {
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .shop_entry section .shop_message {
     padding-right: 3em;
+
     .content {
       font-size: 16px;
-      line-height:1.6;
+      line-height: 1.6;
     }
   }
 }
@@ -6545,7 +6564,7 @@ footer {
     position: relative;
     margin: 1em 0 0;
     font-size: 16px;
-    line-height:1.6;
+    line-height: 1.6;
   }
 }
 
@@ -6824,9 +6843,11 @@ form.inquiry_form {
     .col-sm-8.zip-code {
       .parsley-errors-list {
         display: inline-block;
+
         li {
           display: none;
         }
+
         width: 0;
         height: 0;
       }
@@ -6834,28 +6855,28 @@ form.inquiry_form {
     }
 
     select {
-      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
-      background-color:#fff;
-      background-repeat:no-repeat;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+      background-color: #fff;
+      background-repeat: no-repeat;
       background-position: right 10px top 15px;
       background-size: 16px 16px;
-      padding:5px;
+      padding: 5px;
       padding-right: 30px;
-      width:100%;
-      font-size:16px;
+      width: 100%;
+      font-size: 16px;
       text-align: left;
-      text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
-      border-radius:0px;
-      -webkit-border-radius:0;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      border-radius: 0px;
+      -webkit-border-radius: 0;
       -webkit-appearance: none;
       -moz-appearance: none;
       border: 1px solid #ccc;
-      outline:0;
-      -webkit-transition:0.3s ease all;
-      -moz-transition:0.3s ease all;
-      -ms-transition:0.3s ease all;
-      -o-transition:0.3s ease all;
-      transition:0.3s ease all;
+      outline: 0;
+      -webkit-transition: 0.3s ease all;
+      -moz-transition: 0.3s ease all;
+      -ms-transition: 0.3s ease all;
+      -o-transition: 0.3s ease all;
+      transition: 0.3s ease all;
       text-overflow: '';
       -moz-appearance: none;
       text-indent: 0.01px;
@@ -6870,25 +6891,24 @@ form.inquiry_form {
     }
 
     #blue {
-      background-color:#b4b4b4;
+      background-color: #b4b4b4;
     }
 
 
     select:focus, select:active {
-      border:0;
-      outline:0;
+      border: 0;
+      outline: 0;
     }
 
-    option:focus
-    {
+    option:focus {
       background: pink;
     }
-
 
 
     .form-check-label {
       padding: 5px 0;
     }
+
     &.mail .col-sm-4 p {
       color: $color-primary;
     }
@@ -6902,7 +6922,7 @@ form.inquiry_form {
 
     .form-control.zip-code {
       width: 40%;
-      display:inline-block;
+      display: inline-block;
     }
 
     .btn._btn-zipcode {
@@ -7007,6 +7027,7 @@ form.inquiry_form {
     display: none;
   }
 }
+
 @media screen and (max-width: 768px) {
   form.inquiry_form {
     .col-sm-4, .col-sm-8 {
@@ -7016,6 +7037,7 @@ form.inquiry_form {
   }
 
 }
+
 @media screen and (min-width: 768px) {
   #estate-image {
     padding-left: 15px;
@@ -7023,13 +7045,16 @@ form.inquiry_form {
 
   form.inquiry_form {
     margin: 0;
+
     .form-group {
       padding: 0.5em 0;
     }
+
     .comment {
       padding: 1em 0.5em;
       line-height: 1.8em;
     }
+
     .must {
       position: absolute;
       top: 26%;
@@ -7037,10 +7062,12 @@ form.inquiry_form {
       padding: 7px 2px 7px 4px;
       margin: 0;
     }
+
     .col-sm-4, .col-sm-8 {
       padding-left: 0;
       padding-right: 0;
     }
+
     .col-sm-4 {
       font-size: 16px;
       padding: 1em 0 1em 60px;
@@ -7052,33 +7079,40 @@ form.inquiry_form {
         padding: 0.5em 0 0;
       }
     }
+
     .col-sm-8 {
       padding: 1em 4%;
       font-size: 15px;
     }
+
     .contact_check label {
       font-size: 15px;
       padding: 7px 7px 12px !important;
       margin: 0;
     }
+
     .column li label {
       font-size: 15px;
       padding: 7px 7px 12px !important;
     }
+
     .column2 li {
       width: 50%;
       float: left;
     }
+
     .column3 li {
       width: 33.3%;
       float: left;
     }
+
     col-sm-4, .col-sm-8 {
       padding-left: 15px;
       padding-right: 15px;
     }
   }
 }
+
 .text-center {
   padding: 2em 0 0;
 
@@ -7150,12 +7184,13 @@ form.inquiry_form {
     background-size: cover;
     margin: 0.5em 0 0.5em 0;
   }
+
   .catch {
-      background-color: #f1f1f1;
-      border: #aaa;
-      padding: 1em;
-      margin: 1em 0;
-      font-size: 14px;
+    background-color: #f1f1f1;
+    border: #aaa;
+    padding: 1em;
+    margin: 1em 0;
+    font-size: 14px;
   }
 }
 
@@ -7550,6 +7585,7 @@ form.inquiry_form {
     font-weight: bold;
     font-size: 24px;
   }
+
   p {
     padding: 10px 0;
     font-size: 16px;
@@ -7560,16 +7596,20 @@ form.inquiry_form {
 .recommended_content {
   .img-frame {
     width: 120px;
+
     img {
       width: 100%;
     }
+
     @media screen and (max-width: 768px) {
       width: 100%;
     }
   }
 }
+
 .btn-container {
   margin: 20px 0;
+
   .btn {
     display: inline-block;
     background: #4e3626;
@@ -7577,6 +7617,7 @@ form.inquiry_form {
     padding: 0.5em 3em;
     font-weight: bold;
     border-radius: 5px;
+
     &:hover {
       background-color: #e83228;
     }
@@ -7586,6 +7627,7 @@ form.inquiry_form {
 .container-fluid.base {
   .error-page {
     padding: 60px 0px 60px 60px;
+
     .error-code {
       font-size: 60px;
       font-style: italic;
@@ -7601,8 +7643,8 @@ form.inquiry_form {
   }
 }
 
-#estate.recommended .container{
-  @media screen and (max-width:768px) {
+#estate.recommended .container {
+  @media screen and (max-width: 768px) {
     padding-left: 0;
     padding-right: 0;
   }

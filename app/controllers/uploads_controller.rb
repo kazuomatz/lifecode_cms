@@ -4,7 +4,7 @@ class UploadsController < ApplicationController
     @upload.save
 
     respond_to do |format|
-      format.json { render json: { url: rails_blob_url(@upload.image), upload_id: @upload.id } }
+      format.json { render json: {url: rails_blob_url(@upload.image), upload_id: @upload.id} }
     end
   end
 
@@ -13,7 +13,7 @@ class UploadsController < ApplicationController
     @upload.destroy
 
     respond_to do |format|
-      format.json { render json: { status: :ok } }
+      format.json { render json: {status: :ok} }
     end
   end
 

@@ -16,7 +16,7 @@
                       <i class="icon-lock"></i>
                     </span>
                 </div>
-                <%= form.password_field :password, class: 'form-control', placeholder:'8文字以上',
+                <%= form.password_field :password, class: 'form-control', placeholder: '8文字以上',
                                         data: {
                                             parsley_required: true,
                                             parsley_required_message: 'パスワードを入力して下さい',
@@ -36,7 +36,7 @@
                                   </span>
                 </div>
 
-                <%= form.password_field :password_confirmation, class: 'form-control',placeholder:'もう一度入力',
+                <%= form.password_field :password_confirmation, class: 'form-control', placeholder: 'もう一度入力',
                                         data: {
                                             parsley_required: true,
                                             parsley_required_message: '再度パスワードを入力して下さい',
@@ -70,10 +70,10 @@
 <%= content_for :add_js do %>
   <script>
 
-  $(function(){
+    $(function () {
       var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
       form.init();
-  });
+    });
 
   </script>
-<%-end%>
+<%- end %>

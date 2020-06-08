@@ -10,7 +10,7 @@
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 
-<%= render partial: 'layouts/header'%>
+<%= render partial: 'layouts/header' %>
 
 <div class="app-body">
 
@@ -28,25 +28,25 @@
 
 </div>
 
-<%=render partial:'layouts/footer'%>
+<%= render partial: 'layouts/footer' %>
 <div
   id="image-path"
   data-noimage-image-path="<%= asset_path('noimage.jpg') %>"
-  data-nodocument-image-path="<%= asset_path('nodocument.jpg')%>"
+  data-nodocument-image-path="<%= asset_path('nodocument.jpg') %>"
   data-document-image-path="<%= asset_path('document.jpg') %>"
   style="display: none">
 </div>
 </body>
 <%= javascript_include_tag 'application' %>
-<%= content_for :add_js if content_for?(:add_js)%>
+<%= content_for :add_js if content_for?(:add_js) %>
 <script>
-  $(function(){
-      $(".nav-item .nav-link").removeClass("active");
-      <%- if params[:controller] == 'published_histories' && params[:action] == 'new' %>
-      $(".nav-item[data-menu='facility'] .nav-link").addClass("active");
-      <%-else %>
-      $(".nav-item[data-menu=<%=params[:controller].gsub('master/','').gsub('admin/','').singularize%>] .nav-link").addClass("active");
-      <%- end %>
+  $(function () {
+    $(".nav-item .nav-link").removeClass("active");
+    <%- if params[:controller] == 'published_histories' && params[:action] == 'new' %>
+    $(".nav-item[data-menu='facility'] .nav-link").addClass("active");
+    <%-else %>
+    $(".nav-item[data-menu=<%=params[:controller].gsub('master/','').gsub('admin/','').singularize%>] .nav-link").addClass("active");
+    <%- end %>
   });
 </script>
 </html>

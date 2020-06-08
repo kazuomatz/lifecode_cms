@@ -1,4 +1,4 @@
-<%- content_for :title do%>
+<%- content_for :title do %>
   お問い合わせ管理
 <%- end %>
 <% content_for :breadcrumb do %>
@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-sm-12 ">
         <h1 class="func-title">お問い合わせ詳細</h1>
-        <%= render partial: 'form', locals: { inquiry: @inquiry} %>
+        <%= render partial: 'form', locals: {inquiry: @inquiry} %>
       </div>
     </div>
   </div>

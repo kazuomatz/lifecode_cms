@@ -14,7 +14,7 @@
                 <label class="form-check-label" for="admin_article_is_publish_false">下書き</label>
               </div>
               <div class="form-check form-check-inline mr-1">
-                <%= form.radio_button :is_publish, true%>
+                <%= form.radio_button :is_publish, true %>
                 <label class="form-check-label" for="admin_article_is_publish_true">公開</label>
               </div>
             </div>
@@ -24,20 +24,20 @@
         <div class="col-sm-8">
           <div class="form-group">
             <label>タイトル<span class="label_required">必須</span></label>
-            <%= form.text_field :title, class: 'form-control',placeholder: '記事のタイトルを入力します。', data:{ parsley_required: true}  %>
+            <%= form.text_field :title, class: 'form-control', placeholder: '記事のタイトルを入力します。', data: {parsley_required: true} %>
           </div>
         </div>
         <div class="col-sm-8">
           <div class="form-group">
             <label>記事見出し</label>
-            <%= form.text_area :catch, rows:5, class: 'form-control' ,placeholder: '120文字くらいで記事の概要を書きましょう。'%>
+            <%= form.text_area :catch, rows: 5, class: 'form-control', placeholder: '120文字くらいで記事の概要を書きましょう。' %>
           </div>
         </div>
 
         <div class="col-sm-8">
           <div class="form-group">
             <label>記事カテゴリー<span class="label_required">必須</span></label>
-            <%= form.select :tag_list, ArticleCategory.all.map{|c| [c.name, c.name]}, {}, class: 'form-control', selected: article.tag_list.first%>
+            <%= form.select :tag_list, ArticleCategory.all.map { |c| [c.name, c.name] }, {}, class: 'form-control', selected: article.tag_list.first %>
           </div>
         </div>
 
@@ -49,7 +49,7 @@
                 <div class="col-sm-12">
                   <div class="image-preview">
                     <% if article.main_image.attached? %>
-                      <%= image_tag article.main_image.variant(resize:'600x300').processed, class:'img-fluid' %>
+                      <%= image_tag article.main_image.variant(resize: '600x300').processed, class: 'img-fluid' %>
                     <% end %>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                       <span class="btn btn-primary">
                         <i class="fas fa-file"></i>
                         ファイル選択(jpg)
-                        <%= form.file_field :main_image, style: 'display:none', accept: 'image/jpeg'%>
+                        <%= form.file_field :main_image, style: 'display:none', accept: 'image/jpeg' %>
                         <input type="file" style="display:none">
                       </span>
                   </label>
@@ -68,10 +68,10 @@
           </div>
         </div>
 
-        <div class="field col-sm-12" data-controller="summernote" >
+        <div class="field col-sm-12" data-controller="summernote">
           <div class="form-group">
             <label>記事本文</label>
-            <%= form.text_area :content, data: { editor: 'summernote' }, style: 'display:none' %>
+            <%= form.text_area :content, data: {editor: 'summernote'}, style: 'display:none' %>
           </div>
         </div>
       </div>
@@ -87,11 +87,12 @@
         <a href="<%= admin_articles_path(id: site.id) %>" class="btn btn-default">
           キャンセル
         </a>
-      <%- else params[:admin].present? %>
+      <%- else
+            params[:admin].present? %>
         <a href="<%= admin_articles_path(admin: true) %>" class="btn btn-default">
           キャンセル
         </a>
-      <%- end  %>
+      <%- end %>
     </div>
   </div>
 
@@ -99,81 +100,81 @@
 
 <%= content_for :add_js do -%>
   <script>
-      function sendFile(file, toSummernote){
-          console.log('called sendFile().');
-          let data = new FormData();
-          data.append('upload[image]', file);
-          data.append('upload[article_id]', "<%= article.id || session[:article_session_id] %>" );
-          $.ajax({
-              data: data,
-              type: 'POST',
-              url: '/uploads.json',
-              cache: false,
-              contentType: false,
-              processData: false,
-              success: function(data){
-                  let img = document.createElement("IMG");
-                  img.src = data.url;
-                  img.setAttribute('style','width: 100%');
-                  img.setAttribute('id', data.upload_id);
-                  toSummernote.summernote("insertNode", img);
-              }
-          })
-      }
+    function sendFile(file, toSummernote) {
+      console.log('called sendFile().');
+      let data = new FormData();
+      data.append('upload[image]', file);
+      data.append('upload[article_id]', "<%= article.id || session[:article_session_id] %>");
+      $.ajax({
+        data: data,
+        type: 'POST',
+        url: '/uploads.json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          let img = document.createElement("IMG");
+          img.src = data.url;
+          img.setAttribute('style', 'width: 100%');
+          img.setAttribute('id', data.upload_id);
+          toSummernote.summernote("insertNode", img);
+        }
+      })
+    }
 
-      function deleteFile(file_id){
-          $.ajax({
-              type: 'DELETE',
-              url: `/uploads/${file_id}`,
-              cache: false,
-              contentType: false,
-              processData: false
-          })
-      }
+    function deleteFile(file_id) {
+      $.ajax({
+        type: 'DELETE',
+        url: `/uploads/${file_id}`,
+        cache: false,
+        contentType: false,
+        processData: false
+      })
+    }
 
-      $(function () {
-          var form = new FormManager();
-          form.init();
+    $(function () {
+      var form = new FormManager();
+      form.init();
 
-          $("input[type=file]").on('change', function (e) {
-              showSelectImage(e.target,'.image-preview');
-          });
-
-          $('[data-editor="summernote"]').summernote({
-              height: 800,
-              lang: 'ja-JP',
-              styleTags: ['p', 'h1', 'h2','h3','blockquote'],
-              callbacks: {
-                  onImageUpload: function(files){
-                      console.log('called onImageUpload.');
-                      for(let i = 0; i < files.length; i++){
-                          sendFile(files[i], $(this))
-                      }
-                  },
-                  onMediaDelete: function(target, editor, editiable){
-                      let upload_id = target[0].id;
-                      if(!!upload_id){
-                          deleteFile(upload_id)
-                      }
-                      target.remove()
-                  },
-                  onPaste: function (e) {
-                      var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-                      e.preventDefault();
-                      document.execCommand('insertText', false, bufferText);
-                  }
-              },
-              toolbar: [
-                  ['style', ['style']],
-                  ['paragraph'],
-                  ['style', ['bold', 'italic', 'underline']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol']],
-                  ['link'],
-                  ['picture'],
-                  ['video']
-              ]
-          });
+      $("input[type=file]").on('change', function (e) {
+        showSelectImage(e.target, '.image-preview');
       });
+
+      $('[data-editor="summernote"]').summernote({
+        height: 800,
+        lang: 'ja-JP',
+        styleTags: ['p', 'h1', 'h2', 'h3', 'blockquote'],
+        callbacks: {
+          onImageUpload: function (files) {
+            console.log('called onImageUpload.');
+            for (let i = 0; i < files.length; i++) {
+              sendFile(files[i], $(this))
+            }
+          },
+          onMediaDelete: function (target, editor, editiable) {
+            let upload_id = target[0].id;
+            if (!!upload_id) {
+              deleteFile(upload_id)
+            }
+            target.remove()
+          },
+          onPaste: function (e) {
+            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+            e.preventDefault();
+            document.execCommand('insertText', false, bufferText);
+          }
+        },
+        toolbar: [
+          ['style', ['style']],
+          ['paragraph'],
+          ['style', ['bold', 'italic', 'underline']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol']],
+          ['link'],
+          ['picture'],
+          ['video']
+        ]
+      });
+    });
   </script>
 <% end -%>

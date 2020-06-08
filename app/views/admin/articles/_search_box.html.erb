@@ -8,10 +8,10 @@
         <div class="form-group">
           <label>カテゴリー</label>
           <select class="form-control select" name="category">
-              <option value="">カテゴリーを選択</option>
-              <% Article.tag_counts_on(:tags).pluck(:name).each do |category|  %>
-                <option value="<%= category %>"><%= category %></option>
-              <%-end %>
+            <option value="">カテゴリーを選択</option>
+            <% Article.tag_counts_on(:tags).pluck(:name).each do |category| %>
+              <option value="<%= category %>"><%= category %></option>
+            <%- end %>
           </select>
         </div>
       </div>
@@ -20,11 +20,11 @@
           <label>公開状態</label>
           <div class="_container-radio">
             <div class="form-inline">
-              <input type="radio" value="all" checked="checked" name="is_publish" id="is_publish_all" />
+              <input type="radio" value="all" checked="checked" name="is_publish" id="is_publish_all"/>
               <label class="form-check-label" for="is_publish_all">全て</label>
-              <input type="radio" value="true" name="is_publish" id="is_publish_true" />
+              <input type="radio" value="true" name="is_publish" id="is_publish_true"/>
               <label class="form-check-label" for="is_publish_true">公開</label>
-              <input type="radio" value="false" name="is_publish" id="is_publish_false" />
+              <input type="radio" value="false" name="is_publish" id="is_publish_false"/>
               <label class="form-check-label" for="is_publish_false">下書き</label>
             </div>
           </div>
@@ -40,20 +40,22 @@
 
 <%- content_for :add_js do %>
   <script type="text/javascript">
-      // 検索用パラメータ設定
+    // 検索用パラメータ設定
     function searchParams() {
       var searchParams = {};
       <%- if @site.present? %>
       searchParams.id = <%= @site.id %>
-      <%- elsif params[:admin].present? %>
-      searchParams.admin = true;
+        <%- elsif params[:admin].present? %>
+        searchParams.admin = true;
       <%- end %>
-      searchParams.is_publish = $('[name=is_publish]:checked').val();;
+      searchParams.is_publish = $('[name=is_publish]:checked').val();
+      ;
       searchParams.category = $('[name=category]').val();
       return searchParams;
     }
+
     $(function () {
-        new FormManager().init('.search-box');
+      new FormManager().init('.search-box');
     });
   </script>
 <%- end %>

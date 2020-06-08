@@ -7,11 +7,11 @@
     %>
   <%- else %>
     <% items = [
-      {url: '/', title: 'ホーム'},
-      {url: "#{admin_users_path}", title: 'ユーザー一覧'},
-      {title: 'ユーザー編集'},
+        {url: '/', title: 'ホーム'},
+        {url: "#{admin_users_path}", title: 'ユーザー一覧'},
+        {title: 'ユーザー編集'},
     ]
-  %>
+    %>
   <%- end %>
   <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
 <% end %>
@@ -34,12 +34,12 @@
                   <%= render partial: 'form', locals: {form: form, user: @user} %>
                 </div>
                 <%- if current_user && current_user.grater_than_equal_to_operator_role? %>
-                <div class="col-sm-8">
-                  <div class="alert alert-danger mt-3" id="lock-control">
-                    <%= render partial: 'admin/users/lock', locals: {user: @user} %>
+                  <div class="col-sm-8">
+                    <div class="alert alert-danger mt-3" id="lock-control">
+                      <%= render partial: 'admin/users/lock', locals: {user: @user} %>
+                    </div>
                   </div>
-                </div>
-                <%-end %>
+                <%- end %>
               </div>
             </div>
           </div>
@@ -63,18 +63,18 @@
 
 <% content_for :add_js do %>
   <script>
-      $(document).on('click','.lock-btn', function () {
-          var status = $(this).data("status");
-          var  method = 'put';
-          if (status == 'locked') {
-              method = 'delete';
-          }
-          $.ajax({
-              method: method,
-              url: '/admin/users/lock/' + '<%= @user.id %>'
-          }).done(function (data) {
-              $("#lock-control").html(data.content);
-          })
-      });
+    $(document).on('click', '.lock-btn', function () {
+      var status = $(this).data("status");
+      var method = 'put';
+      if (status == 'locked') {
+        method = 'delete';
+      }
+      $.ajax({
+        method: method,
+        url: '/admin/users/lock/' + '<%= @user.id %>'
+      }).done(function (data) {
+        $("#lock-control").html(data.content);
+      })
+    });
   </script>
-<%-end %>
+<%- end %>

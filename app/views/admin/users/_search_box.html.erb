@@ -32,13 +32,13 @@
 
 <%- content_for :add_js do %>
   <script>
-      // 検索用パラメータ設定
-      function searchParams() {
-          return {
-              name: $('[name="name"]').val(),
-              email: $('[name="email"]').val(),
-              name_kana: $('[name="name_kana"]').val()
-          };
-      }
+    // 検索用パラメータ設定
+    function searchParams() {
+      return {
+        name: $('[name="name"]').val(),
+        email: $('[name="email"]').val(),
+        name_kana: $('[name="name_kana"]').val()
+      };
+    }
   </script>
 <%- end %>

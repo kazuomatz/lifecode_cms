@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    @user = User.where(email:params[:user][:email]).first
+    @user = User.where(email: params[:user][:email]).first
     if @user.present?
       if @user.valid_password?(params[:user][:password])
 
@@ -29,11 +29,11 @@ class Users::SessionsController < Devise::SessionsController
               ip_address: request.remote_ip
           })
 
-          flash[:alert] =  t('devise.failure.locked')
+          flash[:alert] = t('devise.failure.locked')
           @user = User.new
           @user.email = params[:user][:email]
           set_cache_headers
-          render template:'users/sessions/new'
+          render template: 'users/sessions/new'
           return
         end
 
@@ -63,7 +63,7 @@ class Users::SessionsController < Devise::SessionsController
         @user = User.new
         @user.email = params[:user][:email]
         set_cache_headers
-        render template:'users/sessions/new'
+        render template: 'users/sessions/new'
       end
     else
       if @user
@@ -82,7 +82,7 @@ class Users::SessionsController < Devise::SessionsController
       @user = User.new
       @user.email = params[:user][:email]
       set_cache_headers
-      render template:'users/sessions/new'
+      render template: 'users/sessions/new'
     end
   end
 

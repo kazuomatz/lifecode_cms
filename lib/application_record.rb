@@ -62,7 +62,7 @@ class ApplicationRecord < ActiveRecord::Base
         column[:type] = :email
         column[:placeholder] = ''
       elsif column_name.index('tel') || column_name.index('phone')
-        validate[:pattern] =  '/^[-0-9]+$/'
+        validate[:pattern] = '/^[-0-9]+$/'
         validate[:pattern_message] = '電話番号は半角数字とハイフンのみ有効です。'
         column[:placeholder] = ''
       end
@@ -95,18 +95,18 @@ class ApplicationRecord < ActiveRecord::Base
         column[:icon] = 'far fa-file-alt'
         column[:placeholder] = ''
       elsif column[:type] == :integer
-        validate[:pattern] =  '[+-]?\d+'
+        validate[:pattern] = '[+-]?\d+'
         validate[:pattern_message] = '正しい整数値を入力して下さい。'
       elsif column[:type] == :float || column[:type] == :decimal
-        validate[:pattern] =  '[+-]?\d+\.?\d*'
+        validate[:pattern] = '[+-]?\d+\.?\d*'
         validate[:pattern_message] = '正しい実数値を入力して下さい。'
       elsif column[:type] == :boolean
         column[:column] = 12
-        column[:options] = [{ label: '有効', value: true}, {label:'無効', value: false }]
+        column[:options] = [{label: '有効', value: true}, {label: '無効', value: false}]
         column[:default_option] = false
         validate = nil
       else
-        column[:placeholder] = ''  if column[:placeholder].blank?
+        column[:placeholder] = '' if column[:placeholder].blank?
       end
       column[:validate] = validate unless validate.nil?
       column
@@ -136,8 +136,8 @@ class ApplicationRecord < ActiveRecord::Base
       ret[:icon] = self.default_icon(self.name)
       columns = []
       form_columns = []
-      column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
-      column_names.each do| column_name |
+      column_names = self.columns_hash.keys.dup - (%w(id created_at updated_at deleted_at))
+      column_names.each do |column_name|
         form_columns << column_name.to_sym
         columns << initial_column(column_name)
       end
@@ -175,12 +175,12 @@ class ApplicationRecord < ActiveRecord::Base
     def merge_form_attributes
       config = self.load_config
       columns = config[:columns]
-      before_column_names = columns.map{|c|c[:name]}
+      before_column_names = columns.map { |c| c[:name] }
       exist_column_names = []
 
-      column_names = self.columns_hash.keys.dup  - (%w(id created_at updated_at deleted_at))
+      column_names = self.columns_hash.keys.dup - (%w(id created_at updated_at deleted_at))
       added_column_names = []
-      column_names.each do| column_name |
+      column_names.each do |column_name|
         exist_column_names << column_name
         exists = false
         columns.each do |column|
@@ -213,10 +213,10 @@ class ApplicationRecord < ActiveRecord::Base
       config[:form_columns] += added_column_names
 
       (before_column_names - exist_column_names).each do |name|
-        config[:columns] = config[:columns].select{ |column| column[:name].to_s != name.to_s }
-        config[:search_columns] = config[:search_columns].select{ |column_name| column_name.to_s != name.to_s }
-        config[:form_columns] = config[:form_columns].select{ |column_name| column_name.to_s != name.to_s }
-        config[:list_columns] = config[:list_columns].select{ |column_name| column_name.to_s != name.to_s }
+        config[:columns] = config[:columns].select { |column| column[:name].to_s != name.to_s }
+        config[:search_columns] = config[:search_columns].select { |column_name| column_name.to_s != name.to_s }
+        config[:form_columns] = config[:form_columns].select { |column_name| column_name.to_s != name.to_s }
+        config[:list_columns] = config[:list_columns].select { |column_name| column_name.to_s != name.to_s }
       end
       config
     end
@@ -254,7 +254,7 @@ class ApplicationRecord < ActiveRecord::Base
       attr = self.form_attributes.map { |a| ':' + a[:name] }
       time_attr = self.form_attributes.select { |column|
         column[:type] == :datetime || column[:type] == :timestamp
-      }.map { |date_column |
+      }.map { |date_column|
         ":#{date_column[:name]}_time"
       }
       (attr + time_attr).join(', ')
@@ -282,7 +282,7 @@ class ApplicationRecord < ActiveRecord::Base
       if config[:edit_mode] != :modal
         return false
       end
-      column_names = config[:columns].select{ |c| c[:type] == :spatial && c[:show_map]}.map{ |c| c[:name].to_sym }
+      column_names = config[:columns].select { |c| c[:type] == :spatial && c[:show_map] }.map { |c| c[:name].to_sym }
       (config[:form_columns] && column_names).length > 0
     end
 
@@ -393,17 +393,17 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def load_config
-      file = File.join(Rails.root,'config','form_attributes',"#{self.name.underscore.gsub('admin/','')}.yml")
+      file = File.join(Rails.root, 'config', 'form_attributes', "#{self.name.underscore.gsub('admin/', '')}.yml")
       if File.exist? file
-        YAML.load_file( file )
+        YAML.load_file(file)
       else
         self.initial_form_attributes
       end
     end
 
     def add_permission
-      file = File.join(Rails.root,'config','settings',"permission.yml")
-      permission_data = YAML.load_file( file )
+      file = File.join(Rails.root, 'config', 'settings', "permission.yml")
+      permission_data = YAML.load_file(file)
       if permission_data['permission'][self.name.pluralize.underscore].nil?
         permission_data['permission'][self.name.pluralize.underscore] = '1,2,3'
         YAML.dump(permission_data, File.open(file, 'w'))
@@ -412,39 +412,39 @@ class ApplicationRecord < ActiveRecord::Base
 
     def default_label(column_name)
 
-      columns = self.columns.select{ |column|  column.name == column_name }
+      columns = self.columns.select { |column| column.name == column_name }
       if columns.length == 1
         return columns[0].comment if columns[0].comment.present?
       end
 
       if column_name.index('name')
-        name = "#{column_name.gsub('name','名称')}"
+        name = "#{column_name.gsub('name', '名称')}"
       elsif column_name.index('mail')
-        name = "#{column_name.gsub('mail','メール')}"
+        name = "#{column_name.gsub('mail', 'メール')}"
       elsif column_name.index('content') || column_name.index('description')
-        name = "#{column_name.gsub('content','概要').gsub('description','概要')}"
-      elsif column_name.index('tel')|| column_name.index('phone')
-        name = "#{column_name.gsub('tel','電話番号').gsub('phone','電話番号')}"
+        name = "#{column_name.gsub('content', '概要').gsub('description', '概要')}"
+      elsif column_name.index('tel') || column_name.index('phone')
+        name = "#{column_name.gsub('tel', '電話番号').gsub('phone', '電話番号')}"
       elsif column_name.index('fax')
-        name = "#{column_name.gsub('fax','FAX')}"
+        name = "#{column_name.gsub('fax', 'FAX')}"
       elsif column_name.index('url')
-        name = "#{column_name.gsub('url','URL')}"
+        name = "#{column_name.gsub('url', 'URL')}"
       elsif column_name.index('zip_code')
-        name = "#{column_name.gsub('zip_code','郵便番号')}"
+        name = "#{column_name.gsub('zip_code', '郵便番号')}"
       elsif column_name.index('prefecture_code')
-        name = "#{column_name.gsub('prefecture_code','都道府県')}"
+        name = "#{column_name.gsub('prefecture_code', '都道府県')}"
       elsif column_name.index('city_code')
-        name = "#{column_name.gsub('city_code','市区町村')}"
+        name = "#{column_name.gsub('city_code', '市区町村')}"
       elsif column_name.index('address1')
-        name = "#{column_name.gsub('address1','町名番地')}"
+        name = "#{column_name.gsub('address1', '町名番地')}"
       elsif column_name.index('address2')
         name = '建物等'
       elsif column_name.index('image')
-        name = "#{column_name.gsub('image','画像')}"
+        name = "#{column_name.gsub('image', '画像')}"
       elsif column_name.index('photo')
-        name = "#{column_name.gsub('photo','写真')}"
+        name = "#{column_name.gsub('photo', '写真')}"
       end
-      name.present? ? name :  column_name
+      name.present? ? name : column_name
     end
 
     def default_icon(column_name)
@@ -453,7 +453,7 @@ class ApplicationRecord < ActiveRecord::Base
         icon = 'far fa-envelope'
       elsif column_name.index('content') || column_name.index('description')
         icon = 'fa-file-alt'
-      elsif column_name.index('tel')|| column_name.index('phone')
+      elsif column_name.index('tel') || column_name.index('phone')
         icon = 'fas fa-mobile-alt'
       elsif column_name.index('fax')
         icon = 'fas fa-fax'

@@ -9,13 +9,15 @@ $accent-color: #f28e24;
     top: 0;
     left: 0;
   }
+
   .left-content {
     background-color: transparent;
     position: absolute;
     width: 60%;
     height: 100%;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
+
     .content {
       margin-bottom: 20%;
       margin-top: 20%;
@@ -38,22 +40,27 @@ $accent-color: #f28e24;
         font-size: 1.7rem;
         font-weight: 600;
       }
+
       h1 {
         font-weight: 700;
         font-size: 2.3rem;
         padding: 0.5rem 0;
       }
+
       .description {
         padding: 1.2rem 0 1rem 0;
         line-height: 1.5rem;
         font-weight: 200;
         font-size: 1.1rem;
       }
+
       .buttons {
         margin: 1.5rem 0;
+
         a:link, a:visited {
           transition: none;
           opacity: 1;
+
           span {
             margin-left: 0.5rem;
             padding: 0.5rem 1rem;
@@ -62,9 +69,11 @@ $accent-color: #f28e24;
             border: 1px #ccc solid;
           }
         }
+
         a:hover, a:active {
           transition: none;
           opacity: 1;
+
           span {
             color: #fff;
             border: 1px $accent-color solid;
@@ -72,6 +81,7 @@ $accent-color: #f28e24;
           }
         }
       }
+
       @media screen and (max-width: 834px) {
         .buttons {
           display: block;
@@ -84,24 +94,30 @@ $accent-color: #f28e24;
 
     }
   }
+
   @media screen and (max-width: 480px) {
     .left-content {
       width: 100%;
+
       .content {
         width: 100%;
         margin-top: 2%;
         left: 0;
+
         .discover {
           font-family: 'Nothing You Could Do', cursive;
           font-size: 1.2rem;
         }
+
         h1 {
           text-align: center;
           font-size: 1.8rem;
         }
+
         .description {
           display: none;
         }
+
         .buttons {
           text-align: center;
           display: block;
@@ -116,9 +132,11 @@ $accent-color: #f28e24;
         h1 {
           display: none;
         }
+
         .buttons {
           margin-top: 0;
           display: block;
+
           span {
             margin-top: 10px;
           }
@@ -138,6 +156,7 @@ $accent-color: #f28e24;
     top: 0;
     left: 0;
   }
+
   .content {
     position: absolute;
     padding: 10% 5% 5% 10%;
@@ -149,15 +168,18 @@ $accent-color: #f28e24;
     top: 0;
     width: 42%;
     height: 100%;
+
     h1 {
       font-size: 2rem;
       padding: 0.5rem 0;
       font-weight: 700;
     }
+
     .description {
       font-size: 1rem;
       line-height: 1.8;
     }
+
     a:link, a:visited {
       transition: none;
       display: inline-block;
@@ -167,12 +189,14 @@ $accent-color: #f28e24;
       @media screen and (max-width: 834px) {
         margin-top: 1rem;
       }
+
       span {
         background-color: #fff;
         padding: 0.5rem 1rem;
         display: inline-block;
         color: #000;
         border: 1px #ccc solid;
+
         svg {
           font-size: 0.4rem;
           display: inline-block;
@@ -182,16 +206,20 @@ $accent-color: #f28e24;
       }
     }
   }
+
   @media screen and (max-width: 480px) {
     .content {
       width: 60%;
       height: 100%;
+
       h1 {
         font-size: 1rem;
       }
+
       .description {
         display: none;
       }
+
       a {
         span {
           position: absolute;
@@ -218,6 +246,7 @@ $accent-color: #f28e24;
     top: 0;
     left: 0;
   }
+
   .left-content {
     background-color: transparent;
     position: absolute;
@@ -225,6 +254,7 @@ $accent-color: #f28e24;
     height: 100%;
     top: 0;
     left: 50%;
+
     .content-wrapper {
       position: absolute;
       color: #fff;
@@ -242,6 +272,7 @@ $accent-color: #f28e24;
       left: 0%;
       bottom: 0;
       background-color: transparent;
+
       a:link, a:hover, a:visited {
         transition: none;
         display: inline-block;
@@ -249,6 +280,7 @@ $accent-color: #f28e24;
         opacity: 1;
         margin-top: 0rem;
         color: #fff;
+
         span {
           background-color: $accent-color;
           padding: 0.5rem 1rem;
@@ -257,10 +289,12 @@ $accent-color: #f28e24;
           color: #fff;
         }
       }
+
       .content {
         height: 100%;
         padding: 1.2rem 1.2rem;
         background-color: #fff;
+
         h1 {
           font-weight: 400;
           font-size: 1.2rem;
@@ -268,15 +302,17 @@ $accent-color: #f28e24;
           color: #000;
 
         }
-        .description{
+
+        .description {
           font-size: 0.7rem;
           line-height: 1.8;
           padding: 0.2rem 0;
           color: #000;
-          }
+        }
       }
     }
   }
+
   @media screen and (max-width: 640px) {
     .left-content {
       .content-wrapper {
@@ -299,23 +335,26 @@ $accent-color: #f28e24;
     .carousel-type-1 {
       @extend .type-1;
     }
+
     .carousel-type-2 {
       @extend .type-2;
     }
+
     .carousel-type-3 {
       @extend .type-3;
     }
   }
+
   @media screen and (min-width: 1200px) {
     width: 1200px;
-    margin:  0 auto;
+    margin: 0 auto;
   }
 }
 
-#top_content,.top_mainimage {
+#top_content, .top_mainimage {
   @media screen and (min-width: 1200px) {
     width: 1200px;
-    margin:  0 auto;
+    margin: 0 auto;
   }
 }
 

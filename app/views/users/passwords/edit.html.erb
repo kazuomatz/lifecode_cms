@@ -18,9 +18,9 @@
                       <i class="fas fa-lock"></i>
                     </span>
                 </div>
-                <%= form.password_field :password, class: 'form-control', placeholder:'8文字以上',
+                <%= form.password_field :password, class: 'form-control', placeholder: '8文字以上',
                                         data: {
-                                            parsley_minlength: Settings.security.password.min_length || 8 ,
+                                            parsley_minlength: Settings.security.password.min_length || 8,
                                             parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
                                             parsley_pattern: Settings.security.password.regex,
                                             parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
@@ -36,7 +36,7 @@
                   </span>
                 </div>
 
-                <%= form.password_field :password_confirmation, class: 'form-control',placeholder:'もう一度入力',
+                <%= form.password_field :password_confirmation, class: 'form-control', placeholder: 'もう一度入力',
                                         data: {
                                             parsley_required: true,
                                             parsley_required_message: '再度パスワードを入力して下さい',
@@ -75,13 +75,13 @@
 
 <%= content_for :add_js do %>
   <script>
-    $(function(){
+    $(function () {
       var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
       form.init();
-      $("#user_email").on('keyup',function(){
+      $("#user_email").on('keyup', function () {
         $(".alert.alert-danger").hide();
       });
     });
 
   </script>
-<%-end%>
+<%- end %>

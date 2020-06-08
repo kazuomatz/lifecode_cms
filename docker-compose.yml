@@ -24,7 +24,7 @@ services:
       - "1234:1234"
       - "26168:26168"
     networks:
-      - local_network  
+      - local_network
     depends_on:
       - db
   db:
@@ -44,7 +44,7 @@ services:
     ports:
       - 4307:3307
     networks:
-      - local_network  
+      - local_network
 networks:
   local_network:
     driver: 'bridge'

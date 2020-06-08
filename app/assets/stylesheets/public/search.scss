@@ -2,15 +2,17 @@
   height: 120px;
   display: inline-block;
   width: 100%;
+
   .col-sm-3 {
     height: 80px;
   }
+
   label {
     font-weight: bold;
     padding: 0.5rem 0
   }
 
-  .link{
+  .link {
 
     div.button {
       cursor: pointer;
@@ -24,13 +26,14 @@
       font-size: 12px;
       position: absolute;
       bottom: 15px;
-      @media screen and (max-width:768px){
+      @media screen and (max-width: 768px) {
         display: block;
         position: static;
         margin: 1.5rem 30% 3rem 30%;
       }
+
       &:hover {
-        background: lighten(#9a1810,10%);
+        background: lighten(#9a1810, 10%);
       }
     }
 

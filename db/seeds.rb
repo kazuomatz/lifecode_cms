@@ -4,7 +4,7 @@
 email = 'admin@example.com'
 password = 'your-password'
 
-user = User.create(name:'システム管理者',email: email ,password: password, role:1)
+user = User.create(name: 'システム管理者', email: email, password: password, role: 1)
 user.confirmed_at = DateTime.now
 user.save
 

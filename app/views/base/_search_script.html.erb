@@ -9,22 +9,21 @@
       $('.search-button').on('click', function () {
         execSearch();
       });
-      $('.clear-button').on('click',function(){
+      $('.clear-button').on('click', function () {
         clearSearch();
       });
 
       searchManager.getList(<%= page %>, searchParams());
 
-      $('.search-box input').on("keydown",function(e){
+      $('.search-box input').on("keydown", function (e) {
         keyDownCode = e.which;
       });
 
-      $('.search-box input').on("keyup",function(e){
-        if ( 13 == e.which && e.which == keyDownCode ) {
+      $('.search-box input').on("keyup", function (e) {
+        if (13 == e.which && e.which == keyDownCode) {
           $('.search-button').trigger('click');
           return false;
-        }
-        else {
+        } else {
           return false;
         }
       });
