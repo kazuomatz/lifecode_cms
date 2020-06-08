@@ -22,7 +22,7 @@
     <$$- <%= model.name %>.list_columns.each do | name | -$$>
     <td><$$= <%= var_model %>[name] $$></td>
     <$$ end -$$>
-    <td class="operator-column" width="300">
+    <td class="operator-column">
       <$$- if  <%= model.name %>.edit_mode == :modal $$>
       <button type="button" class="btn-primary btn edit-modal-btn" data-id="<$$= <%= var_model %>.id $$>"><i class="far fa-edit"></i> <$$= Settings.form.label.edit -$$></button>
       <$$- else -%>

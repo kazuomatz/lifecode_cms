@@ -432,9 +432,15 @@ form, .search-box {
     thead, tbody {
       .operator-column {
         text-align: right;
-
         .btn {
-          margin-right: 5px;
+          margin: 5px;
+          min-width: 75px;
+        }
+        @media (min-width: 768px) {
+          width: 20%;
+        }
+        @media (min-width: 1024px) {
+          width: 30%;
         }
       }
     }
