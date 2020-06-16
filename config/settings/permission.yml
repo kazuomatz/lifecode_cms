@@ -14,6 +14,7 @@ permission:
     destroy: '1,2,3'
     confirm_user: '1,2,3'
     lock: '1,2'
+    resend_confirmation: '1,2'
   events: '1,2,3'
   animals: '1,2,3'
   companies: '1,2,3'
