@@ -82,6 +82,14 @@ module Admin
       if @user.update_attributes(@attr)
         @user.confirm
         sign_in(@user)
+        LoginHistory.create ({
+            account: @user.email,
+            user_type: 0,
+            user_id: @user.id,
+            status: 1,
+            name: @user.name,
+            ip_address: request.remote_ip
+        })
         redirect_to admin_top_index_path
       else
         @user.errors
