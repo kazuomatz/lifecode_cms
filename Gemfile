@@ -52,7 +52,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-gem 'sanitize'
+gem "sanitize", ">= 5.2.1"
 
 gem 'activerecord-session_store'
 gem 'annotate'
@@ -95,7 +95,7 @@ gem 'activerecord-mysql2spatial-adapter', github: 'kazuomatz/activerecord-mysql2
 
 gem 'rails-html-sanitizer'
 #gem 'simple_form'
-gem 'acts-as-taggable-on', git:'https://github.com/alkhadher/acts-as-taggable-on', branch:  'support_rails_6'
+gem 'acts-as-taggable-on', git: 'https://github.com/alkhadher/acts-as-taggable-on', branch: 'support_rails_6'
 gem 'uglifier'
 
 # feature - FullText Index Search
