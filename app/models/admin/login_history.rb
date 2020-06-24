@@ -18,7 +18,7 @@ module Admin
           if params[:start_at_time].present?
             start_at += ' ' + params[:start_at_time]
           end
-          objects = objects.where('created_at >= ?', start_at)
+          objects = objects.where('created_at >= ?', Time.zone.parse(start_at))
         end
 
         if params[:end_at].present?
@@ -26,7 +26,7 @@ module Admin
           if params[:end_at_time].present?
             end_at += ' ' + params[:end_at_time]
           end
-          objects = objects.where('created_at <= ?', end_at)
+          objects = objects.where('created_at <= ?', Time.zone.parse(end_at))
         end
 
         objects
