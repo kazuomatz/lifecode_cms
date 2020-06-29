@@ -420,7 +420,18 @@ var date2HTML = function (date) {
   return dateString + ' (<span class="' + className + '">' + dayOfWeekStr + '</span>)';
 };
 
-var intlDateTimeFormatOptions = { era:'short', year:'2-digit', month:'2-digit', day:'2-digit',  hour:'2-digit', minute:'2-digit', second:'2-digit', weekday:'short', hour12:false, timeZoneName:'short' };
+var intlDateTimeFormatOptions = {
+  era:'short',
+  year:'2-digit',
+  month:'2-digit',
+  day:'2-digit',
+  hour:'2-digit',
+  minute:'2-digit',
+  second:'2-digit',
+  weekday:'short',
+  hour12:false,
+  timeZoneName:'short'
+};
 var intlDateTimeFormat = new Intl.DateTimeFormat('ja-JP-u-ca-japanese', intlDateTimeFormatOptions);
 var getEra = function(date) {
   var dt = intlDateTimeFormat.format(date);
