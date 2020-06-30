@@ -13,7 +13,7 @@ LifeCode CMS for Rails 6.0
 - Rails 6.0
 
 ### RDBMS
-- MySQL 6.7x / 8.0
+- MySQL 5.7x / 8.0
 
 ### Requirements for Ruby Libraries
 - ImageMagick 6.9x / 7.x
@@ -139,7 +139,7 @@ nodeモジュールをインストールするので、yarnを使えるように
 
 ## RDBMS
 
-MySQL 6.7.x / 8.xに対応しています。
+MySQL 5.7.x / 8.xに対応しています。
 
 ## Ruby
 
