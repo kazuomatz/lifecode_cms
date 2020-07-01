@@ -10,7 +10,8 @@ gem 'device'
 gem 'mysql2'
 # Use Puma as the app server
 gem "puma", '>= 3.12.6'
-
+gem "rack", ">= 2.2.3"
+gem "actionpack", ">= 6.0.3.2"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5'
 
