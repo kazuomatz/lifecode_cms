@@ -196,8 +196,12 @@ span.danger {
 .input-group {
   label.wrap-file-button {
     border-bottom: none;
+    display: inline-block;
+    width: auto;
+    .btn {
+      margin-right: 5px;
+    }
   }
-
   .img {
     height: 200px;
 
