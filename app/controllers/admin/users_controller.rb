@@ -54,6 +54,16 @@ module Admin
 
     def update
       @user = Admin::User.where(id: params[:id]).first
+
+      params.keys.each do |key|
+        if key.index('delete_') == 0
+          if params[key] == 'true'
+            item = key.gsub('delete_admin_', '').gsub('user_', '')
+            @attr[item] = nil
+          end
+        end
+      end
+
       if @user.present?
         if @attr[:password] != @attr[:password_confirmation]
           flash[:alert] = '入力されたパスワードが一致しません'
