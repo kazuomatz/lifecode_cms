@@ -4,7 +4,7 @@
 -->
 <%= content_for :breadcrumb do %>
   <% items = [
-      {url: '/', title: Settings.form.label.home},
+      {url: '/admin', title: Settings.form.label.home},
       {url: "#{admin_login_histories_path}", title: "#{LoginHistory.label}#{Settings.form.label.list}"},
       {title: "#{LoginHistory.label}#{Settings.form.label.create}"},
   ]

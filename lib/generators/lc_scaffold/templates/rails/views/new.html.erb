@@ -5,7 +5,7 @@
 -->
 <%%= content_for :breadcrumb do %>
   <%% items = [
-    {url: '/', title: Settings.form.label.home},
+    {url: '/admin', title: Settings.form.label.home},
     {url: "#{admin_<%= var_models %>_path}", title: "#{<%= model.name %>.label}#{Settings.form.label.list}"},
     {title: "#{<%= model.name %>.label}#{Settings.form.label.create}"},
   ]

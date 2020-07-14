@@ -1,13 +1,13 @@
 <%= content_for :breadcrumb do %>
   <%- if current_user.normal_role? %>
     <% items = [
-        {url: '/', title: 'ホーム'},
+        {url: '/admin', title: 'ホーム'},
         {title: 'ユーザー編集'},
     ]
     %>
   <%- else %>
     <% items = [
-        {url: '/', title: 'ホーム'},
+        {url: '/admin', title: 'ホーム'},
         {url: "#{admin_users_path}", title: 'ユーザー一覧'},
         {title: 'ユーザー編集'},
     ]
