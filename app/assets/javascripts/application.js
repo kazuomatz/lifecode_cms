@@ -47,6 +47,8 @@
 //= require summernote/dist/lang/summernote-ja-JP
 //= require activestorage
 //= require @johmun/vue-tags-input/dist/vue-tags-input
+//= require common/UltraDate
+//= require common/UltraDate.ja
 
 
 
