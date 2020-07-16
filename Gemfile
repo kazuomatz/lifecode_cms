@@ -98,6 +98,7 @@ gem 'rails-html-sanitizer'
 #gem 'simple_form'
 gem 'acts-as-taggable-on', git: 'https://github.com/alkhadher/acts-as-taggable-on', branch: 'support_rails_6'
 gem 'uglifier'
+gem 'holiday_japan'
 
 # feature - FullText Index Search
 # gem 'natto'

@@ -149,6 +149,7 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    holiday_japan (1.4.3)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     i18n_generators (2.2.2)
@@ -318,6 +319,7 @@ DEPENDENCIES
   dry-core (= 0.4.8)
   faraday
   faraday_middleware
+  holiday_japan
   i18n_generators
   image_processing
   jbuilder (~> 2.7)
