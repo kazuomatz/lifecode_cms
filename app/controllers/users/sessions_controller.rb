@@ -46,6 +46,10 @@ class Users::SessionsController < Devise::SessionsController
             name: @user.name,
             ip_address: request.remote_ip
         })
+
+        @user.last_sign_in_at = Time.zone.now
+        @user.save
+
         yield resource if block_given?
         respond_with resource, location: after_sign_in_path_for(@user)
       else
