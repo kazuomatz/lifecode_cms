@@ -19,7 +19,7 @@
       <li class="nav-item px-3 welcome-name">
         <div class="avatar">
           <%- if current_user.avatar.attached? %>
-            <%= image_tag(url_for(current_user.avatar.variant(combine_options: {resize: "120x120^", crop: "120x120+0+0", gravity: :center}).processed)) %>
+            <%= image_tag(url_for(current_user.avatar.variant(combine_options: {gravity: :center, resize: "120x120^", crop: "120x120+0+0"}).processed)) %>
           <%- else %>
             <%= image_tag(asset_path('nouser-circle.jpg')) %>
           <%- end %>
