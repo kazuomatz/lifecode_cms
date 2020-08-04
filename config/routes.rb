@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   end
 
   get 'admin', to: 'admin/top#index'
+  get 'zip_code/search'
+
   resources :uploads, only: [:create, :destroy]
 
   namespace :admin do

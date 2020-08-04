@@ -409,7 +409,7 @@ var FormManager;
         var $el_input = $($(this).data('input'));
 
         $.ajax({
-          url: 'https://api.zipaddress.net/',
+          url: '/zip_code/search',
           data: {'zipcode': $el_input.val()},
           dataType: 'json'
         }).done(function (res) {
