@@ -91,7 +91,7 @@
               <div class="col-12">
                 <%- if user.avatar.attached? -%>
                   <div class="image-preview">
-                    <%= image_tag representation_image_path(user.avatar.variant(resize:'800x800').processed), style: 'width: 100%' %>
+                    <%= image_tag representation_image_path(user.avatar.variant(resize:'800x800').processed), class:'img-fluid' %>
                   </div>
                 <%- else -%>
                   <div class="image-preview">
