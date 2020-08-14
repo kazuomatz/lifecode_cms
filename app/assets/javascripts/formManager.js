@@ -17,7 +17,7 @@ var FormManager;
       select2_options: {
         width: '100%',
         language: "ja",
-        allowClear: true,
+        allowClear: false,
         placeholder: '選択してください'
       },
       datepicker_options: {
