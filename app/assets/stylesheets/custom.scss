@@ -569,6 +569,9 @@ form, .search-box {
         padding: 0.24rem 0.75rem;
         color: #000 !important;
       }
+      .select2-selection__clear {
+        margin-right: 10px;
+      }
     }
   }
 }
