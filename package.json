@@ -21,6 +21,7 @@
     "iscroll": "^5.2.0",
     "jquery": "^3.5.1",
     "jquery-drawer": "^3.2.2",
+    "jquery-maskmoney": "^3.0.2",
     "jquery-ui-sortable-npm": "1.0.0",
     "jquery.finger": "0.1.6",
     "markerclustererplus": "2.1.4",

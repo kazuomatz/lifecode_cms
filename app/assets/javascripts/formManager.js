@@ -655,6 +655,14 @@ var FormManager;
       $(this).parent().find('svg').css('color', event.color.toString());
     });
 
+    // currency
+    $el.find('._input-currency').maskMoney({
+        thousands:',',
+        allowZero: true,
+        precision: '0'
+      }
+    ).maskMoney('mask');
+
     var buttons = $('.regist-buttons');
     buttons.hide();
     setTimeout(function () {

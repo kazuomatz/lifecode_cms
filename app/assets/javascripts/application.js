@@ -49,6 +49,7 @@
 //= require @johmun/vue-tags-input/dist/vue-tags-input
 //= require common/UltraDate
 //= require common/UltraDate.ja
+//= require jquery-maskmoney/dist/jquery.maskMoney
 
 
 

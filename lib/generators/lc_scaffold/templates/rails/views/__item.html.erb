@@ -23,6 +23,8 @@
       <%= ApplicationController::render partial: 'rails/views/map', locals:{ column: column, model: model,var_model: var_model } -%>
     <%- elsif column[:type] == :integer || column[:type] == :string || column[:type] == :float || column[:type] == :decimal -%>
       <%= ApplicationController::render partial: 'rails/views/text_field', locals:{column: column, model: model, var_model: var_model, model_name: model_name} -%>
+    <%- elsif column[:type] == :currency -%>
+      <%= ApplicationController::render partial: 'rails/views/currency_field', locals:{column: column, model: model, var_model: var_model, model_name: model_name} -%>
     <%- elsif column[:type] == :attachment -%>
       <%- if column[:content_type].index('image') -%>
         <%= ApplicationController::render partial: 'rails/views/image_attachment', locals:{column: column, model_name: model_name} -%>

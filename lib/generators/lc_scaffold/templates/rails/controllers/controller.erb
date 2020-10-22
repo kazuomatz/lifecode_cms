@@ -98,6 +98,11 @@ module Admin
         @attr.delete(date_column[:name] + '_day')
         @attr.delete(date_column[:name] + '_time')
       end
+
+      <%= model.name %>.form_attributes.select {| column | column[:type] == :currency}.each do |currency_column|
+        @attr[currency_column[:name]] = @attr[currency_column[:name]].gsub(',','')
+      end
+
     end
 
     def set_default_params
