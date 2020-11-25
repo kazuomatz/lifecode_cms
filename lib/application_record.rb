@@ -95,11 +95,15 @@ class ApplicationRecord < ActiveRecord::Base
         column[:icon] = 'far fa-file-alt'
         column[:placeholder] = ''
       elsif column[:type] == :integer
-        validate[:pattern] = '[+-]?\d+'
-        validate[:pattern_message] = '正しい整数値を入力して下さい。'
+        if validate
+          validate[:pattern] = '[+-]?\d+'
+          validate[:pattern_message] = '正しい整数値を入力して下さい。'
+        end
       elsif column[:type] == :float || column[:type] == :decimal
-        validate[:pattern] = '[+-]?\d+\.?\d*'
-        validate[:pattern_message] = '正しい実数値を入力して下さい。'
+        if validate
+          validate[:pattern] = '[+-]?\d+\.?\d*'
+          validate[:pattern_message] = '正しい実数値を入力して下さい。'
+        end
       elsif column[:type] == :boolean
         column[:column] = 12
         column[:options] = [{label: '有効', value: true}, {label: '無効', value: false}]
