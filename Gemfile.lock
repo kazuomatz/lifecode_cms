@@ -336,9 +336,9 @@ DEPENDENCIES
   mysql2
   paranoia (~> 2.0)
   parsley-rails
-  puma (>= 3.12.6)
+  puma (>= 5.0)
   rack (>= 2.2.3)
-  rails (~> 6.0.3.3)
+  rails (~> 6.0.3.4)
   rails-html-sanitizer
   rails-i18n
   rb-readline
