@@ -19,11 +19,11 @@ class User < ApplicationRecord
     role == 3
   end
 
-  def grater_than_equal_to_normal_role?
+  def greater_than_equal_to_normal_role?
     true
   end
 
-  def grater_than_equal_to_operator_role?
+  def greater_than_equal_to_operator_role?
     role == 1 || role == 2
   end
 
