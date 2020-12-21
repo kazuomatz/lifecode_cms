@@ -669,7 +669,7 @@ LifeCode CMSは、JavaScriptのバリデーションライブラリー[Parsley](
 |max|許容される値の最大値を設定します。|
 |datetime_greater|日付の大小比較をチェックします。例えば、開始日と終了日の項目がある場合の大小比較をチェックします。show_time=trueが設定されていた場合は時間の大小比較も行います。|
 
-date_time_graterの例
+date_time_greaterの例
 開始日:start_at 終了日：end_at の設定
 
 
