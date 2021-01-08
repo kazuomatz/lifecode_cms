@@ -1029,9 +1029,13 @@ function rotate(img) {
   var raw_width = img.width;
   var raw_height = img.height;
   var canvas = document.createElement('canvas');
-  canvas.width = raw_width / 4;
-  canvas.height = raw_height / 4;
+  canvas.width = raw_width / 2;
+  canvas.height = raw_height / 2;
   var ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = 'rgb(255,255,255)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   ctx.translate(canvas.width / 2, canvas.height / 2);
   switch (exif) {
     case 1:
