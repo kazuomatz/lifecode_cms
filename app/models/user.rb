@@ -46,7 +46,7 @@ class User < ApplicationRecord
   end
 
   def lock_expired?
-    locked_at && locked_at < UNLOCK_IN.ago
+    !permanent_lock && locked_at && locked_at < UNLOCK_IN.ago
   end
 
   if Rails.env == 'production'

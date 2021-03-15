@@ -109,8 +109,10 @@ module Admin
     def lock
       user = Admin::User.find params[:id]
       if request.put?
+        user.permanent_lock = true
         user.lock_access!
       elsif request.delete?
+        user.permanent_lock = false
         user.unlock_access!
       end
       content = render_to_string(partial: 'lock', locals: {user: user})
