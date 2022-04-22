@@ -1,0 +1,52 @@
+<!DOCTYPE>
+<html html lang="ja">
+<head>
+  <title><%= Settings.common.app_name %></title>
+  <%= csrf_meta_tags %>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+<%= render partial: 'layouts/header' %>
+
+<div class="app-body">
+
+  <%#= yield %>
+  <%= render partial: 'layouts/side_bar' %>
+  <main class="main">
+    <!-- Breadcrumb-->
+    <%= yield(:breadcrumb) if content_for?(:breadcrumb) %>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+  </main>
+
+
+</div>
+
+<%= render partial: 'layouts/footer' %>
+<div
+  id="image-path"
+  data-noimage-image-path="<%= asset_path('noimage.jpg') %>"
+  data-nodocument-image-path="<%= asset_path('nodocument.jpg') %>"
+  data-document-image-path="<%= asset_path('document.jpg') %>"
+  style="display: none">
+</div>
+</body>
+<%= javascript_include_tag 'application' %>
+<%= content_for :add_js if content_for?(:add_js) %>
+<script>
+  $(function () {
+    $(".nav-item .nav-link").removeClass("active");
+    <%- if params[:controller] == 'published_histories' && params[:action] == 'new' %>
+    $(".nav-item[data-menu='facility'] .nav-link").addClass("active");
+    <%-else %>
+    $(".nav-item[data-menu=<%=params[:controller].gsub('master/','').gsub('admin/','').singularize%>] .nav-link").addClass("active");
+    <%- end %>
+  });
+</script>
+</html>

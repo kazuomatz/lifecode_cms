@@ -1,0 +1,139 @@
+<%= form_for inquiry, html: {class: 'form-inquiry'} do |form| %>
+  <div class="card">
+    <div class="card-header">
+      <strong><i class="fas fa-home"></i>　お問い合わせ</strong>
+    </div>
+    <div class="card-body">
+
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>お問い合わせID</label>
+            <div class="iq-item"><%= sprintf '%08d', inquiry.id %></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>会社名</label>
+            <div class="iq-item"><%= inquiry.company_name || '--' %></div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>部門・部署名</label>
+            <div class="iq-item"><%= inquiry.company_section || '--' %></div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>肩書き・役職</label>
+            <div class="iq-item"><%= inquiry.company_post || '--' %></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>お名前</label>
+            <div class="iq-item"><%= inquiry.name %> <%= inquiry.name_kana.present? ? " (#{inquiry.name_kana}) " : "" %>
+              様
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>ご住所</label>
+            <div class="iq-item">〒<%= inquiry.zip_code %> <%= inquiry.prefecture_name %> <%= inquiry.city_name %> <%= inquiry.address_1 %> <%= inquiry.address_2 %></div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>メールアドレス
+              <a href="mailto:<%= inquiry.email %>" class="btn btn-primary btn-xs" style="float: right"><i class="fas fa-envelope"></i></a></label>
+            <div class="iq-item"><%= inquiry.email %></div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>電話番号</label>
+            <div class="iq-item"><%= inquiry.tel %></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>お問い合わせ内容</label>
+            <div class="iq-item"><%= inquiry.content.html_safe %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <strong><i class="fas fa-home"></i>　対応内容</strong>
+    </div>
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-sm-8 _container-radio">
+          <div class="form-check form-check-inline mr-1">
+            <%= form.radio_button :is_supported, true %>
+            <label class="form-check-label" for="admin_inquiry_is_supported_true">対応済み</label>
+          </div>
+          <div class="form-check form-check-inline mr-1">
+            <%= form.radio_button :is_supported, false %>
+            <label class="form-check-label" for="admin_inquiry_is_supported_false">未対応</label>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>対応者</label>
+            <%= form.text_field :supporter_name, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>対応内容</label>
+            <%= form.text_area :support_note, class: 'form-control', rows: 5 %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="regist-buttons-wrapper">
+    <div class="card-footer regist-buttons">
+      <button type="submit" class="btn btn-primary">
+        <i class="far fa-check-circle"></i> 更新
+      </button>
+      <a href="<%= admin_inquiries_path %>" class="btn btn-default">
+        キャンセル
+      </a>
+    </div>
+  </div>
+<%- end %>
+
+<% content_for :add_js do %>
+  <script>
+    $(function () {
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+    });
+  </script>
+<% end %>

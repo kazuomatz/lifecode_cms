@@ -1,0 +1,28 @@
+#!/bin/bash
+APP_NAME=lifecode_cms
+USER=ec2-user
+APP_DIR=/home/$USER/$APP_NAME
+
+echo -e "Asset Precompile..."
+#sudo /etc/init.d/sidekiq stop
+bin/rails assets:precompile RAILS_ENV=production
+sudo systemctl stop puma
+sudo systemctl start puma
+#sudo /etc/init.d/sidekiq start
+echo -e "Restart Puma Complete!"
+
+echo -e "　　　　　　　　　　　　　　 　　　　　ヾ:､"
+echo -e "　　　　　　　　　　　　　　,.. -::ｰ:::-..､ﾉﾉ"
+echo -e "　　　　　　　　　　　　,,´:::;:::::::;:::::::::::::::｀:.､"
+echo -e "　　　　　　　　　　／::::::::;:::::::;:::::::;::::::::;:::::::ヽ,"
+echo -e "　　　　　　　　　 /;:::::::::::::::::::::::;:::::::::人::::;:;:::i､"
+echo -e "　　　　　　　　 !）ヽ;:::--:;r-､;:::;:::::/　　 ヽ;:::::;i"
+echo -e "　　 　 　 　 　 i':::::::::::::::::;;(.ﾉj:::::::::::i　　 　 ヽ:;i"
+echo -e "　　 　 　 　 　 i::ﾍ:::::::;⊿:::::i　ヽ::::::::i　　　 /::;::､"
+echo -e "　　　　　　 ./::::ゝ::(;;ﾉ ;::::／　　ヽ:::::i　　　!::i:::i:::）"
+echo -e "　　　　　　 /::::/　ﾐ::i::彡ノ　　　　ヽ:::i　 　 ﾞ'ﾞ'"''""
+echo -e "　　　　　_/::::::i　　　　　　　 　　 　冫:ヽ,"
+echo -e "　   r'::i:::i:::j　　　　　　　　　 　 (;:i::;i:::j"
+echo -e "　　　ﾞ''ﾞ'"''"　　　　　　　　　　　    ｀ﾞ"
+
+sudo systemctl status puma

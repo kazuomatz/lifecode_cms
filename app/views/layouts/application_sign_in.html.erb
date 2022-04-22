@@ -1,0 +1,32 @@
+<!DOCTYPE>
+<html html lang="ja">
+<head>
+  <title><%= Settings.common.app_name %></title>
+  <%= csrf_meta_tags %>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <meta name="robots" content="noindex"/>
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+<div class="app-body">
+  <main class="main_public">
+    <div class="container public">
+      <%= yield %>
+    </div>
+  </main>
+</div>
+
+<footer class="app-footer" style="margin-left:0">
+  <div>
+    <%= Settings.common.app_name %>
+    <span>&copy; 2019-2020 <%= Settings.common.copyright %>.</span>
+  </div>
+</footer>
+
+</body>
+<%= javascript_include_tag 'application' %>
+<%= content_for :add_js if content_for?(:add_js) %>
+</html>

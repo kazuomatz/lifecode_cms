@@ -1,0 +1,56 @@
+<$$- if column[:show_map] $$>
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-8 container-map">
+      <div id="admin_<%= var_model %>_<%= column[:name] %>_map" class="map_view"></div>
+      <$$ if column[:prefecture_column].present? && column[:city_column].present? $$>
+      <div class="mt-2 text-right">
+        <button id="admin_<%= var_model %>_<%= column[:name] %>_address-btn" type="button" class="address-btn btn btn-primary"
+                data-prefecture="admin_<%= var_model %>_<$$= column[:prefecture_column] $$>"
+                data-city="admin_<%= var_model %>_<$$= column[:city_column] $$>"
+                data-address1="admin_<%= var_model %>_<$$= column[:address1_column] $$>">
+          <i class="fas fa-map-marker-alt"></i> <$$= Settings.form.label.get_geom $$>
+        </button>
+      </div>
+      <$$ end $$>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="<%= column[:name] %>_lat"><$$= Settings.form.label.latitude $$></label>
+        <div class="input-group-prepend mb-3">
+          <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+          <input type="text" id="admin_<%= var_model %>_<%= column[:name] %>_lat" name="<%= column[:name] %>_lat" class="form-control _lat_lon" value="<$$= <%= var_model %>.<%= column[:name] %>.nil?  ? column[:default_latitude] : <%= var_model %>.<%= column[:name] %>.y $$>" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="<%= column[:name] %>_lng"><$$= Settings.form.label.longitude $$></label>
+        <div class="input-group-prepend mb-3">
+          <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+          <input type="text" id="admin_<%= var_model %>_<%= column[:name] %>_lng" name="<%= column[:name] %>_lng" class="form-control _lat_lon" value="<$$= <%= var_model %>.<%= column[:name] %>.nil?  ? column[:default_longitude] : <%= var_model %>.<%= column[:name] %>.x $$>" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<$$- else %>
+<div class="col-sm-3">
+  <div class="form-group">
+    <label for="<%= column[:name] %>_lat"><$$= Settings.form.label.latitude $$></label>
+    <div class="input-group-prepend mb-3">
+      <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+      <input type="text" id="admin_<%= var_model %>_<%= column[:name] %>_lat" name="<%= column[:name] %>_lat" class="form-control _lat_lon" value="<$$= <%= var_model %>.<%= column[:name] %>.nil?  ? column[:default_latitude] : <%= var_model %>.<%= column[:name] %>.y $$>" />
+    </div>
+  </div>
+</div>
+<div class="col-sm-3">
+  <div class="form-group">
+    <label for="<%= column[:name] %>_lng"><$$= Settings.form.label.longitude $$></label>
+    <div class="input-group-prepend mb-3">
+      <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+      <input type="text" id="admin_<%= var_model %>_<%= column[:name] %>_lng" name="<%= column[:name] %>_lng" class="form-control _lat_lon" value="<$$= <%= var_model %>.<%= column[:name] %>.nil?  ? column[:default_longitude] : <%= var_model %>.<%= column[:name] %>.x $$>" />
+    </div>
+  </div>
+</div>
+<$$- end $$>
+
+<$$= form.hidden_field <%= ':' + column[:name] %>, value: Point.to_s(<%= var_model %>.<%= column[:name] %>), class: '_spatial' $$>

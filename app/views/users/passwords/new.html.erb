@@ -1,0 +1,65 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :post}) do |f| %>
+  <div class="container login-form">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group">
+          <div class="card p-4">
+            <div class="card-body">
+              <h2>パスワードのリセット</h2>
+              <p class="text-muted" style="padding: 30px 0">登録したメールアドレスを入力して、送信ボタンを押して下さい。パスワードをリセットするためのメールを送信します。</p>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'メールアドレス', class: 'form-control',
+                                  data: {
+                                      parsley_required: true,
+                                      parsley_required_message: 'メールアドレスを入力して下さい'
+                                  }
+                %>
+              </div>
+              <%- if resource.errors.full_messages.length > 0 %>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="alert alert-danger">登録されていないメールアドレスです</div>
+                  </div>
+                </div>
+              <%- end %>
+              <div class="row">
+                <div class="col-6">
+                  <button type="submit" class="btn btn-primary px-4"><i class="fas fa-paper-plane"></i>&nbsp;&nbsp;送信
+                  </button>
+                </div>
+                <div class="col-6 text-right">
+                  <a class="btn btn-link px-0" href="/users/sign_in">ログイン画面に戻る</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+            <div class="card-body text-center">
+              <div>
+                <div><%= image_tag (asset_path('brand/logo-w.png')), width: 200 %></div>
+                <p><%= Settings.common.app_name %>へようこそ</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= content_for :add_js do %>
+  <script>
+    $(function () {
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+      $("#user_email").on('keyup', function () {
+        $(".alert.alert-danger").hide();
+      });
+    });
+
+  </script>
+<%- end %>

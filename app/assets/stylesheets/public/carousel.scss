@@ -1,0 +1,374 @@
+$accent-color: #f28e24;
+.type-1 {
+  .layer-dark {
+    background-color: #000;
+    opacity: 0.4;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .left-content {
+    background-color: transparent;
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    .content {
+      margin-bottom: 20%;
+      margin-top: 20%;
+      @media screen and (max-width: 1200px) {
+        margin-bottom: auto;
+        margin-top: 10%;
+      }
+      position: relative;
+      right: 0;
+      vertical-align: middle;
+      text-align: right;
+      color: #fff;
+      height: 50%;
+      width: 70%;
+      left: 30%;
+
+      .discover {
+        font-family: 'Nothing You Could Do', cursive;
+        color: $accent-color;
+        font-size: 1.7rem;
+        font-weight: 600;
+      }
+
+      h1 {
+        font-weight: 700;
+        font-size: 2.3rem;
+        padding: 0.5rem 0;
+      }
+
+      .description {
+        padding: 1.2rem 0 1rem 0;
+        line-height: 1.5rem;
+        font-weight: 200;
+        font-size: 1.1rem;
+      }
+
+      .buttons {
+        margin: 1.5rem 0;
+
+        a:link, a:visited {
+          transition: none;
+          opacity: 1;
+
+          span {
+            margin-left: 0.5rem;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            color: #fff;
+            border: 1px #ccc solid;
+          }
+        }
+
+        a:hover, a:active {
+          transition: none;
+          opacity: 1;
+
+          span {
+            color: #fff;
+            border: 1px $accent-color solid;
+            background-color: $accent-color;
+          }
+        }
+      }
+
+      @media screen and (max-width: 834px) {
+        .buttons {
+          display: block;
+          bottom: 30px;
+        }
+        .description {
+          display: none;
+        }
+      }
+
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .left-content {
+      width: 100%;
+
+      .content {
+        width: 100%;
+        margin-top: 2%;
+        left: 0;
+
+        .discover {
+          font-family: 'Nothing You Could Do', cursive;
+          font-size: 1.2rem;
+        }
+
+        h1 {
+          text-align: center;
+          font-size: 1.8rem;
+        }
+
+        .description {
+          display: none;
+        }
+
+        .buttons {
+          text-align: center;
+          display: block;
+          margin: 0.8rem;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 320px) {
+    .left-content {
+      .content {
+        h1 {
+          display: none;
+        }
+
+        .buttons {
+          margin-top: 0;
+          display: block;
+
+          span {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.type-2 {
+  .layer-dark {
+    background-color: #000;
+    opacity: 0.6;
+    position: absolute;
+    width: 42%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .content {
+    position: absolute;
+    padding: 10% 5% 5% 10%;
+    @media screen and (max-width: 768px) {
+      padding: 5% 5% 5% 5%;
+    }
+    color: #fff;
+    left: 0;
+    top: 0;
+    width: 42%;
+    height: 100%;
+
+    h1 {
+      font-size: 2rem;
+      padding: 0.5rem 0;
+      font-weight: 700;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    a:link, a:visited {
+      transition: none;
+      display: inline-block;
+      font-size: 0.8rem;
+      opacity: 1;
+      margin-top: 3rem;
+      @media screen and (max-width: 834px) {
+        margin-top: 1rem;
+      }
+
+      span {
+        background-color: #fff;
+        padding: 0.5rem 1rem;
+        display: inline-block;
+        color: #000;
+        border: 1px #ccc solid;
+
+        svg {
+          font-size: 0.4rem;
+          display: inline-block;
+          margin-right: 0.5rem;
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .content {
+      width: 60%;
+      height: 100%;
+
+      h1 {
+        font-size: 1rem;
+      }
+
+      .description {
+        display: none;
+      }
+
+      a {
+        span {
+          position: absolute;
+          bottom: 1rem;
+        }
+      }
+    }
+    .layer-dark {
+      width: 60%;
+    }
+
+  }
+
+
+}
+
+.type-3 {
+  .layer-dark {
+    background-color: #000;
+    opacity: 0.3;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .left-content {
+    background-color: transparent;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+
+    .content-wrapper {
+      position: absolute;
+      color: #fff;
+      opacity: 0.9;
+      width: 70%;
+      @media screen and (min-width: 1200px) {
+        height: 35%;
+      }
+      @media screen and (max-width: 960px) {
+        height: 50%;
+      }
+      @media screen and (max-width: 768px) {
+        height: 55%;
+      }
+      left: 0%;
+      bottom: 0;
+      background-color: transparent;
+
+      a:link, a:hover, a:visited {
+        transition: none;
+        display: inline-block;
+        font-size: 0.8rem;
+        opacity: 1;
+        margin-top: 0rem;
+        color: #fff;
+
+        span {
+          background-color: $accent-color;
+          padding: 0.5rem 1rem;
+          display: inline-block;
+          border: 0px;
+          color: #fff;
+        }
+      }
+
+      .content {
+        height: 100%;
+        padding: 1.2rem 1.2rem;
+        background-color: #fff;
+
+        h1 {
+          font-weight: 400;
+          font-size: 1.2rem;
+          padding: 0.2rem 0;
+          color: #000;
+
+        }
+
+        .description {
+          font-size: 0.7rem;
+          line-height: 1.8;
+          padding: 0.2rem 0;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .left-content {
+      .content-wrapper {
+        .content {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+#carousel {
+  .bx-wrapper {
+    -moz-box-shadow: 0 0 5px #ccc;
+    -webkit-box-shadow: 0 0 5px #ccc;
+    box-shadow: 0 0 5px #ccc;
+    border-width: 0;
+
+    .carousel-type-1 {
+      @extend .type-1;
+    }
+
+    .carousel-type-2 {
+      @extend .type-2;
+    }
+
+    .carousel-type-3 {
+      @extend .type-3;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+#top_content, .top_mainimage {
+  @media screen and (min-width: 1200px) {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+
+.top_mainimage {
+  &.slide-2 {
+    background-image: url('/assets/images/carousel/image-2.jpg');
+    height: 450px;
+    @media screen and (max-width: 480px) {
+      background-image: url('/assets/images/carousel/image-2-sp.jpg');
+      height: 384px;
+    }
+    @media screen and (min-width: 480px) and (max-width: 768px) {
+      height: 416px;
+    }
+  }
+}

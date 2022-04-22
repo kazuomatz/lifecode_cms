@@ -1,0 +1,37 @@
+お問い合わせがありました。
+
+<%- if @inquiry.company_name %>
+  ■　会社名
+  <%= @inquiry.company_name %>
+<%- end %>
+
+<%- if @inquiry.company_section %>
+  ■　部署名
+  <%= @inquiry.company_section %>
+<%- end %>
+
+<%- if @inquiry.company_post %>
+  ■　肩書き
+  <%= @inquiry.company_post %>
+<%- end %>
+
+■　お名前
+<%= @inquiry.name %>
+
+■　メールアドレス
+<%= @inquiry.email %>
+
+■　電話番号
+<%= @inquiry.tel %>
+
+■　住所
+〒<%= @inquiry.zip_code %> <%= @inquiry.prefecture_name %> <%= @inquiry.city_name %> <%= @inquiry.address_1 %> <%= @inquiry.address_2 %>
+
+■　お問い合わせ内容
+<%= @inquiry.content %>
+
+お問い合わせの詳細は、以下のURLで確認できます。
+
+---------------------------------------------------------
+Powered By LifeCode CMS
+

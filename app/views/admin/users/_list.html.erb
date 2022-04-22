@@ -1,0 +1,61 @@
+<table class="table table-responsive-sm">
+  <thead>
+  <tr>
+    <th width="120">ID</th>
+    <th>氏名</th>
+    <th>権限</th>
+    <th>最終ログイン</th>
+    <th width="200">操作</th>
+  </tr>
+  </thead>
+  <% users.each do |user| -%>
+    <tr>
+      <td>
+        <div>
+          <%= user.id %>
+          <% if user.access_locked? %>&nbsp;<span class="danger"> <i class="fas fa-user-lock"></i></span>
+          <%- end %>
+        </div>
+      </td>
+      <td>
+        <%= user.name %>
+      </td>
+      <td><%= user_role_icon(user) %> <%= user.role_name %></td>
+      <td>
+        <%- if user.confirmed_at.nil? && !user.access_locked? %>
+          <div>
+            <i class="fas fa-user-clock" style="color:#ccc"></i>&nbsp;&nbsp;確認待ち
+            <button data-user-id="<%= user.id %>" class="btn-resend btn btn-primary btn-sm">&nbsp;<i class="fas fa-envelope"></i>
+              再送
+            </button>
+          </div>
+        <%- else %>
+          <%= user.last_sign_in_at ? feed_time(user.last_sign_in_at, true) : '--' %>
+        <%- end %>
+      </td>
+      <td>
+        <a class="btn-primary btn" href="<%= edit_admin_user_path(user) %>"><i class="far fa-edit"></i> 編集</a>&nbsp;
+      </td>
+    </tr>
+  <%- end %>
+</table>
+
+<script>
+  $(function () {
+
+    $(".btn-resend ").on('click', function () {
+      var id = $(this).data('user-id');
+      $.ajax({
+        url: '/admin/users/resend_confirmation',
+        data: {id: id, authenticity_token: '<%= form_authenticity_token %>'},
+        method: 'post'
+      }).done(function (data) {
+        if (data.status == 'OK') {
+          swal("送信完了", "確認メールを再送しました", "success");
+        } else {
+          swal("送信失敗", "確認メールの再送ができませんでした。", "error");
+        }
+      });
+    });
+  });
+</script>

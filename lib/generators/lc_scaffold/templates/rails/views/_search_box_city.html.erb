@@ -1,0 +1,31 @@
+<div class="col-sm-3">
+  <div class="form-group ">
+    <label for="<$$= column[:name] $$>"><$$= column[:label] $$></label>
+    <div class="input-group mb-0">
+      <select class="form-control _el-city"
+              id="<$$= column[:name] $$>"
+              name="<$$= column[:name] $$>"
+              data-prefecture="<$$= column[:prefecture_code] $$>"
+              placeholder="- 選択 -">
+        <option value="">- 選択 -</option>
+        <$$- if params[:<%= column[:prefecture_column] %>].present? -$$>
+        <$$- cities = City.where(prefecture_code: params[:<%= column[:prefecture_column] %>]) -$$>
+        <$$- else $$>
+        <$$- cities = [] $$>
+        <$$- end $$>
+        <$$- cities.each do |city| $$>
+        <$$ selected = params[:<%= column[:name] %>] == city.code.to_s $$>
+        <$$ if selected $$>
+        <option value="<$$= city.code $$>" data-prefecture="<$$= city.prefecture_code $$>" selected>
+          <$$= city.name $$>
+        </option>
+        <$$ else $$>
+        <option value="<$$= city.code $$>" data-prefecture="<$$= city.prefecture_code $$>">
+          <$$= city.name $$>
+        </option>
+        <$$ end $$>
+        <$$- end $$>
+      </select>
+    </div>
+  </div>
+</div>

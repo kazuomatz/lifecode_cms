@@ -1,0 +1,41 @@
+<%= content_for :breadcrumb do %>
+  <% items = [
+      {url: '/admin', title: 'ホーム'},
+      {title: 'グループ一覧'}
+  ]
+  %>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
+<% end %>
+
+<%= render partial: 'base/search_script', locals: {page: params[:landing_page] || 1} %>
+
+<div class="container-fluid base">
+  <div>
+    <div class="row">
+
+      <div class="col-sm-12 ">
+        <h1 class="func-title">グループ管理</h1>
+
+        <%= render partial: 'admin/groups/search_box' %>
+
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="fas fa-users"></i>　グループ一覧</strong>
+            <div class="right-button-element">
+              <a class="btn-primary btn" href="<%= new_admin_group_path %>"><i class="fas fa-users"></i> グループ追加</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mt-10">
+              <div class="col-sm-12">
+                <div id="content-body"></div>
+                <div id="pagination" class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

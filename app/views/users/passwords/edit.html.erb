@@ -1,0 +1,87 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :put}) do |form| %>
+  <%= devise_error_messages! %>
+  <%= form.hidden_field :reset_password_token %>
+  <input type="hidden" name="edit_password" value="1"/>
+  <div class="container login-form">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group">
+          <div class="card p-4">
+            <div class="card-body">
+              <h2>パスワードの設定</h2>
+              <%= form.text_field :email, style: 'visibility: hidden' %>
+              <p class="text-muted">パスワードを設定して下さい。</p>
+              <label for="user_role">パスワード</label>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-lock"></i>
+                    </span>
+                </div>
+                <%= form.password_field :password, class: 'form-control', placeholder: '8文字以上',
+                                        data: {
+                                            parsley_minlength: Settings.security.password.min_length || 8,
+                                            parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
+                                            parsley_pattern: Settings.security.password.regex,
+                                            parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
+                                        }
+                %>
+              </div>
+
+              <label for="user_role">パスワード(再入力)</label>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                </div>
+
+                <%= form.password_field :password_confirmation, class: 'form-control', placeholder: 'もう一度入力',
+                                        data: {
+                                            parsley_required: true,
+                                            parsley_required_message: '再度パスワードを入力して下さい',
+                                            parsley_equalto: '#user_password',
+                                            parsley_equalto_message: 'パスワードが一致していません'
+                                        }
+                %>
+              </div>
+              <%- if resource.errors.full_messages.length > 0 %>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="alert alert-danger">エラーが発生しました。</div>
+                  </div>
+                </div>
+              <%- end %>
+              <div class="row">
+                <div class="col-6">
+                  <button type="submit" class="btn btn-primary px-4">続ける</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+            <div class="card-body text-center">
+              <div>
+                <h2><%= Settings.common.app_name %></h2>
+                <p><%= Settings.common.app_name %>へようこそ</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= content_for :add_js do %>
+  <script>
+    $(function () {
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+      $("#user_email").on('keyup', function () {
+        $(".alert.alert-danger").hide();
+      });
+    });
+
+  </script>
+<%- end %>

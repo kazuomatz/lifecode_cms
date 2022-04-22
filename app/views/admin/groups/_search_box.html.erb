@@ -1,0 +1,30 @@
+<div class="card search-box">
+  <div class="card-header">
+    <strong><i class="fas fa-search"></i>　グループ検索</strong>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="name">グループ名</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+      </div>
+      <hr/>
+      <div class="col-sm-12 search-box-buttons">
+        <button type="button" class="search-button btn btn-primary btn-lg"><i class="fas fa-search"></i> 検索</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- content_for :add_js do %>
+  <script>
+    // 検索用パラメータ設定
+    function searchParams() {
+      return {
+        name: $('[name="name"]').val()
+      };
+    }
+  </script>
+<%- end %>

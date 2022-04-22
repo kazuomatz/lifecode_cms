@@ -1,0 +1,27 @@
+<table class="table table-responsive-sm">
+  <thead>
+  <tr>
+    <th width="120">ID</th>
+    <th>グループ名</th>
+    <th>説明</th>
+    <th width="200">操作</th>
+  </tr>
+  </thead>
+  <% groups.each do |group| -%>
+    <tr>
+      <td>
+        <div>
+          <%= group.id %>
+        </div>
+      </td>
+      <td>
+        <%= group.name %>
+      </td>
+      <td><%= group.description %></td>
+      <td>
+        <a class="btn-primary btn" href="<%= edit_admin_group_path(group) %>"><i class="far fa-edit"></i> 編集</a>&nbsp;
+        <a class="btn btn-danger" href=""><i class="fas fa-trash"></i> 削除</a>&nbsp;
+      </td>
+    </tr>
+  <%- end %>
+</table>

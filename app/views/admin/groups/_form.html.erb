@@ -1,0 +1,56 @@
+<div class="row">
+  <% if flash[:alert] %>
+    <div class="col-sm-8">
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    </div>
+  <% end %>
+
+  <div class="col-sm-8">
+    <div class="form-group">
+      <label for="user_name">name</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+        </div>
+
+
+        <%= form.text_field :name, class: 'form-control',
+                            data: {
+                                parsley_required: true,
+                                parsley_required_message: '氏名を入力して下さい。',
+                            }
+        %>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-8">
+    <div class="form-group">
+      <label for="user_name">description</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+        </div>
+
+
+        <%= form.text_field :description, class: 'form-control',
+                            data: {
+                                parsley_required: true,
+                                parsley_required_message: '氏名を入力して下さい。',
+                            }
+        %>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%- content_for :add_js do %>
+  <script>
+    $(function () {
+      new FormManager({img_noimage: "<%= asset_path('noimage.jpg') %>"}).init();
+    });
+  </script>
+<%- end %>

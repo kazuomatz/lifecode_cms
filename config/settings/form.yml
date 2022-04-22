@@ -1,0 +1,36 @@
+form:
+  label:
+    required: 必須
+    edit: 編集
+    new: 登録
+    update: 更新
+    destroy: 削除
+    create: 登録
+    operate: 操作
+    search: 検索
+    list: 一覧
+    back: 戻る
+    home: ホーム
+    cancel: キャンセル
+    confirm: 確認
+    manage: 管理
+    add: 追加
+    clear: クリア
+    select_file: ファイル選択
+    get_address: 住所取得
+    latitude: 緯度
+    longitude: 経度
+    get_geom: 住所から座標を取得
+    undo: 元に戻す
+  validate:
+    regex:
+      hiragana: \A[\p{hiragana}　ー－&&[^ -~｡-ﾟ]]+\z
+      hiragana_message: は全角ひらがなのみで入力して下さい。
+      katakana: \A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z
+      katakana_message: は全角カタカナのみで入力して下さい。
+      zip_code: \A\d{7}\z
+      zip_code_message: は7桁の数字で入力してください。
+      phone: \A(((0(\d{1}[-]?\d{4}|\d{2}[-]?\d{3}|\d{3}[-]?\d{2}|\d{4}[-]?\d{1}|[5789]0[-]?\d{4})[-]?)|\d{1,4}\-?)\d{4}|0120[-]?\d{3}[-]?\d{3})\z
+      phone_message: は電話番号形式で入力してください。
+      email: \A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z
+      email_message: はメールアドレス形式で入力してください。

@@ -1,0 +1,12 @@
+<div class="col-sm-<$$= column[:column] $$>">
+  <div class="form-group">
+    <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+    <div class="input-group mb-3">
+      <$$= form.text_field <%= ':' + column[:name] %>, class: 'form-control color-picker', data: <%= model.name %>.parsley_data(column[:name]) $$>
+      <div class="input-group-prepend">
+        <$$ color = "color: #{<%= var_model %>.<%= column[:name]%>}" $$>
+        <div class="input-group-text"><i class="fas fa-square-full" style="<$$= color $$>"></i></div>
+      </div>
+    </div>
+  </div>
+</div>

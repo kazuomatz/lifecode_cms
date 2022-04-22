@@ -1,0 +1,57 @@
+  <$$- if column[:date_ui].blank? || column[:date_ui] == :calendar $$>
+  <div class="form-group">
+    <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><$$= calendar_icon <%= var_model %>.<%= column[:name] %> $$></span>
+      </div>
+      <$$= form.text_field  <%= ':' + column[:name] %>,
+      class: 'form-control _input-date',
+      value: <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%Y/%m/%d') : '',
+      data: <%= model.name %>.parsley_data(column[:name]) $$>
+      <$$= week_string(<%= var_model %>.<%= column[:name] %>)$$>
+    </div>
+  </div>
+  <$$-else $$>
+  <div class="form-group _date_input_selector">
+    <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+    <div class="form-row">
+      <div class="col-sm-5">
+        <div class="input-group-prepend">
+          <select class="form-control _year" name="admin_<%= var_model %>[<%= column[:namAe] %>_year]" id="admin_<%= var_model %>_<%= column[:name]%>_year"
+            data-max-year="<$$= column[:max_year]$$>" data-min-year="<$$= column[:min_year]$$>" data-default-year="<$$= column[:default_year]$$>"
+            data-era="<$$= column[:era] $$>"
+            data-selected="<$$= <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%Y').to_i : ''$$>">
+          </select>
+          <div class="input-group-text date-select">年</div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="input-group-prepend">
+          <select class="form-control _month" name="admin_<%= var_model %>[<%= column[:name] %>_month]" id="admin_<%= var_model %>_<%= column[:name]%>_month"
+                  data-selected="<$$= <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%m').to_i : ''$$>"></select>
+          <div class="input-group-text date-select">月</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group-prepend ">
+          <select class="form-control _day" name="admin_<%= var_model %>[<%= column[:name] %>_day]" id="admin_<%= var_model %>_<%= column[:name]%>_day"
+                  data-selected="<$$= <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%d').to_i : ''$$>"></select>
+          <div class="input-group-text date-select">日
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <div class="week-container"></div>
+      </div>
+
+      <div class="col-sm-12">
+        <div id="<%= var_model %>_<%= column[:name] %>_error_container"></div>
+      </div>
+      <$$= form.hidden_field  <%= ':' + column[:name] %>,
+      value: <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%Y/%m/%d') : '',
+      data: <%= model.name %>.parsley_data(column[:name]).merge({parsley_errors_container: '#<%= var_model %>_<%= column[:name] %>_error_container'}) $$>
+    </div>
+  </div>
+  <$$-end $$>

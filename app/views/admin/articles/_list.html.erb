@@ -1,0 +1,34 @@
+<table class="table table-responsive-sm">
+  <thead>
+  <tr>
+    <th width="100">記事ID</th>
+    <th width="40"></th>
+    <th>タイトル</th>
+    <th width="150">更新日時</th>
+    <th width="300"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <%- objects.each do |object| %>
+    <tr>
+      <td><%= object.id %></td>
+      <td>
+        <%- if object.is_publish %>
+          <span class="badge badge-pill badge-success">公開</span>
+        <%- else %>
+          <span class="badge badge-pill badge-light">下書き</span>
+        <%- end %>
+      </td>
+      <td><%= object.title %></td>
+      <td><%= object.updated_at.strftime('%Y/%m/%d %H:%M') %></td>
+      <td align="right">
+        <a class="btn-primary btn edit-btn" href="<%= edit_admin_article_path(object) %>"><i class="far fa-edit"></i> 編集</a>&nbsp;
+        <a class="btn-primary btn preview-btn" href="<%= admin_article_path(object) %>"><i class="far fa-eye"></i> プレビュー</a>&nbsp;
+        <button type="button" class="btn-danger btn delete-btn" data-id="<%= object.id %>"><i class="fas fa-trash"></i>
+          削除
+        </button>
+      </td>
+    </tr>
+  <%- end %>
+  </tbody>
+</table>

@@ -1,0 +1,15 @@
+<ol class="breadcrumb">
+  <% i = 1 %>
+  <% items.each do |item| %>
+    <li class="breadcrumb-item" class="<%= item == items.last ? 'active' : '' %>">
+      <% unless item[:url].blank? %>
+        <a href="<%= item[:url].blank? ? '' : item[:url].force_encoding('UTF-8') %>" itemprop="item">
+          <span itemprop="name"><%= sanitize_content item[:title].force_encoding('UTF-8') %></span>
+        </a>
+      <% else %>
+        <span itemprop="name"><%= sanitize_content item[:title].force_encoding('UTF-8') %></span>
+      <% end %>
+    </li>
+    <% i += 1 %>
+  <% end %>
+</ol>

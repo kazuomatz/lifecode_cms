@@ -1,0 +1,27 @@
+<div class="col-sm-3">
+  <div class="form-group">
+    <label for="<$$= column[:name] $$>"><$$= column[:label] $$></label>
+    <div class="input-group mb-0">
+      <select class="form-control _el-prefecture"
+              id="<$$= column[:name] $$>"
+              name="<$$= column[:name] $$>"
+              data-city="#<$$= column[:city_column] $$>"
+              laceholder="- 選択 -">
+        <option value="">- 選択 -</option>
+        <$$- prefecture_codes = <%= model %>.all.map {|f| f.<%= column[:name] %> }.uniq -$$>
+        <$$- Prefecture.where(code: prefecture_codes).each do |prefecture| -$$>
+        <$$ selected = params[:<%= column[:name] %>] == prefecture.code.to_s %>
+        <$$ if selected $$>
+        <option data-name="<$$= prefecture.name $$>" value="<$$= prefecture.code $$>" selected>
+          <$$= prefecture.name $$>
+        </option>
+        <$$ else $$>
+        <option data-name="<$$= prefecture.name $$>" value="<$$= prefecture.code $$>">
+          <$$= prefecture.name $$>
+        </option>
+        <$$ end $$>
+        <$$- end $$>
+      </select>
+    </div>
+  </div>
+</div>

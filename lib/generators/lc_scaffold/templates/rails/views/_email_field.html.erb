@@ -1,0 +1,13 @@
+<div class="col-sm-<$$= column[:column] $$>">
+  <div class="form-group">
+    <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+    <div class="input-group mb-3">
+      <$$- if column[:icon].present? -$$>
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="<$$= column[:icon] $$>"></i></span>
+        </div>
+      <$$- end -$$>
+      <$$= form.mail_field <%= ':' + column[:name] %>, class: 'form-control', data: <%= model.name %>.parsley_data(column[:name]), placeholder: column[:placeholder] $$>
+    </div>
+  </div>
+</div>

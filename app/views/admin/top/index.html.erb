@@ -1,0 +1,25 @@
+<%= content_for :breadcrumb do %>
+  <% items = [
+      {url: '/admin', title: Settings.form.label.home}
+  ]
+  %>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
+<% end %>
+<div class="container-fluid base">
+  <div class="row">
+    <div class="col-sm-12 ">
+      <h1 class="func-title">Form <%= Settings.form.label.manage %></h1>
+      <div class="card">
+        <div class="card-header">
+          <strong><i class="fas fa-th-list"></i>　Form一覧</strong>
+        </div>
+        <div class="card-body">
+          <% Dir.glob(File.join(Rails.root, 'config', 'form_attributes', '*.yml')) do |file| %>
+            <% data = YAML.load_file(file) %>
+            <div><%= link_to data[:label], "/admin/#{File.basename(file.gsub(File.extname(file), '')).pluralize.underscore}" %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

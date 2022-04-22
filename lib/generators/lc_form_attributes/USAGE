@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    rails generate lc_form_attributes Thing
+
+    This will create:
+        what/will/it/create

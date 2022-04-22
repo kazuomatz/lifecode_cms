@@ -1,0 +1,64 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="container login-form">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group">
+          <div class="card p-4">
+            <div class="card-body">
+              <h2>ログイン</h2>
+              <p class="text-muted" style="padding: 30px 0">メールアドレス、パスワードを入力してログインしてください</p>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <%= f.text_field :email, autofocus: true, autocomplete: "email", placeholder: 'メールアドレス', class: 'form-control' %>
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="fas fa-lock-alt"></i>
+                    </span>
+                </div>
+                <%= f.password_field :password, autocomplete: "off", placeholder: 'パスワード', class: 'form-control' %>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <%= f.check_box :remember_me %>&nbsp;<%= f.label :remember_me, 'ログイン状態を保持する' %>
+                </div>
+              </div>
+              <%- if flash[:alert].present? %>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <div class="alert alert-danger"><%= t(flash[:alert]) %></div>
+                  </div>
+                </div>
+              <%- end %>
+              <div class="row mt-3">
+                <div class="col-6">
+                  <button type="submit" class="btn btn-primary px-4"><i class="fas fa-sign-in-alt"></i>　ログイン</button>
+                </div>
+                <div class="col-6 text-right">
+                  <a class="btn btn-link" href="<%=new_user_password_path%>">パスワードを忘れました</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+            <div class="card-body text-center">
+              <div>
+                <div><%= image_tag (asset_path('brand/logo-w.png')), width: 200 %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= content_for :add_js do %>
+  <script>
+    $(function () {
+      new FormManager().init();
+    });
+  </script>
+<% end %>

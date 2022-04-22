@@ -1,0 +1,33 @@
+<table class="table table-responsive-sm inquiry-table">
+  <thead>
+  <tr>
+    <th width="120">お問い合わせID</th>
+    <th>対応</th>
+    <th>区分</th>
+    <th>店舗</th>
+    <th>お名前</th>
+    <th>お問い合わせ日時</th>
+    <th width="150">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <%- objects.each do |object| %>
+    <tr>
+      <td><%= sprintf '%08d', object.id %></td>
+      <td class="badge-col">
+        <% if object.is_supported %>
+          <span class="badge-success badge"><i class="fas fa-check"></i></span>
+        <% else %>
+          <span class="badge-danger badge"><i class="fas fa-exclamation-triangle"></i></span>
+        <%- end %>
+      </td>
+      <td><%= object.name %> 様</td>
+      <td><%= object.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+      <td>
+        <a class="btn-primary btn edit-btn" href="<%= edit_admin_inquiry_path(object) %>"><i class="fas fa-info-circle"></i>
+          詳細</a>
+      </td>
+    </tr>
+  <%- end %>
+  </tbody>
+</table>

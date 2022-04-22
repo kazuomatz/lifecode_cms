@@ -1,0 +1,121 @@
+---
+:label: ログイン履歴
+:icon: fas fa-history
+:columns:
+  - :name: user_type
+    :label: user_type
+    :icon: fas fa-info-circle
+    :type: :string
+    :column: 4
+    :placeholder: ''
+    :validate:
+      :required: false
+      :required_message: ''
+      :max_length: -1
+      :max_length_message: ''
+      :min_length: -1
+      :min_length_message: ''
+      :pattern: ''
+      :pattern_message: ''
+      :length: ''
+      :length_message: ''
+  - :name: account
+    :label: account
+    :icon: fas fa-info-circle
+    :type: :string
+    :column: 4
+    :placeholder: ''
+    :validate:
+      :required: false
+      :required_message: ''
+      :max_length: -1
+      :max_length_message: ''
+      :min_length: -1
+      :min_length_message: ''
+      :pattern: ''
+      :pattern_message: ''
+      :length: ''
+      :length_message: ''
+  - :name: name
+    :label: アカウント
+    :icon: fas fa-info-circle
+    :type: :string
+    :column: 4
+    :placeholder: ''
+    :validate:
+      :required: true
+      :required_message: ''
+      :max_length: -1
+      :max_length_message: ''
+      :min_length: -1
+      :min_length_message: ''
+      :pattern: ''
+      :pattern_message: ''
+      :length: ''
+      :length_message: ''
+  - :name: user_id
+    :label: user_id
+    :icon: fas fa-info-circle
+    :type: :integer
+    :column: 4
+    :placeholder: ''
+    :validate:
+      :required: false
+      :required_message: ''
+      :max_length: -1
+      :max_length_message: ''
+      :min_length: -1
+      :min_length_message: ''
+      :pattern: ''
+      :pattern_message: ''
+      :length: ''
+      :length_message: ''
+  - :name: ip_address
+    :label: ip_address
+    :icon: fas fa-info-circle
+    :type: :string
+    :column: 4
+    :placeholder: ''
+    :validate:
+      :required: false
+      :required_message: ''
+      :max_length: -1
+      :max_length_message: ''
+      :min_length: -1
+      :min_length_message: ''
+      :pattern: ''
+      :pattern_message: ''
+      :length: ''
+      :length_message: ''
+  - :name: status
+    :label: status
+    :icon: fas fa-info-circle
+    :type: :integer
+    :column: 4
+    :placeholder: ''
+    :validate:
+      :required: false
+      :required_message: ''
+      :max_length: -1
+      :max_length_message: ''
+      :min_length: -1
+      :min_length_message: ''
+      :pattern: ''
+      :pattern_message: ''
+      :length: ''
+      :length_message: ''
+:form_columns:
+  - :user_type
+  - :account
+  - :name
+  - :user_id
+  - :ip_address
+  - :status
+:search_columns:
+  - :acount
+  - :user_type
+  - :status
+:list_columns:
+  - :id
+  - :name
+:edit_mode: :view_form

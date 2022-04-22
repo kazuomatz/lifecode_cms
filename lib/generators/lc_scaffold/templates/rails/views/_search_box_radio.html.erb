@@ -1,0 +1,15 @@
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="<%= column[:name] %>"><%= column[:label] %></label>
+        <$$- column[:options].each do |option|  $$>
+        <div class="form-check form-check-inline mr-1">
+          <input type="radio" value="<$$= option[:value] $$>" name="<$$= column[:name] $$>" id="<%= model.name.underscore %>_<%= column[:name] %>_<$$= option[:value] $$>" />
+          <label class="form-check-label" for="<%= model.name.underscore %>_<%= column[:name] %>_<$$= option[:value] $$>"><$$= option[:label] $$></label>
+        </div>
+        <$$- end $$>
+      </div>
+    </div>
+  </div>
+</div>

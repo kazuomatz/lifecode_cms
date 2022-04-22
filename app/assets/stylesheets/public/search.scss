@@ -1,0 +1,41 @@
+.search-box {
+  height: 120px;
+  display: inline-block;
+  width: 100%;
+
+  .col-sm-3 {
+    height: 80px;
+  }
+
+  label {
+    font-weight: bold;
+    padding: 0.5rem 0
+  }
+
+  .link {
+
+    div.button {
+      cursor: pointer;
+      display: inline-block;
+      padding: 0.6em 1.5em;
+      border-radius: 5px;
+      background: #9a1810;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      font-size: 12px;
+      position: absolute;
+      bottom: 15px;
+      @media screen and (max-width: 768px) {
+        display: block;
+        position: static;
+        margin: 1.5rem 30% 3rem 30%;
+      }
+
+      &:hover {
+        background: lighten(#9a1810, 10%);
+      }
+    }
+
+  }
+}

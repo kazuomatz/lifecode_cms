@@ -1,0 +1,20 @@
+form.form-inquiry {
+  .iq-item {
+    font-size: 14px;
+  }
+}
+
+table.inquiry-table {
+  .badge-col {
+    .badge {
+      display: inline-block;
+      padding: 5px;
+      width: 24px;
+      height: 24px;
+
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+}

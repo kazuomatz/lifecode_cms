@@ -1,0 +1,33 @@
+<div class="col-sm-12">
+  <div class="form-row">
+    <div class="col-sm-<$$= column[:column] $$>">
+      <div class="form-group">
+        <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+        <div class="input-group mb-0">
+          <div class="input-group-prepend">
+            <span class="input-group-text zip-code">〒</span>
+          </div>
+          <$$= form.text_field :<%= column[:name] %>, class: 'form-control _el-zipcode', maxlength: 8,
+                placeholder: column[:placeholder],
+                data: <%= model.name %>.parsley_data(column[:name]),
+                style: 'width:80%'
+          $$>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-group" style="margin-top:3.1rem;margin-left: -10px">
+        <div class="input-group-prepend">
+          <button type="button"
+                  class="btn btn-primary btn-xs btn-attach-right _btn-zipcode"
+                  data-input="#admin_<%= var_model %>_<%= column[:name] %>"
+                  data-prefecture="#admin_<%= var_model %>_<%= column[:prefecture_code] %>"
+                  data-city="#admin_<%= var_model %>_<%= column[:city_code] %>"
+                  data-address="#admin_<%= var_model %>_<%= column[:address1] %>">
+            <$$= Settings.form.label.get_address $$> <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

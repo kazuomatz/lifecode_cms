@@ -1,0 +1,41 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">
+    <img class="navbar-brand-full" src="<%= asset_path('brand/logo.png') %>" width="160" alt="CoreUI Logo">
+    <img class="navbar-brand-minimized" src="<%= asset_path('brand/logo.png') %>" width="30" height="30" alt="CoreUI Logo">
+  </a>
+  <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <ul class="nav navbar-nav d-md-down-none">
+
+  </ul>
+
+  <ul class="nav navbar-nav ml-auto">
+    <% if current_user.present? %>
+      <li class="nav-item px-3 welcome-name">
+        <div class="avatar">
+          <%- if current_user.avatar.attached? %>
+            <%= image_tag(url_for(current_user.avatar.variant(gravity: :center, resize: "120x120^", crop: "120x120+0+0").processed)) %>
+          <%- else %>
+            <%= image_tag(asset_path('nouser-circle.jpg')) %>
+          <%- end %>
+        </div>
+      </li>
+      <li class="nav-item px-3 welcome-name">
+        ようこそ <b><%= current_user.name %></b> さん
+      </li>
+      <li class="nav-item px-3">
+        <a href="<%= destroy_user_session_path %>" class="nav-link" data-method="delete"><i class="fas fa-sign-out-alt"></i>
+          ログアウト</a>
+      </li>
+    <%- else %>
+      <li class="nav-item px-3">
+        <a href="<%= new_user_session_path %>" class="nav-link"><i class="fas fa-sign-in-alt"></i> サインイン</a>
+      </li>
+    <%- end %>
+  </ul>
+</header>

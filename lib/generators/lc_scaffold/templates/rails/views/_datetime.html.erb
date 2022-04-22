@@ -1,0 +1,29 @@
+<$$- if column[:show_time] -$$>
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-<$$= column[:date_ui] == :select ? '6' : column[:column] $$>">
+    <%= ApplicationController::render partial: 'rails/views/date', locals:{column: column, model: model,var_model: var_model} -%>
+
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="<%= column[:name] %>">　</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-clock"></i></span>
+          </div>
+          <$$= form.text_field  <%= ':' + column[:name] %>_time,
+                                class: 'form-control _input-time',
+                                value: <%= var_model %>.<%= column[:name] %>.present? ? <%= var_model %>.<%= column[:name] %>.strftime('%H:%M') : '00:00',
+                                data: <%= model.name %>.parsley_data(column[:name]) $$>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<$$- else $$>
+<div class="col-sm-<$$= column[:date_ui] == :select ? '6' : column[:column] $$>">
+<%= ApplicationController::render partial: 'rails/views/date', locals:{column: column, model: model,var_model: var_model} -%>
+
+</div>
+<$$- end -$$>

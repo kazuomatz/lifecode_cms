@@ -1,0 +1,43 @@
+<%- content_for :add_js do %>
+  <script>
+    var searchManager;
+    var keyDownCode = 0;
+
+    $(function () {
+      searchManager = new SearchManager('#content-body', '#pagination', '<%= (defined? search_path) ? search_path : "#{params[:controller].split('/').last}.json" %>');
+      // 検索ボタン押下
+      $('.search-button').on('click', function () {
+        execSearch();
+      });
+      $('.clear-button').on('click', function () {
+        clearSearch();
+      });
+
+      searchManager.getList(<%= page %>, searchParams());
+
+      $('.search-box input').on("keydown", function (e) {
+        keyDownCode = e.which;
+      });
+
+      $('.search-box input').on("keyup", function (e) {
+        if (13 == e.which && e.which == keyDownCode) {
+          $('.search-button').trigger('click');
+          return false;
+        } else {
+          return false;
+        }
+      });
+    });
+
+    var clearSearch = function () {
+      $('.search-box input').val('');
+      $('.search-box select').val('');
+      searchManager.getList(1, {});
+    };
+
+    var execSearch = function () {
+      searchManager.getList(1, searchParams());
+
+    }
+  </script>
+<% end %>

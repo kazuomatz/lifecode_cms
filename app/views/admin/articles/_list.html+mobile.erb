@@ -1,0 +1,32 @@
+<table class="table table-responsive-sm">
+  <thead>
+  </thead>
+  <tbody>
+  <%- objects.each do |object| %>
+    <tr>
+      <td><%= object.id %>&nbsp;
+        <%- if object.is_publish %>
+          <span class="badge badge-pill badge-success">公開</span>
+        <%- else %>
+          <span class="badge badge-pill badge-light">下書き</span>
+        <%- end %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= object.title %></td>
+    </tr>
+    <tr>
+      <td align="right"><%= object.updated_at.strftime('%Y/%m/%d %H:%M') %></td>
+    </tr>
+    <tr>
+      <td align="right" style="padding-right: 0">
+        <a class="btn-primary btn edit-btn" href="<%= edit_admin_article_path(object) %>"><i class="far fa-edit"></i> 編集</a>&nbsp;
+        <a class="btn-primary btn preview-btn" href="<%= admin_article_path(object) %>"><i class="far fa-eye"></i> プレビュー</a>&nbsp;
+        <button type="button" class="btn-danger btn delete-btn" data-id="<%= object.id %>"><i class="fas fa-trash"></i>
+          削除
+        </button>
+      </td>
+    </tr>
+  <%- end %>
+  </tbody>
+</table>

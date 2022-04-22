@@ -1,0 +1,162 @@
+@import "../theme";
+
+$base_size: 1.1rem;
+
+.base_style {
+  font-size: $base_size !important;
+  line-height: $base_size * 2;
+  @media screen and (max-width: 768px) {
+    line-height: $base_size * 1.5;
+  }
+}
+
+.article_style {
+  word-wrap: break-word;
+
+  .main-image {
+    height: 315px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0.5rem 0 0.5rem 0;
+    @media screen and (max-width: 768px) {
+      height: 150px;
+    }
+  }
+
+  a:link, a:visited {
+    color: $color-link;
+
+    &:hover {
+      color: $color-link-hover;
+    }
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    margin: 1rem 0;
+    line-height: 1.8rem;
+    padding: .5rem 0;
+  }
+
+  .catch {
+    @extend .base_style;
+    background: #efefef;
+    padding: 1rem 1.2rem;
+  }
+
+  p {
+    @extend .base_style;
+
+    span {
+      @extend .base_style;
+    }
+  }
+
+  h1, h2 {
+    border-width: 0 0 3px 0;
+    border-style: solid;
+    border-color: $color-primary;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    img {
+      margin: 1rem 0;
+    }
+
+    iframe {
+      margin: 1rem 0;
+    }
+  }
+
+  blockquote {
+    position: relative;
+    padding: 3.5rem 1.5rem 1rem 1.5rem;
+    margin: 1rem 0;
+    box-sizing: border-box;
+    font-style: italic;
+    background: #efefef;
+    color: #555;
+
+    &:before {
+      display: inline-block;
+      position: absolute;
+      top: 13px;
+      left: 15px;
+      content: "\f10d";
+      font-family: "Font Awesome 5 Free";
+      color: #cfcfcf;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    @extend .base_style;
+
+    span {
+      @extend .base_style;
+    }
+  }
+
+  ul, ol {
+    padding-left: 1.7rem;
+    padding-right: 0.3rem;
+
+    li {
+      padding-left: 0;
+
+      span {
+        @extend .base_style;
+      }
+
+      @extend .base_style;
+    }
+  }
+
+  ul {
+    li {
+      list-style: disc;
+    }
+  }
+
+  ul {
+    ol {
+      margin-left: 1.5rem;
+
+    }
+  }
+}
+
+.card-body.article {
+  padding: 20px 30px;
+  @extend .article_style;
+}
+
+.next_content {
+  .news_entry {
+    .news_left {
+      @extend .article_style;
+    }
+  }
+}
+
+.note-editor {
+  @extend .article_style;
+
+  blockquote {
+    &:before {
+      display: none;
+    }
+  }
+}

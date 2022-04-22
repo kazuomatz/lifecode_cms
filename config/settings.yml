@@ -1,0 +1,39 @@
+# 共通
+common:
+  app_name: 'LifeCode CMS'
+  copyright: 'LifeCode.jp'
+  info_mail: 'ifo@exsample.jp'
+  description: ''
+# 管理画面
+admin:
+  ## ユーザー
+  user:
+    role:
+      1: 'システム管理者'
+      2: 'コンテンツ管理者'
+      3: '一般ユーザー'
+    role_value:
+      administrator: 1
+      operator: 2
+      normal: 3
+# meta
+meta:
+  title: 'LifeCode CMS'
+  description: ''
+  og:
+    type:  'website'
+    url:   ''
+    image: ''
+    site_name: ''
+basic:
+  user: lifecode
+  password: 'Your Basic Authentication Password'
+
+security:
+  password:
+    min_length: 8
+    regex: '^(?=.*?[a-z])(?=.*?\d)(?=.*?[!-\/:-@[-`{-~])[!-~]{8,100}$'
+    validate_message: 'パスワードは英大文字、英小文字、数字、記号の４種の文字を含む必要があります'
+
+google:
+  api_key: 'your google api-key'

@@ -1,0 +1,22 @@
+<%- content_for :title do %>
+  お問い合わせ管理
+<%- end %>
+<% content_for :breadcrumb do %>
+  <% items = [
+      {url: '/admin', title: 'ホーム'},
+      {url: admin_inquiries_path, title: 'お問い合わせ一覧'},
+      {title: '店舗編集'}
+  ]
+  %>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
+<% end %>
+<div class="container base">
+  <div>
+    <div class="row">
+      <div class="col-sm-12 ">
+        <h1 class="func-title">お問い合わせ詳細</h1>
+        <%= render partial: 'form', locals: {inquiry: @inquiry} %>
+      </div>
+    </div>
+  </div>
+</div>

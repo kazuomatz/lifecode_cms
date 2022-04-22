@@ -1,0 +1,22 @@
+<%= @inquiry.name %> 様
+──────────────────────────
+この度はお問い合せ頂き誠にありがとうございました。
+改めて担当者よりご連絡をさせていただきます。
+
+─ご送信内容の確認─────────────────
+
+[ お名前 ] <%= @inquiry.name %> 様
+[ メールアドレス ] <%= @inquiry.email %>
+[ 電話番号 ] <%= @inquiry.tel %>
+[ 郵便番号 ] 〒<%= @inquiry.zip_code %>
+[ ご住所 ] <%= @inquiry.prefecture_name %> <%= @inquiry.city_name %> <%= @inquiry.address_1 %> <%= @inquiry.address_2 %>
+[ お問い合わせ内容 ]
+<%= @inquiry.content %>
+
+──────────────────────────
+このメールに心当たりの無い場合は、お手数ですが
+下記連絡先までお問い合わせください。
+──────────────────────────
+
+----
+Powered By LifeCode CMS

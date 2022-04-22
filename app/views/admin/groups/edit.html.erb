@@ -1,0 +1,51 @@
+<%= content_for :breadcrumb do %>
+  <% items = [
+      {url: '/admin', title: 'ホーム'},
+      {url: "#{admin_users_path}", title: 'グループ一覧'},
+      {title: 'グループ編集'},
+  ]
+  %>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
+<% end %>
+
+<div class="container-fluid base">
+  <div>
+    <%= form_for @group, html: {class: 'form'} do |form| %>
+      <div class="row">
+        <div class="col-sm-12">
+
+          <h1 class="func-title">グループ編集</h1>
+
+          <div class="card">
+            <div class="card-header">
+              <strong><i class="fas fa-user-plus"></i>　グループ編集</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= render partial: 'form', locals: {form: form, group: @group} %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="regist-buttons-wrapper">
+        <div class="card-footer regist-buttons">
+          <button type="submit" class="btn btn-primary">
+            <i class="far fa-check-circle"></i> <%= @group.new_record? ? '登録' : '更新' %>
+          </button>
+          <a href="<%= admin_groups_path %>" class="btn btn-default">
+            キャンセル
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<% content_for :add_js do %>
+  <script></script>
+<%- end %>

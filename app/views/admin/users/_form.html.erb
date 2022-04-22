@@ -1,0 +1,203 @@
+<div class="row">
+  <% if flash[:alert] %>
+    <div class="col-sm-12">
+      <div class="alert alert-danger"><%= flash[:alert] %></div>
+    </div>
+  <% end %>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="form-group">
+          <label for="user_name">氏名<span class="label_required">必須</span></label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+            </div>
+            <%= form.text_field :name, class: 'form-control',
+                                data: {
+                                    parsley_required: true,
+                                    parsley_required_message: '氏名を入力して下さい。',
+                                }
+            %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="user_name">氏名かな<span class="label_required">必須</span></label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+            </div>
+            <%= form.text_field :name_kana, class: 'form-control',
+                                data: {
+                                    parsley_required: true,
+                                    parsley_required_message: '氏名かなを入力して下さい。',
+                                }
+            %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="user_name">メールアドレス<span class="label_required"><%= user.new_record? ? '必須' : '変更不可' %></span></label>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">@</span>
+            </div>
+            <%= form.email_field :email, class: 'form-control', readonly: !user.new_record?,
+                                 data: {
+                                     parsley_required: true,
+                                     parsley_required_message: 'メールアドレスを入力してください。',
+                                 } %>
+          </div>
+        </div>
+
+        <%- if current_user.greater_than_equal_to_operator_role? -%>
+          <div class="form-group">
+            <label for="user_role">権限</label>
+            <div class="col-md-9 col-form-label">
+              <% if current_user.administrator_role? %>
+                <% Settings.admin.user.role.keys.each_with_index do |role_key, index| %>
+                  <div class="form-check form-check-inline mr-1">
+                    <%= form.radio_button :role, Settings.admin.user.role_value[Settings.admin.user.role_value.keys[index]] %>
+                    <label class="form-check-label" for="admin_user_role_<%= Settings.admin.user.role_value[Settings.admin.user.role_value.keys[index]] %>"><%= Settings.admin.user.role[role_key] %></label>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="user_group">所属グループ</label>
+            <div class="input-group mb-3 payments ">
+              <% Group.all.each_with_index do |group, index| %>
+                <div class="form-check form-check-inline mr-1">
+                  <input type="checkbox"
+                         name="groups_users[<%= index %>][group_id]"
+                         id="<%= "groups_users_#{index}_group_id" %>"
+                         value="<%= group.id %>"
+                         <%= @group_ids.index(group.id) ? 'checked' : '' %> />
+                  <label for="<%= "groups_users_#{index}_group_id" %>"><%= group.name %></label>
+                </div>
+              <%- end %>
+            </div>
+          </div>
+        <%- end -%>
+      </div>
+      <div class="col-sm-4 container-fileinput">
+        <div class="form-group">
+          <label for="image">プロフィール画像</label>
+          <div class="input-group">
+            <div class="row">
+
+              <div class="col-12">
+                <%- if user.avatar.attached? -%>
+                  <div class="image-preview">
+                    <%= image_tag representation_image_path(user.avatar.variant(resize:'800x800').processed), class:'img-fluid' %>
+                  </div>
+                <%- else -%>
+                  <div class="image-preview">
+                    <%= image_tag asset_path('nouser.jpg') %>
+                  </div>
+                <%- end -%>
+              </div>
+              <div class="col-sm-6">
+                <label class="wrap-file-button mt-2">
+            <span class="btn btn-primary">
+              <i class="fas fa-portrait"></i>
+              ファイル選択
+              <%= form.file_field :avatar, class: '_image', style: 'display:none', accept: 'image/jpeg,image/png' -%>
+            </span>
+                </label>
+              </div>
+              <div class="col-sm-6">
+                <%- if user.avatar.attached? -%>
+                  <label class="wrap-file-button mt-2" style="width: 100%;text-align: right">
+                    <span class="btn btn-danger btn-file-delete"><i class="fas fa-trash"></i>&nbsp;<%= Settings.form.label.destroy %></span>
+                  </label>
+                <% else %>
+                  <label class="wrap-file-button mt-2" style="width: 100%;text-align: right;display: none">
+                    <span class="btn btn-danger btn-file-delete"><i class="fas fa-trash"></i>&nbsp;<%= Settings.form.label.destroy %></span>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- unless user.new_record? %>
+    <div class="col-sm-8">
+      <hr class="mt-lg-3 mb-lg-3"/>
+      <div class="form-check form-check-inline mr-1">
+        <input type="checkbox" name="edit_password" id="set-password"/><label for="set-password">パスワードを再設定する</label>
+      </div>
+      <div class="password-config mt-3" style="display: none">
+        <div class="form-group">
+          <label for="user_role">パスワード</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+            </div>
+            <%= form.password_field :password, class: 'form-control',
+                                    autocomplete: 'off',
+                                    data: {
+                                        parsley_minlength: Settings.security.password.min_length || 8,
+                                        parsley_minlength_message: "パスワードは#{Settings.security.password.min_length}文字以上である必要があります。",
+                                        parsley_pattern: Settings.security.password.regex,
+                                        parsley_pattern_message: Settings.security.password.validate_message || 'パスワードが正しくありません'
+                                    }
+            %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="user_role">パスワード(再入力）</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+            </div>
+            <%= form.password_field :password_confirmation, class: 'form-control',
+                                    autocomplete: 'off',
+                                    data: {
+                                        parsley_equalto: '#admin_user_password',
+                                        parsley_equalto_message: 'パスワードが一致していません'
+                                    }
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%- else %>
+    <div class="col-sm-8">
+      <div class="alert alert-info">
+        ユーザー登録すると、登録の手順がメールでユーザーに通知されます。
+      </div>
+    </div>
+  <%- end %>
+
+</div>
+
+
+<%- content_for :add_js do %>
+  <script>
+    $(function () {
+      var form = new FormManager({img_noimage: '<%= asset_path('noimage.jpg') %>'});
+      form.init();
+      $("#set-password").on('ifChanged', function () {
+        if ($(this).prop("checked")) {
+          $(".password-config").fadeIn();
+        } else {
+          $(".password-config").fadeOut();
+        }
+      });
+
+      <% if params[:edit_password] %>
+      $("#set-password").iCheck("check").iCheck("update");
+      <% end %>
+    });
+  </script>
+<%- end %>

@@ -1,0 +1,36 @@
+<div class="col-sm-<$$= column[:column] $$> container-fileinput">
+  <div class="form-group">
+    <label for="image"><$$= column[:label] $$></label>
+    <div class="input-group">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="image-preview">
+            <$$- if <%= model_name.underscore %>.<%= column[:name] %>.attached? -$$>
+            <$$= image_tag <%= model_name.underscore %>.<%= column[:name] %>.variant(resize:'600x300').processed, class:'img-fluid' -$$>
+            <$$- else -$$>
+            <$$= image_tag asset_path('noimage.jpg'), class:'img-fluid' -$$>
+            <$$- end -$$>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <label class="wrap-file-button mt-2">
+            <span class="btn btn-primary">
+              <i class="fas fa-file"></i>
+              <$$= Settings.form.label.select_file -$$>
+              <$$= form.file_field :<%= column[:name] %>, class:'_image', style: 'display:none', accept: '<%=  column[:content_type]  %>' -$$>
+            </span>
+          </label>
+          <$$- if <%= model_name.underscore %>.<%= column[:name] %>.attached? -$$>
+          <label class="wrap-file-button mt-2">
+            <span class="btn btn-danger btn-file-delete"><i class="fas fa-trash"></i>&nbsp;<$$= Settings.form.label.destroy $$></span>
+          </label>
+          <$$ else $$>
+          <label class="wrap-file-button mt-2">
+            <span class="btn btn-danger btn-file-delete" style="display: none"><i class="fas fa-trash"></i>&nbsp;<$$= Settings.form.label.destroy $$></span>
+          </label>
+          <$$ end $$>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

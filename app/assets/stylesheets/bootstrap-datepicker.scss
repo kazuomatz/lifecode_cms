@@ -1,0 +1,88 @@
+@import "theme";
+
+body.app {
+  .datepicker {
+    padding: 0.9rem;
+
+    table {
+      tr {
+        th.dow {
+          padding: 5px 0;
+
+          &:first-child {
+            color: #FC4549;
+          }
+
+          &:last-child {
+            color: #091AF6;
+          }
+        }
+
+        th.datepicker-switch {
+          padding: 5px 0;
+
+          &:hover {
+            background: lighten($color-primary, 30%);
+          }
+        }
+
+        th.clear {
+          padding: 5px 0;
+        }
+
+        th.prev, th.next {
+          &:hover {
+            background: lighten($color-primary, 30%);
+          }
+        }
+
+        td, th {
+          span.month, span.year {
+            &.focused {
+              background: $color-primary;
+              color: #fff;
+            }
+
+            &:hover {
+              background: lighten($color-primary, 30%);
+            }
+          }
+
+          &.day {
+            padding: 3px;
+            font-family: $font-family-base;
+            font-size: 0.9rem;
+
+            &:hover {
+              background: lighten($color-primary, 30%);
+            }
+
+            &.active, &.focused {
+              background: $color-primary;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+
+    table tr td.day {
+      &.sunday, &.holiday {
+        color: #FC4549;
+
+        &.new, &.old {
+          color: #FD9B9D;
+        }
+      }
+
+      &.saturday {
+        color: #091AF6;
+
+        &.new, &.old {
+          color: #9DA3FB
+        }
+      }
+    }
+
+  }
+}

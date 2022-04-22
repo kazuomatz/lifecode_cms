@@ -1,0 +1,18 @@
+<$$- <%= var_model %>.<%= column[:name] %> = column[:default_option] if <%= var_model %>.<%= column[:name] %>.nil?  -$$>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-sm-<$$= column[:column] $$>">
+      <div class="form-group">
+        <label for="<%= column[:name] %>"><$$= column[:label] $$></label>
+        <div class="form-group">
+          <$$- column[:options].each do |option|  $$>
+          <div class="form-check form-check-inline mr-1">
+            <$$= form.radio_button :<%= column[:name]%>, option[:value] $$>
+            <label class="form-check-label" for="admin_<%= model.name.underscore %>_<%= column[:name] %>_<$$= option[:value] $$>"><$$= option[:label] $$></label>
+          </div>
+          <$$- end $$>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

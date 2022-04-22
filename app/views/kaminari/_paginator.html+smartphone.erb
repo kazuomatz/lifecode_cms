@@ -1,0 +1,9 @@
+<%= paginator.render do -%>
+  <div style="text-align: center">
+    <ul class="pagination">
+      <%= prev_page_tag unless current_page.first? %>
+      <li class="active"><a href="#"><%= current_page %> / <%= each_page.count %></a></li>
+      <%= next_page_tag unless current_page.last? %>
+    </ul>
+  </div>
+<% end -%>

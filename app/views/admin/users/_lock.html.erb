@@ -1,0 +1,13 @@
+<%- if user.access_locked? -%>
+  このユーザーはロックされてます（利用不可）。
+  <div class="mt-3">
+    <button type="button" class="btn-primary btn lock-btn" data-status="locked"><i class="fas fa-unlock"></i> ロック解除
+    </button>
+  </div>
+<%- else %>
+  このユーザーをロック（利用不可に）します。
+  <div class="mt-3">
+    <button type="button" class="btn-danger btn lock-btn" data-status="unlock"><i class="fas fa-user-lock"></i> ロックする
+    </button>
+  </div>
+<%- end %>

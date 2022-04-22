@@ -1,0 +1,12 @@
+<div class="col-sm-<$$= column[:column] $$>">
+  <div class="form-group">
+    <label for="<%= column[:name] %>"><$$= column[:label] $$><$$= raw <%= model.name%>.required?(column[:name]) ? '<span class="label_required">' +  Settings.form.label.required + '</span>' : '' $$></label>
+    <div class="input-group mb-0">
+      <$$= form.select :<%= column[:name] %>,
+      options_for_select(@city_data['<%=column[:name] %>']|| [], selected: @<%= var_model %>.<%= column[:name]%>),
+      {}, class: 'form-control _el-city',
+      data: {prefecture: '#admin_<%= var_model %>_<%= column[:prefecture_code] %>'}
+      $$>
+    </div>
+  </div>
+</div>

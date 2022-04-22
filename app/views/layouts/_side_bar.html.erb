@@ -1,0 +1,27 @@
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      <%- if current_user && current_user.greater_than_equal_to_operator_role? %>
+        <li class="nav-title">管理</li>
+
+        <li class="nav-item nav-dropdown">
+          <a class="nav-link nav-dropdown-toggle" href="#">
+            <i class="fas fa-users-cog"></i> <span>ユーザー管理</span>
+          </a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item" data-menu="group">
+              <a class="nav-link" href="<%= admin_groups_path %>">
+                <i class="fas fa-users"></i> <span>グループ</span>
+              </a>
+            </li>
+            <li class="nav-item" data-menu="user">
+              <a class="nav-link" href="<%= admin_users_path %>">
+                <i class="fas fa-user"></i> <span>ユーザー</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      <%- end %>
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,44 @@
+<div class="card search-box">
+  <div class="card-header">
+    <strong><i class="fas fa-search"></i>　ユーザー検索</strong>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="name">氏名</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="name_kana">氏名かな</label>
+          <input type="name_kana" class="form-control" id="email" name="name_kana">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="email">メールアドレス</label>
+          <input type="email" class="form-control" id="email" name="email">
+        </div>
+      </div>
+      <hr/>
+      <div class="col-sm-12 search-box-buttons">
+        <button type="button" class="search-button btn btn-primary btn-lg"><i class="fas fa-search"></i> 検索</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- content_for :add_js do %>
+  <script>
+    // 検索用パラメータ設定
+    function searchParams() {
+      return {
+        name: $('[name="name"]').val(),
+        email: $('[name="email"]').val(),
+        name_kana: $('[name="name_kana"]').val()
+      };
+    }
+  </script>
+<%- end %>

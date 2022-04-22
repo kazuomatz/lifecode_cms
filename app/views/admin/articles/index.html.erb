@@ -1,0 +1,84 @@
+<%- content_for :title do %>
+  記事管理
+<%- end %>
+<% content_for :breadcrumb do %>
+  <%- if @site.present? %>
+    <% items = [
+        {url: '/admin', title: 'ホーム'},
+        {title: "店舗一覧", url: admin_shops_path},
+        {title: "記事管理(#{@site.company.name } - #{ @site.name })"}
+    ]
+    %>
+  <%- else %>
+    <% items = [
+        {url: '/admin', title: 'ホーム'},
+        {title: '記事管理'}
+    ]
+    %>
+  <%- end %>
+  <%= render partial: 'layouts/breadcrumb', locals: {items: items} %>
+<% end %>
+<%= render partial: 'base/search_script', locals: {page: params[:page] || 1} %>
+<div class="container base">
+  <div>
+    <div class="row">
+      <div class="col-sm-12 ">
+        <h1 class="func-title">記事管理</h1>
+        <%= render partial: 'search_box' %>
+        <div class="card">
+          <div class="card-header">
+            <strong><i class="far fa-newspaper"></i>　記事一覧</strong>
+            <div class="right-button-element">
+              <a class="btn-primary btn" href="<%= new_admin_article_path %>"><i class="fas fa-plus"></i> 記事追加</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row mt-10">
+              <div class="col-sm-12">
+                <div id="content-body"></div>
+                <div id="pagination" class="clear"></div>
+              </div>
+            </div>
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :add_js do %>
+  <script>
+
+    $(document).on('click', '.delete-btn', function () {
+      var id = $(this).data('id');
+      swal({
+        title: "削除の確認",
+        text: 'この記事を削除してよろしいですか？',
+        buttons: ["キャンセル", "削除"],
+        dangerMode: true,
+        icon: 'warning'
+      }).then(function (willDelete) {
+        if (willDelete) {
+          $.ajax({
+            method: 'delete',
+            url: '/admin/articles/' + id
+          }).then(
+            function (data) {
+              searchManager.getList(<%= params[:page] || 1 %>, searchParams());
+            },
+            function (data) {
+              //error
+            }
+          );
+        }
+      });
+
+    });
+
+
+  </script>
+
+
+
+<% end %>

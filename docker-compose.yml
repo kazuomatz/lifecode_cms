@@ -1,0 +1,50 @@
+version: '3'
+
+volumes:
+  db-store:
+  tmp_data:
+
+services:
+  app:
+    build: .
+    command: sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    # command: sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rdebug-ide --port 1234 --dispatcher-port 26168 --host 0.0.0.0 -- bundle exec rails  s -b 0.0.0.0 -p 3000"
+    # command: 'tail -f /dev/null'
+    tty: true
+    stdin_open: true
+    environment:
+      DB_HOST: db
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    volumes:
+      - .:/app
+      - tmp_data:/app/tmp
+    ports:
+      - "3000:3000"
+      - "1234:1234"
+      - "26168:26168"
+    networks:
+      - local_network
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0.4
+    command: mysqld --default-authentication-plugin=caching_sha2_password
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./logs:/var/log/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    tty: true
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    ports:
+      - 4307:3307
+    networks:
+      - local_network
+networks:
+  local_network:
+    driver: 'bridge'
