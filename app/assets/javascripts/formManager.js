@@ -426,7 +426,7 @@ var FormManager;
 		});
 
 		// 郵便番号住所自動入力ボタン動作
-		$('._btn-zipcode').on('click', function () {
+		$el.find('._btn-zipcode').on('click', function () {
 			if ($(this).data('input') && $($(this).data('input'))[0]) {
 				var $el_input = $($(this).data('input'));
 
