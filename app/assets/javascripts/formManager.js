@@ -447,6 +447,33 @@ var FormManager;
 							$($(this).data('address')).val(res.data.town);
 						}
 					}
+					else {
+						if($.alert !== undefined) {
+							$.alert(
+								{
+									title: 'エラー',
+									content: '郵便番号が正しくありません。',
+									buttons: {
+										confirm: {
+											text: '確認'
+										},
+										danger: {
+											isHidden: true
+										},
+										cancel: {
+											isHidden: true
+										}
+									}
+								}
+							)
+						}
+						else if (swal !== undefined) {
+							swal('エラー', '郵便番号が正しくありません。', 'error');
+						}
+						else {
+							alert('郵便番号が正しくありません。');
+						}
+					}
 				}.bind(this));
 			}
 		});
