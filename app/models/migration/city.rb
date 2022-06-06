@@ -24,7 +24,7 @@ module Migration
       end
 
       def update_2019
-        p '平成28年10月10日 宮城県黒川郡富谷町　=>  宮城県黒富谷市'
+        p '平成28年10月10日 宮城県黒川郡富谷町　=>  宮城県富谷市'
 
         city = City.where(code: 44237).first
         if city.present?
