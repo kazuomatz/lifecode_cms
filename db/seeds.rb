@@ -9,5 +9,6 @@ user.confirmed_at = DateTime.now
 user.save
 
 Migration::City.load_data
+Migration::City.update_2019
 Migration::Prefecture.load_data
 Migration::Group.load_data
