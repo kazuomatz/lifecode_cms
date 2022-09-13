@@ -8,7 +8,7 @@ class ApplicationRecord < ActiveRecord::Base
       column[:name] = column_name
       column[:label] = self.default_label(column[:name])
       column[:icon] = self.default_icon(column[:name])
-      column[:type] = self.columns_hash[column_name].type
+      column[:type] = self.columns_hash[column_name]&.type || :string
       column[:column] = 4
 
       validate = {
@@ -141,7 +141,7 @@ class ApplicationRecord < ActiveRecord::Base
       ret[:icon] = self.default_icon(self.name)
       columns = []
       form_columns = []
-      column_names = self.columns_hash.keys.dup - (%w(id created_at updated_at deleted_at))
+      column_names = (self.new).attributes.keys.dup - (%w(id created_at updated_at deleted_at))
       column_names.each do |column_name|
         form_columns << column_name.to_sym
         columns << initial_column(column_name)
@@ -183,7 +183,7 @@ class ApplicationRecord < ActiveRecord::Base
       before_column_names = columns.map { |c| c[:name] }
       exist_column_names = []
 
-      column_names = self.columns_hash.keys.dup - (%w(id created_at updated_at deleted_at))
+      column_names = (self.new).attributes.keys.dup - (%w(id created_at updated_at deleted_at))
       added_column_names = []
       column_names.each do |column_name|
         exist_column_names << column_name
